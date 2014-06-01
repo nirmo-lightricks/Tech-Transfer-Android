@@ -46,10 +46,17 @@ def copy_split_pngs(base, input, output):
 def copy_split_png(input, output):
     png = Image.open(input)
 
-    rgbpath = join(output, splitext(basename(input))[0] + "__rgb.jpg")
-    png.save(rgbpath)
+    bands = png.split()
+    mask = bands[3].point(lambda i: 255 if i == 0 else 0)
+    bands[0].paste(0, None, mask)
+    bands[1].paste(0, None, mask)
+    bands[2].paste(0, None, mask)
 
-    alpha = png.split()[3]
+    rgb = Image.merge("RGB", (bands[0], bands[1], bands[2]))
+    rgbpath = join(output, splitext(basename(input))[0] + "__rgb.jpg")
+    rgb.save(rgbpath)
+
+    alpha = bands[3]
     alphapath = join(output, splitext(basename(input))[0] + "__a.jpg")
     alpha.save(alphapath)
 
