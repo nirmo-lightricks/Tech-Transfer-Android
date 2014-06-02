@@ -1,7 +1,6 @@
 # Copyright (c) 2014 Lightricks. All rights reserved.
 # Created by Nir Bruner
 
-
 from os import walk
 from os.path import basename
 from os.path import dirname
@@ -12,22 +11,19 @@ from os.path import relpath
 from distutils.dir_util import copy_tree
 from shutil import copy
 from PIL import Image
-
-input_dir = "/Volumes/Creative's Bar/Products/Facetune Android/Ingredients"
-output_dir = "/Users/Nir/Development/facetune-android/app"
-# output_dir = "/Users/Nir/Downloads/1"
+import argparse
 
 
-def main():
-    for root, dirs, files in walk(input_dir):
+def update_assets(input, output):
+    for root, dirs, files in walk(input):
         if basename(root) == "assets":
             if basename(dirname(root)) == "Help":
-                copy_split_pngs(root, root, output_dir + "/res")
+                copy_split_pngs(root, root, output + "/res")
             else:
-                copy_tree(root, output_dir + "/res")
+                copy_tree(root, output + "/res")
 
         if basename(root) == "assets-beta":
-            copy_tree(root, output_dir + "/res-beta")
+            copy_tree(root, output + "/res-beta")
 
 
 def copy_split_pngs(base, input, output):
@@ -61,4 +57,10 @@ def copy_split_png(input, output):
     alpha.save(alphapath)
 
 
-main()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Copy assets from Creative's Bar to facetune-android.")
+    parser.add_argument('--input-dir', required=True, dest='input', help='input directory')
+    parser.add_argument('--output-dir', required=True, dest='output', help='output directory')
+
+    args = parser.parse_args()
+    update_assets(args.input, args.output)
