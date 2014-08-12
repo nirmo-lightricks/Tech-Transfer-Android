@@ -1,3 +1,6 @@
+# Copyright (c) 2014 Lightricks. All rights reserved.
+# Created by Nir Bruner
+
 def get_key_dict():
     return {
         "app_name": None,
