@@ -3,6 +3,7 @@
 
 def get_strings():
     return {
+        # ShaderStorage:getShaderKey
         "APP_CLASS": "com/lightricks/facetune/FacetuneApplication",
         "PM_CLASS": "android/content/pm/PackageManager",
         "PI_CLASS": "android/content/pm/PackageInfo",
@@ -28,5 +29,9 @@ def get_strings():
         "GET_ENCODE_NAME": "getEncoded",
         "GET_ENCODE_SIG":  "()[B",
         "SIGNATURES_NAME": "signatures",
-        "SIGNATURES_SIG": "[Landroid/content/pm/Signature;"
+        "SIGNATURES_SIG": "[Landroid/content/pm/Signature;",
+        # ShaderStorage:registerShaderStorage
+        "GET_SHADER_NAME": "glLog",
+        "GET_SHADER_CLASS": "com/lightricks/facetune/gpu/GLUtils",
+        "GET_SHADER_SIG": "(Ljava/lang/String;)Ljava/lang/String;",
     }
