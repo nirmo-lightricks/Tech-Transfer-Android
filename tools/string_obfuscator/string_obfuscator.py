@@ -22,22 +22,25 @@ def encrypt(str):
 
 def print_obfuscated_code():
     i = 0
-    static = "static const unsigned char name[] = {\n"
+    static = "static const unsigned char stringStorage[] = {\n"
     dictionary = ""
     clear_strings = get_strings()
 
     for name in clear_strings:
         cipher = encrypt(clear_strings[name])
-        static += ", ".join(str(x) for x in cipher) + ",\n"
+        static += "    " + ", ".join(str(x) for x in cipher) + ",\n"
         dictionary += "#define " + name + " " + str(i) + ", " + str(i + len(cipher)) + "\n"
         i += len(cipher)
-    static += ", ".join([str(random.randint(0, 255)) for x in xrange(random.randint(1, 10))]) + "};\n"
+    static += "    " + ", ".join([str(random.randint(0, 255)) for x in xrange(random.randint(10, 20))]) + "\n};\n"
 
+    print "********** main.cpp ***********"
     print static
-    print dictionary
-
     print '#define KEY "' + key + '"'
     print "#define KEYLEN " + str(len(key)) + "\n"
+
+    print "********* facetune.h **********"
+    print dictionary
+
 
 
 if __name__ == "__main__":
