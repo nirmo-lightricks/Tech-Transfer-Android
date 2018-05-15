@@ -22,9 +22,6 @@ def update_assets(input, output):
             else:
                 copy_tree(root, output + "/res")
 
-        if basename(root) == "assets-beta":
-            copy_tree(root, output + "/res-beta")
-
 
 def copy_split_pngs(base, input, output):
     for root, dirs, files in walk(input):
