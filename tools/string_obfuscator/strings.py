@@ -30,6 +30,7 @@ def get_strings():
         "GET_ENCODE_SIG":  "()[B",
         "SIGNATURES_NAME": "signatures",
         "SIGNATURES_SIG": "[Landroid/content/pm/Signature;",
+
         # ShaderStorage:registerShaderStorage
         "GET_SHADER_NAME": "glLog",
         "GET_SHADER_CLASS": "com/lightricks/facetune/gpu/GLUtils",
