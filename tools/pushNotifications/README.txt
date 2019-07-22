@@ -3,7 +3,7 @@ install via pipenv:
 
 lint with
 >mypy push_notification.py --strict --ignore-missing-imports
->pylint  push_notification.py 
+>pylint . 
 
 Run:
 export GOOGLE_APPLICATION_CREDENTIALS=<path to json>
