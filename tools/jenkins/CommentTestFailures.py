@@ -79,8 +79,9 @@ if __name__ == "__main__":
 
     failing_tests = list(map(createFailingTest, failures))
 
+    tests_signature = hidden_html_tag("Failing Tests")
     if failing_tests:
-        message.post_comment_on_current_pr("### There were failing test\n" +
-                                           markdown_table(failing_tests), hidden_html_tag("Failing Tests"))
+        message.post_comment_on_current_pr(tests_signature + "### There were failing test\n" +
+                                           markdown_table(failing_tests), tests_signature)
     else:
-        message.post_comment_on_current_pr("### All tests passed\n", hidden_html_tag("Failing Tests"))
+        message.post_comment_on_current_pr(tests_signature + "\n #### All tests passed\n", tests_signature)
