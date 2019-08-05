@@ -21,6 +21,8 @@ GITHUB_USERNAME_ENV = "DANGER_GITHUB_API_USER"
 GITHUB_PASSWORD_ENV = "DANGER_GITHUB_API_TOKEN"
 
 def github_post_or_edit_comment(username, passsword, repo_name, pr_number, comment, signature=None):
+    if not comment.startswith(signature):
+        raise ValueError("comment: (" + comment + ") must start with signature: (" + signature + ")")
     github = Github(username, passsword)
     repo = github.get_repo(repo_name)
     pr = repo.get_pull(pr_number)
