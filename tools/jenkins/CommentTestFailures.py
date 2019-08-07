@@ -61,6 +61,8 @@ def markdown_failing_test(failing_test):
 def markdown_link(text, url, alt=None):
     return f'[{text}]({url}{alt if alt else ""})'
 
+markdown_new_paragraph = "\n\n"
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('paths', metavar="test-results", type=str, nargs='*',
@@ -81,7 +83,12 @@ if __name__ == "__main__":
 
     tests_signature = hidden_html_tag("Failing Tests")
     if failing_tests:
-        message.post_comment_on_current_pr(tests_signature + "### There were failing test\n" +
+        message.post_comment_on_current_pr(tests_signature +
+                                           markdown_new_paragraph +
+                                           "### There were failing test" +
+                                           markdown_new_paragraph +
                                            markdown_table(failing_tests), tests_signature)
     else:
-        message.post_comment_on_current_pr(tests_signature + "\n #### All tests passed\n", tests_signature)
+        message.post_comment_on_current_pr(tests_signature +
+                                           markdown_new_paragraph +
+                                           "\n #### All tests passed", tests_signature)
