@@ -17,7 +17,9 @@ params = {
     "dry_run": True,
 
     "video_url": "",
-    "time": ""
+    "time": "",
+    "active_feature_id": "",
+    "visible_feature_item_id": ""
 }
 
 if __name__ == "__main__":
