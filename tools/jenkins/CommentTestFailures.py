@@ -4,64 +4,200 @@
 import xml.etree.ElementTree as ET
 import argparse
 import collections
+import os
 
 import github_message as message
 
 TESTS_SIGNATURE = "generated_by_comment_test_failures_script"
 
-def getFailingTests(tests):
-    return filter(isAnyTestFailing, tests)
+FailingTest = collections.namedtuple('FailingTest', 'klass name failure_message')
 
-def isAnyTestFailing(test):
-    return any(child.tag =='failure' for child in test)
-
-def getTestCases(root):
-    return (child for child in root if child.tag == "testcase")
-
-def getTestName(test):
-    return test.attrib["name"]
-
-def getTestClass(test):
-    return test.attrib["classname"]
-
-def getFailure(test):
-    return [child for child in test if child.tag == "failure"][0]
-
-def getFailureMessage(test):
-    return getFailure(test).text.splitlines()[0]
+TestReport = collections.namedtuple('TestReport', 'num_of_test failing_tests')
 
 
-def getFailingTestFromFile(junit_xml_path):
+######################
+# xml report parsing #
+######################
+
+def is_test_failing(test_case_xml):
+    return any(child.tag == 'failure' for child in test_case_xml)
+
+
+def get_test_cases(report_xml):
+    return (child for child in report_xml if child.tag == "testcase")
+
+
+def get_test_name(test_xml):
+    return test_xml.attrib["name"]
+
+
+def get_test_class(test_xml):
+    return test_xml.attrib["classname"]
+
+
+def get_failure_stack(test_xml):
+    return [child for child in test_xml if child.tag == "failure"][0]
+
+
+def get_failure_message(test_xml):
+    return get_failure_stack(test_xml).text.splitlines()[0]
+
+
+def get_test_cases_from_file(junit_xml_path):
     tree = ET.parse(junit_xml_path)
     root = tree.getroot()
-    tests = getTestCases(root)
-    failures = getFailingTests(tests)
+    tests = get_test_cases(root)
+    return tests
+
+
+def num_of_tests(junit_xml_path):
+    tests_xml_objects = get_test_cases_from_file(junit_xml_path)
+    return sum(True for test in tests_xml_objects)
+
+
+def get_failing_tests_xmls_from_file(junit_xml_path):
+    tests_xml_objects = get_test_cases_from_file(junit_xml_path)
+    failures = filter(is_test_failing, tests_xml_objects)
     return failures
 
-def createFailingTest(failure_xml):
-    klass = getTestClass(failure_xml)
-    name = getTestName(failure_xml)
-    reason = getFailureMessage(failure_xml)
+
+def create_failing_test(failure_xml):
+    klass = get_test_class(failure_xml)
+    name = get_test_name(failure_xml)
+    reason = get_failure_message(failure_xml)
     return FailingTest(klass=klass, name=name, failure_message=reason)
 
-FailingTest = collections.namedtuple('FailingTest', 'klass name failure_message')
+############
+# Markdown #
+############
 
 def hidden_html_tag(metadata):
     return "<p align='right' metadata='" + metadata + "'></p>\n"
 
+
 def markdown_table(failing_tests):
     return markdown_test_header() + "\n".join(map(markdown_failing_test, failing_tests))
+
 
 def markdown_test_header():
     return "| Class | Name | Reason |\n|---|---|---|\n"
 
+
 def markdown_failing_test(failing_test):
-    return "|" + "|".join(list(failing_test)) + "|"
+    return markdown_table_separator + \
+           markdown_table_separator.join(list(failing_test)) + \
+           markdown_table_separator
 
-def markdown_link(text, url, alt=None):
-    return f'[{text}]({url}{alt if alt else ""})'
+def details_tag(summery, details):
+    return "<details><summary>" + summery +"</summary><p>\n\n" + details + "</p></details>"
 
+
+markdown_table_separator = " | "
 markdown_new_paragraph = "\n\n"
+
+####################
+# Module Detection #
+####################
+
+module_marker_file = "build.gradle"
+
+
+def get_immediate_subdirectories(a_dir):
+    return next(os.walk(a_dir))[1]
+
+
+def all_modules(root_dir):
+    return {subdir for subdir in get_immediate_subdirectories(root_dir)
+            if os.path.isfile(os.path.join(root_dir, subdir, module_marker_file))}
+
+
+def is_in_module(file, module_name):
+    # we assume the file is in the form of "./module/build/..."
+    return file.split(os.path.sep)[1] == module_name
+
+
+def module_of_file(file_path, root_dir):
+    all_mods = all_modules(root_dir)
+    dir_gen = (dir for dir in file_path.split(os.path.sep) if dir in all_mods)
+    return next(dir_gen, None)
+
+
+def does_module_have_tests(module_path):
+    return os.path.exists(os.path.join(module_path, "src", "androidTest")) or \
+           os.path.exists(os.path.join(module_path, "src", "test"))
+
+#############################
+# Github Comment Formatting #
+#############################
+
+def failure_details(results):
+    if results.failing_tests:
+        return details_tag("Details", markdown_table(results.failing_tests))
+    return ""
+
+
+
+def emoji_for_result(results):
+    if results.failing_tests:
+        return ":x:"
+    elif results.num_of_test:
+        return ":white_check_mark:"
+    else:
+        return ":warning:"
+
+
+def test_short_message(results):
+    if results.failing_tests:
+        return str(len(results.failing_tests)) + " out of " + str(results.num_of_test) + " failed."
+    elif results.num_of_test:
+        return "All " + str(results.num_of_test) + " tests passed."
+    else:
+        return "No tests have run."
+
+
+def test_results_comment(modules_test_results):
+    res = ""
+    for module, result in modules_test_results.items():
+        if does_module_have_tests(module):
+            res += "<tr><td>" + emoji_for_result(result) + \
+                   " " + module.capitalize() + ": " + \
+                   test_short_message(result) + \
+                   failure_details(result) + \
+                   "</td></tr>\n"
+    return res
+
+
+def build_status_comment(modules_test_results):
+    comment_header = """
+## Lightricks CI status
+    
+<table>
+    """
+
+    comment_footer = """
+</table>
+    
+<p align="right" ${commentSignature()}>
+Generated by the Lightricks android jenkins team :hammer:
+</p>
+    """
+
+    return comment_header + test_results_comment(modules_test_results) + comment_footer
+
+########
+# Main #
+########
+
+def test_report(root_dir, module_name, test_result_paths):
+    failures = []
+    test_count = 0
+    for test_result in test_result_paths:
+        if module_of_file(test_result, root_dir) == module_name:
+            test_count += num_of_tests(test_result)
+            failures.extend(list(get_failing_tests_xmls_from_file(test_result)))
+
+    failing_tests = [create_failing_test(failure) for failure in failures]
+    return TestReport(test_count, failing_tests)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -71,24 +207,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
     test_paths = args.paths
 
+    # we assume that cwd is also the root of the facetune-android workspace.
+    root_dir = os.getcwd()
+
     if len(args.paths) == 0:
         print("No test found")
         exit(1)
 
-    failures = []
-    for test_result in test_paths:
-        failures.extend(getFailingTestFromFile(test_result))
+    modules_result = dict()
+    for module in all_modules(root_dir):
+        modules_result[module] = test_report(root_dir, module, test_paths)
 
-    failing_tests = list(map(createFailingTest, failures))
-
-    tests_signature = hidden_html_tag("Failing Tests")
-    if failing_tests:
-        message.post_comment_on_current_pr(tests_signature +
-                                           markdown_new_paragraph +
-                                           "### There were failing test" +
-                                           markdown_new_paragraph +
-                                           markdown_table(failing_tests), tests_signature)
-    else:
-        message.post_comment_on_current_pr(tests_signature +
-                                           markdown_new_paragraph +
-                                           "\n #### All tests passed", tests_signature)
+    tests_signature = hidden_html_tag(TESTS_SIGNATURE)
+    message.post_comment_on_current_pr(tests_signature +
+                                       build_status_comment(modules_result), tests_signature)
