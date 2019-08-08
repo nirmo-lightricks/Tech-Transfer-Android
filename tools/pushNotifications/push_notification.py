@@ -35,13 +35,6 @@ def _parse_language_file(language_file: str) -> Dict[str, Dict[str, str]]:
     return translations
 
 
-def _get_tokens(token_file: str) -> List[str]:
-    with open(token_file) as csvfile:
-        csv_reader = csv.reader(csvfile)
-        next(csv_reader)
-        return [row[0] for row in csv_reader]
-
-
 def _get_translation_with_fallback_to_en(translations: Dict[str, Dict[str, str]], title_key: str,
                                          content_key: str, lang: str) -> List[str]:
     return [
@@ -94,18 +87,21 @@ def send_push_messages(push_message_configuration: PushMessageConfiguration) -> 
     main function of the module. Sens push messages according to PushMessageConfiguration
     """
     firebase_admin.initialize_app()
-    tokens = _get_tokens(push_message_configuration.token_file)
     push_message = _create_push_message(push_message_configuration)
     data_dict = {DATA_KEY: push_message.to_json()}
-    for token_chunk in chunked(tokens, TOKENS_PER_FCM_CALL):
-        if push_message_configuration.dry_run:
-            print(data_dict)
-            print(token_chunk)
-        else:
-            try:
-                _send_multicast(token_chunk, data_dict)
-            except (messaging.ApiCallError, ValueError) as exception:
-                logging.exception(f'Catched exception:{exception}')
+    with open(push_message_configuration.token_file) as csvfile:
+        csv_reader = csv.reader(csvfile)
+        next(csv_reader)  # skip on the CSV header.
+
+        for token_chunk in chunked((row[0] for row in csv_reader), TOKENS_PER_FCM_CALL):
+            if push_message_configuration.dry_run:
+                print(data_dict)
+                print(token_chunk)
+            else:
+                try:
+                    _send_multicast(token_chunk, data_dict)
+                except (messaging.ApiCallError, ValueError) as exception:
+                    logging.exception(f'Catched exception:{exception}')
 
 
 def _create_argument_parser() -> argparse.ArgumentParser:
