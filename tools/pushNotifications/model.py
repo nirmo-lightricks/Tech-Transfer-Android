@@ -26,7 +26,10 @@ class PushMessageConfiguration():
     image_url: str
     time: str
     video_url: str
+    active_feature_id: str
+    visible_feature_item_id: str
     dry_run: bool = False
+
 
     def __post_init__(self) -> None:
         if not os.path.isfile(self.language_file):
@@ -58,5 +61,7 @@ class PushMessage:
     name: str
     image_url: str
     video_url: str
+    active_feature_id: str
+    visible_feature_item_id: str
     def to_json(self)->str:
         return json.dumps(asdict(self))

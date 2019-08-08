@@ -60,7 +60,9 @@ def _create_push_message(push_message_configuration: PushMessageConfiguration) -
         channel=push_message_configuration.channel,
         image_url=push_message_configuration.image_url,
         video_url=push_message_configuration.video_url,
-        name=push_message_configuration.name
+        name=push_message_configuration.name,
+        active_feature_id=push_message_configuration.active_feature_id,
+        visible_feature_item_id=push_message_configuration.visible_feature_item_id
     )
 
 def _send_multicast(token_chunk: List[str], data_dict: Dict[str, str]) -> None:
@@ -108,6 +110,8 @@ def _create_argument_parser() -> argparse.ArgumentParser:
         '--time', help="when to run push notification locally. In format hh:mm", default='')
     parser.add_argument('--video_url', default='')
     parser.add_argument('--dry_run', action='store_true', default=False)
+    parser.add_argument('--active_feature_id', default='')
+    parser.add_argument('--visible_feature_item_id', default='')
     return parser
 
 def _run_program() -> None:
@@ -119,7 +123,9 @@ def _run_program() -> None:
                                  channel=args.channel, title_key=args.title_key,
                                  content_key=args.content_key, image_url=args.image_url,
                                  time=args.time, video_url=args.video_url,
-                                 dry_run=args.dry_run)
+                                 dry_run=args.dry_run,
+                                 active_feature_id=args.active_feature_id,
+                                 visible_feature_item_id=args.visible_feature_item_id)
     send_push_messages(push_message_configuration)
 
 if __name__ == '__main__':
