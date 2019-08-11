@@ -30,6 +30,7 @@ class PushMessageConfiguration:
     active_feature_id: str
     visible_feature_item_id: str
     dry_run: bool = False
+    supported_build_version_code: int = 186
 
     def __post_init__(self) -> None:
         if not os.path.isfile(self.language_file):
@@ -64,6 +65,8 @@ class PushMessage:
     video_url: str
     active_feature_id: str
     visible_feature_item_id: str
+    supported_build_version_code: int
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), indent=4)
+

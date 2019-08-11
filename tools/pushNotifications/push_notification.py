@@ -25,6 +25,7 @@ DEFAULT_TRANSLATION = 'en'
 DATA_KEY = 'data'
 
 
+
 def _parse_language_file(language_file: str) -> Dict[str, Dict[str, str]]:
     translations: Dict[str, Dict[str, str]] = defaultdict(dict)
     with open(language_file, newline='') as csvfile:
@@ -35,6 +36,7 @@ def _parse_language_file(language_file: str) -> Dict[str, Dict[str, str]]:
     return translations
 
 
+
 def _get_translation_with_fallback_to_en(translations: Dict[str, Dict[str, str]], title_key: str,
                                          content_key: str, lang: str) -> List[str]:
     return [
@@ -43,6 +45,7 @@ def _get_translation_with_fallback_to_en(translations: Dict[str, Dict[str, str]]
         translations[content_key].get(
             lang) or translations[content_key][DEFAULT_TRANSLATION]
     ]
+
 
 
 def _create_push_message(push_message_configuration: PushMessageConfiguration) -> PushMessage:
@@ -62,8 +65,10 @@ def _create_push_message(push_message_configuration: PushMessageConfiguration) -
         video_url=push_message_configuration.video_url,
         name=push_message_configuration.name,
         active_feature_id=push_message_configuration.active_feature_id,
-        visible_feature_item_id=push_message_configuration.visible_feature_item_id
+        visible_feature_item_id=push_message_configuration.visible_feature_item_id,
+        supported_build_version_code=push_message_configuration.supported_build_version_code
     )
+
 
 
 def _send_multicast(token_chunk: List[str], data_dict: Dict[str, str]) -> None:
@@ -119,6 +124,7 @@ def _create_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument('--dry_run', action='store_true', default=False)
     parser.add_argument('--active_feature_id', default='')
     parser.add_argument('--visible_feature_item_id', default='')
+    parser.add_argument('--supported_build_version_code', default=186)
     return parser
 
 
@@ -133,7 +139,9 @@ def _run_program() -> None:
                                                           dry_run=args.dry_run,
                                                           active_feature_id=args.active_feature_id,
                                                           visible_feature_item_id=args.visible_feature_item_id,
-                                                          name=args.name)
+                                                          name=args.name,
+                                                          supported_build_version_code=args.supported_build_version_code
+                                                          )
     send_push_messages(push_message_configuration)
 
 
