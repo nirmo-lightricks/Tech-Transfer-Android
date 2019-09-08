@@ -1,3 +1,4 @@
-firebase-admin
+firebase-admin==2.18.0
 more-itertools
 requests
+retrying

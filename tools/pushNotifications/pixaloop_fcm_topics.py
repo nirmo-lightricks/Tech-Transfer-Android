@@ -3,22 +3,28 @@
 __doc__ = """
 Simple script to subscribe FCM tokens into Firebase topic. Provide function to send Pixaloop push messages via topics.
 
-Example: 
-    >>> tokens = ["fSv1JHI5rRY:APA91bHheNaUfZtEK9WupdleawwRhf8L4Z9NOrfAmIizciI6r_3Cv94y7CtIiHTUWnVfilMTVe7oUXUUm"
-                  "ZaaGcqegLJ6cHslh3rBdSs5WdMRQD-YRpOmc-m-IUXoiGpPPZyTJ0pYqt86"]
+Example - send message to topic: 
+    >>> tokens = ["fsSAvy9hg58:APA91bGHOG2YMVz8P97g-8XEIPfIqI9IWS7DBTZSMjpgpyc50_wS8AmZZALMZDJHQ7c6pCxf93RY350LvdvzO8E"
+                  "NW-mNRSGXd3yCg1EZi2TIZbaAHPs-IOWJc7RwzRfcWo8sGoWKRzrX"]
     >>> subscribe_to_topic(tokens, "test_topic_1")
-    >>> send_message_to_topic(topic="test_topic_1")
+    >>> send_message(message=SAMPLE_MESSAGE, topic="test_topic_1")
+    
+    
+Example - Send message with condition (topics arithmetic), Send message to all the users in test_topic_1 and not in 
+         test_topic_2:
+         
+    >>> tokens = ["fsSAvy9hg58:APA91bGHOG2YMVz8P97g-8XEIPfIqI9IWS7DBTZSMjpgpyc50_wS8AmZZALMZDJHQ7c6pCxf93RY350LvdvzO8E"
+                  "NW-mNRSGXd3yCg1EZi2TIZbaAHPs-IOWJc7RwzRfcWo8sGoWKRzrX"]
+    >>> subscribe_to_topic(tokens, "test_topic_1")
+    >>> send_message(message=SAMPLE_MESSAGE, condition="'test_topic_1' in topics && !('test_topic_2' in topics)")
 """
-import concurrent.futures
 import json
 import logging
 import os
 
 from firebase_admin import initialize_app, messaging
-from more_itertools import chunked
 
-# Max chunk size according to ``messaging.subscribe_to_topic``.
-TOKENS_PER_FCM_CALL = 1000
+from register_to_topic import subscribe_to_topic
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "secret.json"
 
@@ -27,9 +33,12 @@ logger.addHandler(logging.StreamHandler())
 logger.addHandler(logging.FileHandler(filename="topics_script.log"))
 logger.setLevel(logging.INFO)
 
-initialize_app()
+try:
+    initialize_app()
+except ValueError:
+    pass
 
-z = {'data': json.dumps({
+SAMPLE_MESSAGE = {
     # pos 0 = push title, pos 1 = push subtitle. Whats new dialog title and subtitle are identical to push titles.
     # Set position 2 and 3 in order to set separated text for whats new dialog. Do not set position 2 and 3 if the
     # text of the whats new dialog is identical to the push text since it will increase the payload size for no
@@ -42,7 +51,7 @@ z = {'data': json.dumps({
     # Mandatory filed. Defines the channel for the push.
     'channel': 'news',
     #  Mandatory filed. Used for analytics as a push identifier.
-    'name': 'gems_15_08_2019',
+    'name': 'tesr',
     # Image for whats new dialog, mandatory if display_whats_new_dialog is set to True. If video_url is set than the
     # image should be set to be as the first frame of the video.
     'image_url': 'https://assets.pixaloopapp.com/android/production/pn_assets/gems/gems_image.jpg',
@@ -64,41 +73,35 @@ z = {'data': json.dumps({
     # Push will travel all the way up to the stage where it is ready to display but won't be display. Use for sending
     # push to control group for analytics purposes.
     'dry_run': False
-    })
 }
 
 
-def send_message_to_topic(topic: str):
-    messaging.send(
-        messaging.Message(data=z, topic=topic)
-    )
+def send_message(message: dict, topic: str = None, condition: str = None):
+    data_message = {'data': json.dumps(message)}
+    if topic:
+        messaging.send(messaging.Message(
+            data=data_message,
+            topic=topic,
+            fcm_options=messaging.FCMOptions(analytics_label=message["name"])
+        ))
+        return
 
+    if condition:
+        messaging.send(messaging.Message(
+            data=data_message,
+            condition=condition,
+            fcm_options=messaging.FCMOptions(analytics_label=message["name"])
+        ))
+        return
 
-def subscribe_to_topic(tokens, topic):
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
-        future_to_chunk = {
-            executor.submit(_subscribe, token_chunk, index, topic):
-                (index, token_chunk) for index, token_chunk in enumerate(chunked(tokens, TOKENS_PER_FCM_CALL))
-        }
-        for future in concurrent.futures.as_completed(future_to_chunk):
-            try:
-                future.result()
-            except Exception as e:
-                logger.exception(e)
-
-
-def _subscribe(token_chunk, index, topic):
-    topic_management_response = messaging.subscribe_to_topic(tokens=token_chunk, topic=topic)
-    logger.info(
-        f"({index}, {topic_management_response.success_count}, {topic_management_response.failure_count})"
-    )
+    raise Exception("Must specify `topic` or `condition`.")
 
 
 def demo():
-    tokens = [
-        "fsSAvy9hg58:APA91bGHOG2YMVz8P97g-8XEIPfIqI9IWS7DBTZSMjpgpyc50_wS8AmZZALMZDJHQ7c6pCxf93RY350LvdvzO8ENW-mNRSGXd3yCg1EZi2TIZbaAHPs-IOWJc7RwzRfcWo8sGoWKRzrX"]
-    subscribe_to_topic(tokens, "test_topic_2")
-    send_message_to_topic(topic="test_topic_2")
+    tokens = ["fTMErE1iuZs:APA91bEC67vU3GpOWPTxq3-jKxycJaO_UWZpyZpbI8IC6ExWH4uX040iiDnP3TBfKuluWhqlaVaVo5fmsdo4viV1ado"
+              "8AUn-PGSIqfRN8ILBbQ4-q1J21SBj0VJrMfcrlpR9IEH7Kw8K"]
+    subscribe_to_topic(tokens, "test_topic_1")
+    send_message(message=SAMPLE_MESSAGE, topic="test_topic_1")
 
 
 if __name__ == "__main__":
