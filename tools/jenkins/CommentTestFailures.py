@@ -5,7 +5,8 @@ import xml.etree.ElementTree as ET
 import argparse
 import collections
 import os
-import glob
+import re
+from glob import glob
 from enum import Enum
 
 import github_message as message
@@ -109,15 +110,19 @@ markdown_new_paragraph = "\n\n"
 ####################
 
 module_marker_file = "build.gradle"
+module_exclusion_list = ['/third_party/.*', '.*/benchmark']
+module_dirs = []
+
+def exclude_module(module_path):
+    return not any(re.search(exclusion, module_path) for exclusion in module_exclusion_list)
 
 
-def get_immediate_subdirectories(a_dir):
-    return next(os.walk(a_dir))[1]
+def get_module_dirs(a_dir):
+    search_path = os.path.join(a_dir, '**/', module_marker_file)
+    marker_files = glob(search_path, recursive=True)
+    module_dirs = (os.path.basename(os.path.dirname(mf)) for mf in marker_files)
 
-
-def all_modules(root_dir):
-    return {subdir for subdir in get_immediate_subdirectories(root_dir)
-            if os.path.isfile(os.path.join(root_dir, subdir, module_marker_file))}
+    return module_dirs
 
 
 def is_in_module(file, module_name):
@@ -126,7 +131,7 @@ def is_in_module(file, module_name):
 
 
 def module_of_file(file_path, root_dir):
-    all_mods = all_modules(root_dir)
+    all_mods = get_module_dirs(root_dir)
     dir_gen = (dir for dir in file_path.split(os.path.sep) if dir in all_mods)
     return next(dir_gen, None)
 
@@ -233,8 +238,9 @@ def test_report(test_results_paths):
     failing_tests = [create_failing_test(failure) for failure in failures]
     return TestReport(test_count, failing_tests)
 
+
 def test_report_for_type(module_path, test_type):
-    results_paths = glob.glob(os.path.join(module_path, test_results_path_for_type(test_type)), recursive=True)
+    results_paths = glob(os.path.join(module_path, test_results_path_for_type(test_type)), recursive=True)
     return test_report(results_paths)
 
 if __name__ == "__main__":
@@ -253,13 +259,14 @@ if __name__ == "__main__":
         # legacy invocation.
         workspace = os.getcwd()
 
-    modules = all_modules(workspace)
+    all_modules = get_module_dirs(workspace)
+    filtered_modules = filter(exclude_module, all_modules)
     modules_result = {
         module: {
             TestType.UNIT_TEST: test_report_for_type(os.path.join(workspace, module), TestType.UNIT_TEST) ,
             TestType.ANDROID_TEST: test_report_for_type(os.path.join(workspace, module), TestType.ANDROID_TEST)
         }
-        for module in modules
+        for module in filtered_modules
     }
 
     tests_signature = hidden_html_tag(TESTS_SIGNATURE)
