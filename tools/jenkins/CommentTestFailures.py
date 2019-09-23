@@ -245,19 +245,9 @@ def test_report_for_type(module_path, test_type):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # legacy invocation
-    parser.add_argument('paths', metavar="test-results", type=str, nargs='*',
-                        help='paths of the test result files')
-
-    # new invocation
     parser.add_argument('workspace_dir')
-
     args = parser.parse_args()
     workspace = args.workspace_dir
-
-    if args.paths:
-        # legacy invocation.
-        workspace = os.getcwd()
 
     all_modules = get_module_dirs(workspace)
     filtered_modules = filter(exclude_module, all_modules)
