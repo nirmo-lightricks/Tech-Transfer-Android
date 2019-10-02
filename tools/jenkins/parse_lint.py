@@ -7,35 +7,19 @@ import collections
 
 Location = collections.namedtuple('Location', 'file line column')
 
-LintIssue = collections.namedtuple('LintIssue', 'id priority location')
+LintIssue = collections.namedtuple('LintIssue', 'id priority location severity')
 
-def _getLocation(issue):
+severities = {
+    "Fatal": 4,
+    "Error": 3,
+    "Warning": 2,
+    "Information": 1 }
+
+def _get_location(issue):
     return [n for n in issue][0]
 
 def _issues(tree):
     return [node for node in tree.getroot() if node.tag == "issue"]
-
-def _has_issues(tree):
-    return len(_issues(tree)) > 0
-
-def _issues_ids(issues):
-    return {issue.attrib["id"] for issue in issues}
-
-def _has_fatal_issues(tree):
-    return bool(_fatal_issues(tree.getroot()))
-
-
-def _issues_with_severity(git_issues, severity):
-    return [issue for issue in git_issues if issue.attrib["severity"] == severity]
-
-
-def _fatal_issues(git_issues):
-    return _issues_with_severity(git_issues, "Fatal")
-
-
-def _fatal_issues_ids(git_issues):
-    return {issue.attrib["id"] for issue in _fatal_issues(git_issues)}
-
 
 def _parse_location(xml_location):
     file = xml_location.attrib["file"]
@@ -51,8 +35,9 @@ def _parse_location(xml_location):
 def parse_issue(xml_issue):
     id = xml_issue.attrib["id"]
     priority = xml_issue.attrib["priority"]
-    location = _parse_location(_getLocation(xml_issue))
-    return LintIssue(id, priority, location)
+    severity = xml_issue.attrib["severity"]
+    location = _parse_location(_get_location(xml_issue))
+    return LintIssue(id, priority, location, severity)
 
 def linter_issues(lint_xml_report):
     tree = ET.parse(lint_xml_report)

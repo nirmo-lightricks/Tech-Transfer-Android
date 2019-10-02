@@ -64,7 +64,8 @@ def create_lint_entries(workspace):
         if not reports_paths:
             continue
 
-        lint_issues = lint_report_for_module(os.path.join(workspace, module))
+        lint_issues = [issue for issue in lint_report_for_module(os.path.join(workspace, module))
+                       if parse_lint.severities[issue.severity] >= parse_lint.severities["Warning"]]
         if not lint_issues:
             status = Status.OK
             info = "no lint issues"
