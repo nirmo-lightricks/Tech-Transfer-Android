@@ -72,7 +72,11 @@ SAMPLE_MESSAGE = {
     'with_emoji': True,
     # Push will travel all the way up to the stage where it is ready to display but won't be display. Use for sending
     # push to control group for analytics purposes.
-    'dry_run': False
+    'dry_run': False,
+
+    # List of countries or ``None``. Every country is represented according to ISO-3611 (2-characters)
+    # for example: ["us", "il"].
+    'countries_whitelist': []
 }
 
 
