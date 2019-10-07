@@ -76,7 +76,10 @@ SAMPLE_MESSAGE = {
 
     # List of countries or ``None``. Every country is represented according to ISO-3611 (2-characters)
     # for example: ["us", "il"].
-    'countries_whitelist': []
+    'countries_whitelist': [],
+
+    # `True` if promotion window needs to be shown, `False` otherwise.
+    'is_promotion': False
 }
 
 
