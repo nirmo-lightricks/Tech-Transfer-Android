@@ -78,8 +78,8 @@ SAMPLE_MESSAGE = {
     # for example: ["us", "il"].
     'countries_whitelist': [],
 
-    # `True` if promotion window needs to be shown, `False` otherwise.
-    'is_promotion': False
+    # If push is sent in order to trigger a push, needs to be set with the promotion name.
+    'promotion_name': None
 }
 
 
