@@ -79,7 +79,32 @@ SAMPLE_MESSAGE = {
     'countries_whitelist': [],
 
     # If push is sent in order to trigger a push, needs to be set with the promotion name.
-    'promotion_name': None
+    'promotion_name': None,
+
+    # Holds list of offers. for example:
+    # [{
+    #     "priority": 0,
+    #     "configuration": {
+    #         "otp": {
+    #             "billing_period": "LIFETIME",
+    #             "type": "inapp",
+    #             "id": "v1_com.lightricks.pixaloop_gp_vip_otp_l_p3_t0_ip0x.0"
+    #         },
+    #         "monthly": {
+    #             "billing_period": "MONTHLY",
+    #             "type": "subs",
+    #             "id": "v1_com.lightricks.pixaloop_gp_vip_sub_1m_p2_t0_ip0x.0"
+    #         },
+    #         "yearly": {
+    #             "billing_period": "YEARLY",
+    #             "type": "subs",
+    #             "id": "v1_com.lightricks.pixaloop_gp_vip_sub_1y_p1_t0_ip0x.0"
+    #         }
+    #     },
+    #     "name": "test_offer_2",
+    #     "end_date": "2030-02-01"
+    # }]
+    'offers': None
 }
 
 
