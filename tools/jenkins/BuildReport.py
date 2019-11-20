@@ -6,9 +6,14 @@ from enum import Enum
 
 import MarkdownUtils
 
-COMMENT_HEADER = """
+SLACK_CHANNEL_URL = "https://lightricks.slack.com/app_redirect?team=T03V4THAJ&channel=help-android-ci"
+
+SLACK_CHANNEL_LINK = MarkdownUtils.markdown_link("#help-android-ci", SLACK_CHANNEL_URL)
+
+COMMENT_HEADER = f"""
 ## Lightricks CI status
-    
+
+Something looks wrong? Not sure why your build fails? Contact us at {SLACK_CHANNEL_LINK}    
 <table>
 """
 
