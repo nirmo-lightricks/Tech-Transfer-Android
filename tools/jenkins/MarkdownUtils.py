@@ -8,6 +8,6 @@ def details_tag(summary, details):
     return f"<details><summary>{summary}</summary><p>\n\n{details}\n</p></details>"
 
 def markdown_link(text, link):
-    return f'<a src="{link}>{text}</a>'
+    return f'[{text}]({link})'
 
 new_paragraph = "\n\n"
