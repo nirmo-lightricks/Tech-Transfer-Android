@@ -8,19 +8,37 @@
 * alger@lightricks.com
 
 # Analytics
-/analytics/ nmoshe@lightricks.com
+/analytics/ nmoshe@lightricks.com dgang@lightricks.com
 
 # Billing
-/billing/ nmoshe@lightricks.com
+/billing/ yarden@lightricks.com lea@lightricks.com nmoshe@lightricks.com
+
+# Billing Playground
+/billing_playground/ lea@lightricks.com
+
+# Common
+/common/ @Lightricks/android-write-access
+
+# Experiments
+/experiments/ adam@lightricks.com
 
 # Facetune
 /facetune/ aartyomov@lightricks.com
 
+# NN
+/nn/ nmoshe@lightricks.com
+
 # Pixaloop
-/pixaloop/ nmoshe@lightricks.com
+/pixaloop/ nmoshe@lightricks.com efraim@lightricks.com
 
 # Render
 /render/ alger@lightricks.com ido@lightricks.com
 
 # Security
 /security/ nmoshe@lightricks.com ido@lightricks.com
+
+# Swish a.k.a. VideoBoost
+/swish/ yarden@lightricks.com
+
+# Videoleap
+/videoleap/ adam@lightricks.com
