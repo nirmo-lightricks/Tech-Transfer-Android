@@ -108,25 +108,21 @@ SAMPLE_MESSAGE = {
 }
 
 
-def send_message(message: dict, topic: str = None, condition: str = None):
+def send_message(message: dict, topic: str = None, condition: str = None, token: str = None):
+    """
+    Send FCM message using one of the options. Specifying more than one option is not defined.
+    """
+    if topic is None and condition is None and token is None:
+        raise Exception("Must specify `topic` or `condition` or `token`.")
+
     data_message = {'data': json.dumps(message)}
-    if topic:
-        messaging.send(messaging.Message(
-            data=data_message,
-            topic=topic,
-            fcm_options=messaging.FCMOptions(analytics_label=message["name"])
-        ))
-        return
-
-    if condition:
-        messaging.send(messaging.Message(
-            data=data_message,
-            condition=condition,
-            fcm_options=messaging.FCMOptions(analytics_label=message["name"])
-        ))
-        return
-
-    raise Exception("Must specify `topic` or `condition`.")
+    messaging.send(messaging.Message(
+        data=data_message,
+        topic=topic,
+        condition=condition,
+        token=token,
+        fcm_options=messaging.FCMOptions(analytics_label=message["name"])
+    ))
 
 
 def demo():
