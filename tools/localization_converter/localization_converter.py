@@ -10,6 +10,7 @@ Example:
 With any question, you can come to Lea@lightricks.com
 """
 
+import sys
 IOS_FILE_SUFFIX = ".strings"
 WRONG_SUFFIX_MESSAGE = " is not a .strings file. Are you sure it's the right one? \nStopping...."
 USAGE_MESSAGE = "Wrong number of arguments. \nUsage: script_name input_filepath "
@@ -19,7 +20,7 @@ android_special_chars_dict = {"&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "\&q
 
 
 def parse_file(input_file_path):
-    with open(input_file_path, "r", encoding="utf-8") as input_file:
+    with open(input_file_path, "r") as input_file:
         original_filename = input_file.name
         if IOS_FILE_SUFFIX not in original_filename:
             print(original_filename + WRONG_SUFFIX_MESSAGE)
@@ -67,13 +68,13 @@ def is_empty_line(line):
 
 
 """
-iOS Key ... -> ios_key
+iOS.Key. -> ios_key_
 """
 def convert_key(key):
     key = key.strip()
     key = key.lower()
-    key.replace(".", "")
-    return key.replace(" ", "_")
+    key.replace(".", "_")
+    return key.replace(" ", "")
 
 
 def plugin_html(key, value):
