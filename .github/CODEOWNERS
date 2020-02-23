@@ -5,7 +5,7 @@
 # https://git-scm.com/docs/gitignore#_pattern_format
 
 # Default catch-all
-* alger@lightricks.com
+* adam@lightricks.com
 
 # Analytics
 /analytics/ nmoshe@lightricks.com dgang@lightricks.com
@@ -32,7 +32,7 @@
 /pixaloop/ nmoshe@lightricks.com efraim@lightricks.com
 
 # Render
-/render/ alger@lightricks.com ido@lightricks.com
+/render/ aartyomov@lightricks.com ido@lightricks.com
 
 # Security
 /security/ nmoshe@lightricks.com ido@lightricks.com
