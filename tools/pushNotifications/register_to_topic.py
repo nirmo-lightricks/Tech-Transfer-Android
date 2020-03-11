@@ -80,10 +80,8 @@ def subscribe_to_topic(tokens, topic):
                 logger.exception(e)
 
 
-@retry(stop_max_attempt_number=3)
+@retry(stop_max_attempt_number=5)
 def _subscribe(token_chunk, index, topic):
     topic_management_response = messaging.subscribe_to_topic(tokens=token_chunk, topic=topic)
-    if topic_management_response.failure_count == TOKENS_PER_FCM_CALL:
-        raise Exception(f"Failed to register batch number {index} to the topic {topic}.")
-
-    logger.info(f"({index}, {topic_management_response.success_count}, {topic_management_response.failure_count})")
+    logger.info({"batch_number": index, "success": topic_management_response.success_count,
+                 "failure": topic_management_response.failure_count})
