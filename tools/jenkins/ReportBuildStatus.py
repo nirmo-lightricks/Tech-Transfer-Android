@@ -8,24 +8,28 @@ import BuildReport
 import LintReport
 import MarkdownUtils
 import TestReport
+import CompilationReport
 import github_message as message
 
 TESTS_SIGNATURE = "generated_by_comment_test_failures_script"
+
 
 def collect_test_entries(workspace):
     return TestReport.generate_report_entries(workspace)
 
 
 def collect_compilation_entries(workspace):
-    yield from ()
+    return CompilationReport.create_compilation_entries(workspace)
 
 def collect_lint_entries(workspace):
     return LintReport.create_lint_entries(workspace)
 
 def collect_entries(workspace):
-    return chain(collect_test_entries(workspace),
-           collect_compilation_entries(workspace),
-           collect_lint_entries(workspace))
+    return chain(
+        collect_test_entries(workspace),
+        collect_compilation_entries(workspace),
+        collect_lint_entries(workspace)
+    )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
