@@ -81,6 +81,9 @@ SAMPLE_MESSAGE = {
     # If push is sent in order to trigger a push, needs to be set with the promotion name.
     'promotion_name': None,
 
+    # Set to ``True`` if the message is addressed to subscribers as well. Relevant after Pixaloop 1.2.5.
+    'should_show_to_subscribers': None,
+
     # Holds list of offers. for example:
     # [{
     #     "priority": 0,
@@ -126,8 +129,7 @@ def send_message(message: dict, topic: str = None, condition: str = None, token:
 
 
 def demo():
-    tokens = ["fTMErE1iuZs:APA91bEC67vU3GpOWPTxq3-jKxycJaO_UWZpyZpbI8IC6ExWH4uX040iiDnP3TBfKuluWhqlaVaVo5fmsdo4viV1ado"
-              "8AUn-PGSIqfRN8ILBbQ4-q1J21SBj0VJrMfcrlpR9IEH7Kw8K"]
+    tokens = ["f_XfJWNil2A:APA91bFs8AlXDyvQJ9GHphtLVfV9C0UsGKwgpZda3AvXalIyHB2jNq3SS415sT_Nc251dcZODd05dPIkIuHIgXCQ2HPXiDyRi8s9oGApFGek21ZPJXsH_wKglqU9A_fvK-CgPMJ13VPl"]
     subscribe_to_topic(tokens, "test_topic_1")
     send_message(message=SAMPLE_MESSAGE, topic="test_topic_1")
 
