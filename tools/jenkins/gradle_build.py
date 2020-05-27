@@ -14,5 +14,5 @@ def execute_gradle(tasks: List[str], excluded_tasks: List[str] = None, wrapper_p
         args.append("-x")
         args.append(task_name)
 
-    print("[+] Executing: " + " ".join(args))
-    return subprocess.run(args)
+    print("[+] Executing: " + " ".join(args), flush=True)  # If we don't flush, jenkins will print this out of order
+    return subprocess.run(args).returncode

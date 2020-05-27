@@ -45,10 +45,9 @@ def get_modified_dirs(workspace, username, password, repo, pr_id):
     files = pull.get_files()
     print("[+] Files changed in PR: %s" % [f.filename for f in files])
 
-    # This assumes that the leaf module directories are all directly under the root repository directory
     modified_dirnames = {f.filename.split(os.path.sep)[0] if os.path.sep in f.filename else "/" for f in files}
-    print("[+] Directories changed in PR: %s" % modified_dirnames)
-
+    print("[+] Directories changed in PR: %s" % modified_dirnames, flush=True)
+    # If we don't flush, jenkins will print this out of order
     return modified_dirnames
 
 
