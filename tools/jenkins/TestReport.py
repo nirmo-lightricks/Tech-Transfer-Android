@@ -19,7 +19,7 @@ class TestType(Enum):
 
 FailingTest = collections.namedtuple('FailingTest', 'klass name failure_message')
 
-TestReport = collections.namedtuple('TestReport', 'num_of_test failing_tests')
+TestReport = collections.namedtuple('TestReport', 'flavor num_of_test failing_tests')
 
 ######################
 # xml report parsing #
@@ -100,8 +100,10 @@ markdown_table_separator = " | "
 module_marker_file = "build.gradle"
 _module_exclusion_list = ['/third_party/.*', '.*/benchmark']
 
+
 def _exclude_module(module_path):
     return not any(re.search(exclusion, module_path) for exclusion in _module_exclusion_list)
+
 
 def is_in_module(file, module_name):
     # we assume the file is in the form of "./module/build/..."
@@ -114,22 +116,45 @@ def module_of_file(file_path, root_dir):
     return next(dir_gen, None)
 
 
-def _test_results_path_for_type(test_type):
+def _test_paths_by_flavors(module_path, test_type):
+    result_dirs = {}
     if test_type == TestType.UNIT_TEST:
-        return os.path.join("build", "**", "test-results", "**", "*.xml")
-    if test_type == TestType.ANDROID_TEST:
-        return os.path.join("build", "**", "*Test-results", "**", "*.xml")
+        # Default output path used by gradle for unit tests
+        test_package_dirs = glob(os.path.join(module_path, "build", "test-results", "*"))
+        for dir in test_package_dirs:
+            # Directory name format used by gradle to save tests for a specific flavor. Ex: testGmsDebug
+            flavor = re.match("test(.*)Debug", os.path.basename(dir)).group(1)
+            # Default path used by gradle for unit tests
+            test_paths = glob(os.path.join(dir, "*.xml"))
+            result_dirs[flavor.capitalize()] = test_paths
+    elif test_type == TestType.ANDROID_TEST:
+        # Default output path used by gradle for android tests
+        flavor_dirs = glob(os.path.join(module_path, "build", "outputs", "androidTest-results", "*", "flavors", "*"))
+        # Tests found under root directory are registered under default flavor ("")
+        default_flavor_tests = glob(os.path.join(module_path, "build", "outputs", "androidTest-results", "*", "*.xml"))
+        if default_flavor_tests:
+            result_dirs[""] = default_flavor_tests
+        if flavor_dirs:
+            flavors = set([os.path.basename(d) for d in flavor_dirs])
+            for flavor in flavors:
+                # Path used by gradle to save android test results for android tests
+                # Ex: connected tests for flavor 'gms' by default will be saved under:
+                # build/outputs/androidTest-results/connected/flavors/GMS/*.xml
+                result_dirs[flavor.capitalize()] = glob(os.path.join(module_path, "build", "outputs", "androidTest-results",
+                                                                    "*", "flavors", flavor, "*.xml"))
+
+    return result_dirs
 
 
 def _test_dir_in_module(test_type):
     if test_type == TestType.UNIT_TEST:
-        return os.path.join("src", "test")
+        return os.path.join("src", "test*")
     if test_type == TestType.ANDROID_TEST:
-        return os.path.join("src", "androidTest")
+        return os.path.join("src", "androidTest*")
 
 
 def _does_module_have_type_of_tests(module_path, test_type):
-    return os.path.exists(os.path.join(module_path, _test_dir_in_module(test_type)))
+    return len(glob(os.path.join(module_path, _test_dir_in_module(test_type)))) > 0
 
 
 #############################
@@ -159,18 +184,21 @@ def _test_status_message(results):
     else:
         return "No tests have run."
 
-def _report_entry_for_test_type(module, result, test_type):
-    emoji = _status_for_result(result)
-    status = _test_status_message(result)
-    details = _failure_details(result)
-    stage = test_type.value
-    return ReportEntry(module, emoji, stage, status, details)
+
+def _report_entries_for_test_type(module, results, test_type):
+    for result in results:
+        emoji = _status_for_result(result)
+        status = _test_status_message(result)
+        details = _failure_details(result)
+        stage = f"{result.flavor} {test_type.value}" if result.flavor else test_type.value
+        yield ReportEntry(module, emoji, stage, status, details)
 
 ########
 # Main #
 ########
 
-def _test_report(test_results_paths):
+
+def _test_report(test_results_paths, flavor):
     failures = []
     test_count = 0
     for test_result in test_results_paths:
@@ -178,12 +206,15 @@ def _test_report(test_results_paths):
         failures.extend(get_failing_tests_xmls_from_file(test_result))
 
     failing_tests = [create_failing_test(failure) for failure in failures]
-    return TestReport(test_count, failing_tests)
+    return TestReport(flavor, test_count, failing_tests)
 
 
-def _test_report_for_type(module_path, test_type):
-    results_paths = glob(os.path.join(module_path, _test_results_path_for_type(test_type)), recursive=True)
-    return _test_report(results_paths)
+def _test_reports_for_type(module_path, test_type):
+    results_paths = _test_paths_by_flavors(module_path, test_type)
+    if not results_paths:  # If we found no test results for any flavor, notify that there were no tests executed
+        yield _test_report([], "")
+    for flavor in results_paths.keys():
+        yield _test_report(results_paths[flavor], flavor)
 
 def _create_test_entries_for_all_modules(workspace):
     all_modules = project_modules.get_module_dirs(workspace)
@@ -193,14 +224,14 @@ def _create_test_entries_for_all_modules(workspace):
         module_path = os.path.join(workspace, module)
         module_name = os.path.basename(module)
         if _does_module_have_type_of_tests(module, TestType.UNIT_TEST):
-            test_entry = _report_entry_for_test_type(module_name,
-                _test_report_for_type(module_path, TestType.UNIT_TEST), TestType.UNIT_TEST)
-            yield test_entry
+            test_entries = _report_entries_for_test_type(module_name,
+                _test_reports_for_type(module_path, TestType.UNIT_TEST), TestType.UNIT_TEST)
+            yield from test_entries
 
         if _does_module_have_type_of_tests(module, TestType.ANDROID_TEST):
-            android_test_entry = _report_entry_for_test_type(module_name,
-                _test_report_for_type(module_path, TestType.ANDROID_TEST), TestType.ANDROID_TEST)
-            yield android_test_entry
+            android_test_entries = _report_entries_for_test_type(module_name,
+                _test_reports_for_type(module_path, TestType.ANDROID_TEST), TestType.ANDROID_TEST)
+            yield from android_test_entries
 
 def generate_report_entries(workspace):
     return _create_test_entries_for_all_modules(workspace)
