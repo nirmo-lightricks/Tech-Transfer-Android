@@ -24,6 +24,7 @@ add_library(
     SHARED
 
     ColorTransferProcessor.cpp
+    ColorTransfer_jni.cpp
 )
 
 target_compile_options(
