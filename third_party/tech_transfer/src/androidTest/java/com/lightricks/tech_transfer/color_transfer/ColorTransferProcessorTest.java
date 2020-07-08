@@ -20,7 +20,7 @@ public class ColorTransferProcessorTest {
     static {
         System.loadLibrary("c++_shared");
         System.loadLibrary("opencv_java3");
-        System.loadLibrary("tt");
+        System.loadLibrary("tech_transfer");
     }
 
     private Mat input;

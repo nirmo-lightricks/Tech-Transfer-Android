@@ -20,7 +20,7 @@ include_directories(
 )
 
 add_library(
-    tt
+    tech_transfer
     SHARED
 
     ColorTransferProcessor.cpp
@@ -28,13 +28,13 @@ add_library(
 )
 
 target_compile_options(
-    tt
+    tech_transfer
     PRIVATE
     -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wno-unknown-pragmas -std=c++17 -O3
     -Wno-inconsistent-missing-override
 )
 
 target_link_libraries(
-    tt
+    tech_transfer
     opencv_java3
 )
