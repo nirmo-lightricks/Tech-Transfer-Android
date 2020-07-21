@@ -1,0 +1,215 @@
+name: Build and test on PR
+# This workflow is triggered by webhook when a PR opens / gets updated on 'develop' branch
+on:
+  repository_dispatch:
+    types: [test_pr]
+
+# Parameters:
+# github.event.client_payload.pr_id: string
+# github.event.client_payload.pr_sha: string
+# github.event.client_payload.pr_title: string
+# github.event.client_payload.pr_author_email: string
+
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  # Environment variable for the repo name, in the format 'Lightricks/Repo'.
+  ghprbGhRepository: ${{ github.repository }}
+  # Environment variable for the pull request ID.
+  ghprbPullId: ${{ github.event.client_payload.pr_id }}
+  # The EMULATOR_HOST_FOR_CONTAINER environment variable is different for each docker container, as setup by kubernetes
+
+jobs:
+  assemble_and_test:
+    name: Build and test PR
+    # This job runs on our self-hosted linux runners, labeled 'android'
+    runs-on: android
+    steps:
+      - name: Add PR test-run to github 
+        run:
+          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
+        env:
+          ghprbGhRepository: ${{ github.repository }}
+          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          STATUS_CONTEXT: Github Actions Test
+          STATUS_DESCRIPTION: Testing has started..
+          STATUS_STATE: pending
+          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: refs/pull/${{ github.event.client_payload.pr_id }}/head
+
+      - name: Apply GitHub labels
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        run: |
+          mkdir -p "build-logs"
+          (python3 tools/jenkins/ApplyGithubLabels.py || echo "failed reporting status to github") | tee -a "build-logs/output.log"
+
+      # DANGER: Very important to delete this variable in the end, otherwise the secret is kept on the build container!
+      # Configure Configure SSH Key for emulator slaves (Fireflight, etc..)
+      - name : Configure SSH Key for emulator
+        run: |
+          rm -rf ~/.ssh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EMULATORS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod og-rwx ~/.ssh/id_rsa
+
+      # TODO: Add emulator deletion
+      # Every container gets a different value for EMULATOR_PORT variable, so they do not collide
+      - name: Setup remote emulator
+        id: setup_emulator
+        env:
+          AVD_HOME: /Users/jenkins/.jenkins/android/sdk/tools/bin
+          EMULATOR_HOME: /Users/jenkins/.jenkins/android/sdk/emulator
+          ADB_HOME: /Users/jenkins/.jenkins/android/sdk/platform-tools
+        run: |
+          ssh -o StrictHostKeyChecking=no jenkins@$EMULATOR_HOST_FOR_CONTAINER '
+            AVD_HOME='"$AVD_HOME"' EMULATOR_HOME='"$EMULATOR_HOME"' ADB_HOME='"$ADB_HOME"' EMULATOR_PORT='"$EMULATOR_PORT"'
+            echo no |${AVD_HOME}/avdmanager create avd -n android28_$EMULATOR_PORT -k "system-images;android-28;default;x86"
+            ${EMULATOR_HOME}/emulator -list-avds
+            ${EMULATOR_HOME}/emulator -avd android28_$EMULATOR_PORT -memory 2048 -partition-size 2048 -cache-size 2048 -port $EMULATOR_PORT >/dev/null 2>&1 &
+            bootanim=""
+            timeout_in_seconds=60
+            failcounter=-1
+            while true; do
+                bootanim=`${ADB_HOME}/adb -e shell getprop init.svc.bootanim 2>&1`
+                let "failcounter += 1"
+                if [[ failcounter -gt timeout_in_seconds ]]; then
+                    echo "Timeout ($timeout_in_seconds seconds) reached; failed to start emulator"
+                    exit 1
+                fi
+                if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
+                    || "$bootanim" =~ "running" || "$bootanim" =~ "error: no emulators found" ]]; then
+                    echo "Waiting for emulator to start. failed $failcounter times"
+                    sleep 1
+                    continue
+                elif [[ "$bootanim" =~ "stopped" ]]; then
+                    echo "Emulator is ready"
+                    exit 0
+                else
+                    echo "Error booting emulator"
+                    echo "$bootanim"
+                    exit 1
+                fi
+            done
+          '
+          export AVD_NAME=emulator-anroid28_$EMULATOR_PORT
+          # Make adb commands run on this specific emulator
+          export ANDROID_SERIAL=emulator-$EMULATOR_PORT
+
+      # SSH tunnel hack to bypass gradle overwriting ANDROID_ADB_SERVER_ADDRESS variable
+      - name : Configure SSH Tunnel
+        run: |
+          (ps -lef|grep ssh|grep "\-L"|awk '{print $4}'|xargs kill) || echo "No SSH tunnels currently running"
+          adb kill-server
+          killall adb || echo "adb not currently running"
+          netstat -nap
+          ssh -o StrictHostKeyChecking=no -4 -f -N -L 5037:localhost:5037 jenkins@$EMULATOR_HOST_FOR_CONTAINER
+          netstat -nap
+          adb devices
+
+      - name: Gradle clean
+        run: ./gradlew clean
+        
+      - name: Build and test modified modules with gradle
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        # Note that this will run tests only on the emulator device defined by the ANDROID_SERIAL variable
+        run: python3 ./tools/jenkins/build_modified_modules.py "$GITHUB_WORKSPACE"
+
+      - name: Update PR status on failure
+        if: ${{ failure() || cancelled() }}
+        run:
+          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
+        env:
+          ghprbGhRepository: ${{ github.repository }}
+          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          STATUS_CONTEXT: Github Actions Test
+          STATUS_DESCRIPTION: Test failed
+          STATUS_STATE: failure
+          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Update PR status on success
+        if: ${{ success() }}
+        run:
+          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
+        env:
+          ghprbGhRepository: ${{ github.repository }}
+          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          STATUS_CONTEXT: Github Actions Test
+          STATUS_DESCRIPTION: Test success! :)
+          STATUS_STATE: success
+          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Post test results on GitHub
+        if: ${{ failure() || success() }}
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        run: python3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"
+
+      #- name: Send mail to PR author
+      #  # TODO: change to failure() only
+      #  if: ${{ always() }}
+      #  uses: dawidd6/action-send-mail@v2
+      #  with:
+      #    server_address: ${{ secrets.MAIL_SERVER }}
+      #    server_port: 465
+      #    username: ${{ secrets.MAIL_USERNAME }}
+      #    password: ${{ secrets.MAIL_PASSWORD }}
+      #    subject: Failed to build PR ${{ github.event.client_payload.pr_id }} - ${{ github.event.client_payload.pr_title }}.
+      #    # Literal body:
+      #    body: |
+      #      Build job failed on GitHub actions.
+      #      For more details, see: 
+      #      https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #    to: ${{ github.event.client_payload.pr_author_email }}
+      #    from: Gustav Lightricks <gustav@lightricks.com>
+      #    # Optional content type (defaults to text/plain):
+      #    content_type: text/html
+
+      - name: Upload unit-test logs to GitHub
+        if: ${{ failure() || success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: ./**/build/test-results/**/*.xml
+
+      - name: Kill remote emulator
+        if: ${{ ! contains(toJson(steps.setup_emulator), 'skipped') }}
+        run: |
+          echo "Killing emulator:"
+          adb devices
+          cat ./tools/jenkins/terminate_emulators.py | ssh -o StrictHostKeyChecking=no jenkins@$EMULATOR_HOST_FOR_CONTAINER "
+            export ADB_HOME='/Users/jenkins/.jenkins/android/sdk/platform-tools'; 
+            # Call python with stdin as the script file, which kills our specific emulator
+            /Users/jenkins/.pyenv/shims/python3 - $ANDROID_SERIAL $AVD_NAME
+            exit
+          "
+          adb devices
+
+      - name : Kill SSH Tunnel
+        if: ${{ always() }}
+        run: |
+          (ps -lef|grep ssh|grep "\-L"|awk '{print $4}'|xargs kill) || echo "No SSH tunnels currently running"
+          rm -rf ~/.ssh

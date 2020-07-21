@@ -1,0 +1,96 @@
+name: Distribute facetune
+# This workflow is triggered manually by invoking a repository_dispatch event
+on:
+  repository_dispatch:
+    types: [distribute-facetune]
+
+# Parameters:
+# github.event.client_payload.build_branch: string
+# github.event.client_payload.firebase_app_distribution: boolean
+# github.event.client_payload.lightricks_archive: boolean
+# github.event.client_payload.crashlytics_beta: boolean
+# github.event.client_payload.google_play: boolean
+# github.event.client_payload.google_track: string (internal, alpha, beta, production, etc..)
+# github.event.client_payload.firebase_app_distribution_groups: string (e.g. internal-testers)
+
+jobs:
+  facetune_distribution:
+    name: Assemble using gradle and publish where requested
+    # This job runs on our self-hosted linux runners labeled 'android'
+    runs-on: self-hosted
+    timeout-minutes: 60
+    env:
+      # TODO: Fix file secrets to be echoed to file and later deleted - KEYSTORE, JSON..
+      TECHNICAL_VERSION: ${GITHUB_RUN_ID}
+      NOTES_PATH: ${GITHUB_WORKSPACE}/facetune/build/dist/CHANGELOG.txt
+      ABI_FILTERS_OVERRIDE: armeabi-v7a:arm64-v8a
+      KEYSTORE: ${{ secrets.FACETUNE_KEYSTORE }}
+      KEY: ${{ secrets.FACETUNE_KEYSTORE_USER }}
+      KEY_PASSWORD: ${{ secrets.FACETUNE_KEYSTORE_PASSWORD }}
+      KEYSTORE_PASSWORD: ${{ secrets.FACETUNE_KEYSTORE_PASSWORD }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FACTUNE_FIREBASE_CREDENTIALS_JSON }}
+      GOOGLE_PLAY_TRACK: ${{ github.event.client_payload.google_track }}
+      FIREBASE_TEST_APP_DISTRIBUTION_GROUPS: ${{ github.event.client_payload.firebase_app_distribution_groups }}
+
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: ${{ github.event.client_payload.build_branch }}
+
+      - name: Gradle clean
+        run: ./gradlew clean
+
+      - name: Build with gradle
+        run: ./gradlew :facetune:assembleGmsRelease
+
+      - name: Upload symbol file with gradle
+        run: ./gradlew :facetune:uploadCrashlyticsSymbolFileGmsRelease
+
+      - name: Copy distribution artifacts
+        run: |
+          rm -rf ${DIST_DIR}
+          mkdir -p ${DIST_DIR}
+
+          pushd ${BUILD_DIR}
+          zip -r mapping.zip mapping
+          zip -r lint.zip lint-*
+          zip -r logs.zip logs
+          popd
+
+          find "${BUILD_DIR}/apk" -name "*-release.apk" -exec cp "{}" $DIST_DIR \;
+          cp -a "${BUILD_DIR}/mapping.zip" ${DIST_DIR}/ 
+          cp -a "${BUILD_DIR}/lint.zip" ${DIST_DIR}/
+          cp -a "${BUILD_DIR}/logs.zip" ${DIST_DIR}/
+          touch "${DIST_DIR}/CHANGELOG.txt"
+        env:
+          BUILD_DIR: facetune/build/outputs
+          DIST_DIR: facetune/build/dist
+
+      - name: Distribute to firebase app distribution?
+        if: ${{ github.event.client_payload.firebase_app_distribution }}
+        run: ./gradlew :facetune:appDistributionUploadGmsRelease
+
+      - name: Distribute to crashlytics beta?
+        if: ${{ github.event.client_payload.crashlytics_beta }}
+        run: ./gradlew :facetune:crashlyticsUploadDistributionRelease
+
+      - name: Distribute to google play?
+        if: ${{ github.event.client_payload.google_play }}
+        run: ./gradlew :facetune:publishReleaseApk
+
+      #- name: Distribute to lightricks archive?
+      #  if: ${{ github.event.client_payload.lightricks_archive }}
+      #  uses: appleboy/scp-action@master
+      #  with:
+      #    host: optimus
+      #    username: ${{ secrets.OPTIMUS_USER }}
+      #    password: ${{ secrets.OPTIMUS_PASSWORD }}
+      #    port: 22
+      #    source: 'facetune/build/dist/**'
+      #    target: "/Artifacts/Facetune Android/${TECHNICAL_VERSION}"
+      #    strip_components: 3
