@@ -107,7 +107,11 @@ SAMPLE_MESSAGE = {
     #     "name": "test_offer_2",
     #     "end_date": "2030-02-01"
     # }]
-    'offers': None
+    'offers': None,
+
+    # Use to pick the sku to show for the subscription offer dialog.
+    # If null, and the push is a push offer, then Yearly is used by default.
+    'push_offer_billing_period': "YEARLY"
 }
 
 
