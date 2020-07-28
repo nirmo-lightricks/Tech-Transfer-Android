@@ -61,38 +61,39 @@ jobs:
       - name: Setup emulator
         id: setup_emulator
         run: |
+          set -x
           # Setup new avd every time with --force
           echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
           emulator -list-avds
           emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 >/dev/null 2>&1 &
 
-          bootanim=""
-          timeout_in_seconds=60
-          failcounter=-1
+          # bootanim=""
+          # timeout_in_seconds=60
+          # failcounter=-1
 
-          while true; do
-              bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
-              let "failcounter += 1"
-              sleep 1
+          # while true; do
+          #    bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
+          #    let "failcounter += 1"
+          #    sleep 1
 
-              if [[ failcounter -gt timeout_in_seconds ]]; then
-                  echo "Timeout ($timeout_in_seconds seconds) reached; failed to start emulator"
-                  exit 1
-              fi
+          #    if [[ failcounter -gt timeout_in_seconds ]]; then
+          #        echo "Timeout ($timeout_in_seconds seconds) reached; failed to start emulator"
+          #        exit 1
+          #    fi
 
-              if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
-                  || "$bootanim" =~ "running" || "$bootanim" =~ "no emulators found" ]]; then
-                  echo "Waiting for emulator to start. failed $failcounter times"
-                  continue
-              elif [[ "$bootanim" =~ "stopped" ]]; then
-                  echo "Emulator is ready"
-                  break
-              else
-                  echo "Error booting emulator"
-                  echo "$bootanim"
-                  exit 1
-              fi
-          done
+          #    if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
+          #        || "$bootanim" =~ "running" || "$bootanim" =~ "no emulators found" ]]; then
+          #        echo "Waiting for emulator to start. failed $failcounter times"
+          #        continue
+          #    elif [[ "$bootanim" =~ "stopped" ]]; then
+          #        echo "Emulator is ready"
+          #        break
+          #    else
+          #        echo "Error booting emulator"
+          #        echo "$bootanim"
+          #        exit 1
+          #    fi
+          #done
 
       - name: Gradle clean
         run: ./gradlew clean
