@@ -61,7 +61,8 @@ jobs:
       - name: Setup emulator
         id: setup_emulator
         run: |
-          echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86"
+          # Setup new avd every time with --force
+          echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
           emulator -list-avds
           emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 >/dev/null 2>&1 &
 
