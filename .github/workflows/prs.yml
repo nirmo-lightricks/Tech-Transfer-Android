@@ -56,68 +56,42 @@ jobs:
           mkdir -p "build-logs"
           (python3 tools/jenkins/ApplyGithubLabels.py || echo "failed reporting status to github") | tee -a "build-logs/output.log"
 
-      # DANGER: Very important to delete this variable in the end, otherwise the secret is kept on the build container!
-      # Configure Configure SSH Key for emulator slaves (Fireflight, etc..)
-      - name : Configure SSH Key for emulator
-        run: |
-          rm -rf ~/.ssh
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EMULATORS_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod og-rwx ~/.ssh/id_rsa
-
       # TODO: Add emulator deletion
       # Every container gets a different value for EMULATOR_PORT variable, so they do not collide
-      - name: Setup remote emulator
+      - name: Setup emulator
         id: setup_emulator
-        env:
-          AVD_HOME: /Users/jenkins/.jenkins/android/sdk/tools/bin
-          EMULATOR_HOME: /Users/jenkins/.jenkins/android/sdk/emulator
-          ADB_HOME: /Users/jenkins/.jenkins/android/sdk/platform-tools
         run: |
-          ssh -o StrictHostKeyChecking=no jenkins@$EMULATOR_HOST_FOR_CONTAINER '
-            AVD_HOME='"$AVD_HOME"' EMULATOR_HOME='"$EMULATOR_HOME"' ADB_HOME='"$ADB_HOME"' EMULATOR_PORT='"$EMULATOR_PORT"'
-            echo no |${AVD_HOME}/avdmanager create avd -n android28_$EMULATOR_PORT -k "system-images;android-28;default;x86"
-            ${EMULATOR_HOME}/emulator -list-avds
-            ${EMULATOR_HOME}/emulator -avd android28_$EMULATOR_PORT -memory 2048 -partition-size 2048 -cache-size 2048 -port $EMULATOR_PORT >/dev/null 2>&1 &
-            bootanim=""
-            timeout_in_seconds=60
-            failcounter=-1
-            while true; do
-                bootanim=`${ADB_HOME}/adb -e shell getprop init.svc.bootanim 2>&1`
-                let "failcounter += 1"
-                if [[ failcounter -gt timeout_in_seconds ]]; then
-                    echo "Timeout ($timeout_in_seconds seconds) reached; failed to start emulator"
-                    exit 1
-                fi
-                if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
-                    || "$bootanim" =~ "running" || "$bootanim" =~ "error: no emulators found" ]]; then
-                    echo "Waiting for emulator to start. failed $failcounter times"
-                    sleep 1
-                    continue
-                elif [[ "$bootanim" =~ "stopped" ]]; then
-                    echo "Emulator is ready"
-                    exit 0
-                else
-                    echo "Error booting emulator"
-                    echo "$bootanim"
-                    exit 1
-                fi
-            done
-          '
-          export AVD_NAME=emulator-anroid28_$EMULATOR_PORT
-          # Make adb commands run on this specific emulator
-          export ANDROID_SERIAL=emulator-$EMULATOR_PORT
+          echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86"
+          emulator -list-avds
+          emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 >/dev/null 2>&1 &
 
-      # SSH tunnel hack to bypass gradle overwriting ANDROID_ADB_SERVER_ADDRESS variable
-      - name : Configure SSH Tunnel
-        run: |
-          (ps -lef|grep ssh|grep "\-L"|awk '{print $4}'|xargs kill) || echo "No SSH tunnels currently running"
-          adb kill-server
-          killall adb || echo "adb not currently running"
-          netstat -nap
-          ssh -o StrictHostKeyChecking=no -4 -f -N -L 5037:localhost:5037 jenkins@$EMULATOR_HOST_FOR_CONTAINER
-          netstat -nap
-          adb devices
+          bootanim=""
+          timeout_in_seconds=60
+          failcounter=-1
+
+          while true; do
+              bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
+              let "failcounter += 1"
+              sleep 1
+
+              if [[ failcounter -gt timeout_in_seconds ]]; then
+                  echo "Timeout ($timeout_in_seconds seconds) reached; failed to start emulator"
+                  exit 1
+              fi
+
+              if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
+                  || "$bootanim" =~ "running" || "$bootanim" =~ "error: no emulators found" ]]; then
+                  echo "Waiting for emulator to start. failed $failcounter times"
+                  continue
+              elif [[ "$bootanim" =~ "stopped" ]]; then
+                  echo "Emulator is ready"
+                  break
+              else
+                  echo "Error booting emulator"
+                  echo "$bootanim"
+                  exit 1
+              fi
+          done
 
       - name: Gradle clean
         run: ./gradlew clean
@@ -168,26 +142,6 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
         run: python3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"
 
-      #- name: Send mail to PR author
-      #  # TODO: change to failure() only
-      #  if: ${{ always() }}
-      #  uses: dawidd6/action-send-mail@v2
-      #  with:
-      #    server_address: ${{ secrets.MAIL_SERVER }}
-      #    server_port: 465
-      #    username: ${{ secrets.MAIL_USERNAME }}
-      #    password: ${{ secrets.MAIL_PASSWORD }}
-      #    subject: Failed to build PR ${{ github.event.client_payload.pr_id }} - ${{ github.event.client_payload.pr_title }}.
-      #    # Literal body:
-      #    body: |
-      #      Build job failed on GitHub actions.
-      #      For more details, see: 
-      #      https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      #    to: ${{ github.event.client_payload.pr_author_email }}
-      #    from: Gustav Lightricks <gustav@lightricks.com>
-      #    # Optional content type (defaults to text/plain):
-      #    content_type: text/html
-
       - name: Upload unit-test logs to GitHub
         if: ${{ failure() || success() }}
         uses: actions/upload-artifact@v2
@@ -195,21 +149,6 @@ jobs:
           name: test-logs
           path: ./**/build/test-results/**/*.xml
 
-      - name: Kill remote emulator
-        if: ${{ ! contains(toJson(steps.setup_emulator), 'skipped') }}
+      - name: Kill emulator
         run: |
-          echo "Killing emulator:"
-          adb devices
-          cat ./tools/jenkins/terminate_emulators.py | ssh -o StrictHostKeyChecking=no jenkins@$EMULATOR_HOST_FOR_CONTAINER "
-            export ADB_HOME='/Users/jenkins/.jenkins/android/sdk/platform-tools'; 
-            # Call python with stdin as the script file, which kills our specific emulator
-            /Users/jenkins/.pyenv/shims/python3 - $ANDROID_SERIAL $AVD_NAME
-            exit
-          "
-          adb devices
-
-      - name : Kill SSH Tunnel
-        if: ${{ always() }}
-        run: |
-          (ps -lef|grep ssh|grep "\-L"|awk '{print $4}'|xargs kill) || echo "No SSH tunnels currently running"
-          rm -rf ~/.ssh
+          python3 tools/jenkins/terminate_emulators.py
