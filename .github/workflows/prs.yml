@@ -81,7 +81,7 @@ jobs:
               fi
 
               if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
-                  || "$bootanim" =~ "running" || "$bootanim" =~ "error: no emulators found" ]]; then
+                  || "$bootanim" =~ "running" || "$bootanim" =~ "no emulators found" ]]; then
                   echo "Waiting for emulator to start. failed $failcounter times"
                   continue
               elif [[ "$bootanim" =~ "stopped" ]]; then
