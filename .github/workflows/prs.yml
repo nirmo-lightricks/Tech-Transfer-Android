@@ -24,6 +24,15 @@ jobs:
     # This job runs on our self-hosted linux runners, labeled 'android'
     runs-on: android
     steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: refs/pull/${{ github.event.client_payload.pr_id }}/head
+      
       - name: Add PR test-run to github 
         run:
           python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
@@ -36,16 +45,7 @@ jobs:
           STATUS_DESCRIPTION: Testing has started..
           STATUS_STATE: pending
           STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-      - name: Clone Repo
-        uses: actions/checkout@v2
-        with:
-          lfs: true
-          submodules: recursive
-          # To access submodules in Lightricks repo, we need a personal access token
-          token: ${{ secrets.GITHUBCIPAT }}
-          ref: refs/pull/${{ github.event.client_payload.pr_id }}/head
-
+      
       - name: Apply GitHub labels
         env:
           # Environment variable holding the Github username.
