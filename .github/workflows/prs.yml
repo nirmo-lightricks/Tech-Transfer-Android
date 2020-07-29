@@ -154,4 +154,6 @@ jobs:
       - name: Kill emulator
         if: ${{ always() }}
         run: |
+          #TODO: Make terminate_emulators.py use adb from PATH, delete env varaible "ADB_HOME"
+          export ADB_HOME=$ANDROID_HOME/platform-tools
           python3 tools/jenkins/terminate_emulators.py
