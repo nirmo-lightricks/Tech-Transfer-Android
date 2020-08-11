@@ -1,21 +1,13 @@
 name: Build and test on PR
 # This workflow is triggered by webhook when a PR opens / gets updated on 'develop' branch
-on:
-  repository_dispatch:
-    types: [test_pr]
-
-# Parameters:
-# github.event.client_payload.pr_id: string
-# github.event.client_payload.pr_sha: string
-# github.event.client_payload.pr_title: string
-# github.event.client_payload.pr_author_email: string
+on: pull_request
 
 env:
   ABI_FILTERS_OVERRIDE: x86
   # Environment variable for the repo name, in the format 'Lightricks/Repo'.
   ghprbGhRepository: ${{ github.repository }}
   # Environment variable for the pull request ID.
-  ghprbPullId: ${{ github.event.client_payload.pr_id }}
+  ghprbPullId: ${{ github.event.number }}
   # The EMULATOR_HOST_FOR_CONTAINER environment variable is different for each docker container, as setup by kubernetes
 
 jobs:
@@ -31,21 +23,7 @@ jobs:
           submodules: recursive
           # To access submodules in Lightricks repo, we need a personal access token
           token: ${{ secrets.GITHUBCIPAT }}
-          ref: refs/pull/${{ github.event.client_payload.pr_id }}/head
-      
-      - name: Add PR test-run to github 
-        run:
-          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
-        env:
-          ghprbGhRepository: ${{ github.repository }}
-          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
-          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
-          STATUS_CONTEXT: Github Actions Test
-          STATUS_DESCRIPTION: Testing has started..
-          STATUS_STATE: pending
-          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      
+
       - name: Apply GitHub labels
         env:
           # Environment variable holding the Github username.
@@ -106,34 +84,6 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
         # Note that this will run tests only on the emulator device defined by the ANDROID_SERIAL variable
         run: python3 ./tools/jenkins/build_modified_modules.py "$GITHUB_WORKSPACE"
-
-      - name: Update PR status on failure
-        if: ${{ failure() || cancelled() }}
-        run:
-          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
-        env:
-          ghprbGhRepository: ${{ github.repository }}
-          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
-          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
-          STATUS_CONTEXT: Github Actions Test
-          STATUS_DESCRIPTION: Test failed
-          STATUS_STATE: failure
-          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-      - name: Update PR status on success
-        if: ${{ success() }}
-        run:
-          python3 ./tools/jenkins/github_update_status.py "$STATUS_CONTEXT" "$STATUS_DESCRIPTION" "$STATUS_STATE" "$STATUS_DETAILS_URL"
-        env:
-          ghprbGhRepository: ${{ github.repository }}
-          PULL_REQUEST_SHA: ${{ github.event.client_payload.pr_sha }}
-          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
-          STATUS_CONTEXT: Github Actions Test
-          STATUS_DESCRIPTION: Test success! :)
-          STATUS_STATE: success
-          STATUS_DETAILS_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Post test results on GitHub
         if: ${{ failure() || success() }}
