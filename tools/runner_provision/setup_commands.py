@@ -2,16 +2,21 @@
 '''
 This script provisions the ubuntu image
 '''
+import argparse
 import logging
 import requests
 import tarfile
 import zipfile
 # pylint: disable=C0301
-from constants import ANDROID_SDK_ROOT, ANDROID_SDK_VERSION, GH_RUNNER_VERSION, GH_RUNNER_PATH, setup_environment
+from constants import ANDROID_SDK_ROOT, ANDROID_SDK_VERSION, GH_RUNNER_VERSION, GH_RUNNER_PATH, MOUNT_PATH, \
+    setup_environment
 from pathlib import Path
 from subprocess import run
 
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+
+DOCKER_TYPE = "docker"
+GCP_TYPE = "gcp"
 
 
 def _cmdline_tools() -> Path:
@@ -69,7 +74,12 @@ def _install_github_actions() -> None:
     run(deps_command.as_posix(), check=True)
 
 
-def provision_machine() -> None:
+def _create_dirs(machine_type: str) -> None:
+    if machine_type == DOCKER_TYPE:
+        MOUNT_PATH.mkdir(parents=True)
+
+
+def provision_machine(machine_type: str) -> None:
     '''
     python script which provisions system
     '''
@@ -77,7 +87,11 @@ def provision_machine() -> None:
     _setup_cmdline_tools()
     _install_android_sdk()
     _install_github_actions()
+    _create_dirs(machine_type)
 
 
 if __name__ == "__main__":
-    provision_machine()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('machine_type', choices=[DOCKER_TYPE, GCP_TYPE])
+    args = parser.parse_args()
+    provision_machine(args.machine_type)

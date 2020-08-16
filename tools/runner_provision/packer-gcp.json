@@ -19,14 +19,14 @@
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "script": "install_os_dependencies.sh",
-      "pause_before": "30s"
-    },
-    {
       "type": "file",
       "source": "requirements.txt",
       "destination": "/requirements.txt"
+    },
+    {
+      "type": "shell",
+      "script": "install_os_dependencies.sh",
+      "pause_before": "30s"
     },
     {
       "type": "file",
@@ -40,7 +40,7 @@
     },
     {
       "type": "shell",
-      "inline": "python3 /setup_commands.py"
+      "inline": "python3 /setup_commands.py gcp"
     },
     {
       "type": "file",

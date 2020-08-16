@@ -5,7 +5,7 @@
       "image": "ubuntu:focal-20200720",
       "commit": true,
       "changes": [
-        "CMD [\"/usr/bin/supervisord\"]"
+        "ENTRYPOINT [\"python3\",\"/usr/bin/supervisord\"]"
       ]
     }
   ],
@@ -38,7 +38,7 @@
     },
     {
       "type": "shell",
-      "inline": "python3 /setup_commands.py"
+      "inline": "python3 /setup_commands.py docker"
     },
     {
       "type": "file",
