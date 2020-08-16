@@ -99,7 +99,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-logs
-          path: ./**/build/test-results/**/*.xml
+          path: |
+            ./**/build/test-results/**/*.xml
+            facetune-android/**/build/test-results/**/*.xml
 
       - name: Kill emulator
         if: ${{ always() }}
