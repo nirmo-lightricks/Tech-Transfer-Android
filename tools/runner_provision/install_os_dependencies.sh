@@ -37,4 +37,4 @@ dpkg --add-architecture i386 && \
 # Install Python dependencies
 apt-get install python3
 apt-get install -y --no-install-recommends python3-pip
-pip3 install pygithub requests google-cloud-secret-manager
+pip3 install -r /requirements.txt

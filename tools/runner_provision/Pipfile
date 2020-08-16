@@ -12,6 +12,9 @@ autopep8 = "*"
 requests = "*"
 google-cloud-secret-manager = "*"
 pygithub = "*"
+google-api-python-client = "*"
+falcon = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"

@@ -18,6 +18,11 @@
       ]
     },
     {
+      "type": "file",
+      "source": "requirements.txt",
+      "destination": "/requirements.txt"
+    },
+    {
       "type": "shell",
       "script": "install_os_dependencies.sh"
     },

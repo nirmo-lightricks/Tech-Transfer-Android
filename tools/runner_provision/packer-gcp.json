@@ -5,6 +5,7 @@
       "project_id": "videoboost-32071",
       "source_image_family": "ubuntu-2004-lts",
       "ssh_username": "root",
+      "disk_size": "25",
       "zone": "us-central1-a",
       "image_licenses": [
         "projects/vm-options/global/licenses/enable-vmx"
@@ -21,6 +22,11 @@
       "type": "shell",
       "script": "install_os_dependencies.sh",
       "pause_before": "30s"
+    },
+    {
+      "type": "file",
+      "source": "requirements.txt",
+      "destination": "/requirements.txt"
     },
     {
       "type": "file",
