@@ -9,9 +9,10 @@ import os
 import requests
 import signal
 import socket
-# pylint: disable=C0301
-from constants import API_URL, CONFIG_COMMAND, GH_RUNNER_PATH, LABELS, MOUNT_DEVICE, MOUNT_PATH, RUNNER_WORKDIR, \
+from constants import API_URL, CONFIG_COMMAND, GCP_PROJECT_ID, GH_RUNNER_PATH, LABELS, MOUNT_DEVICE, MOUNT_PATH, \
+    RUNNER_WORKDIR, \
     SHORT_URL, setup_environment
+# pylint: disable=C0301
 from google.cloud import secretmanager_v1  # type: ignore
 from subprocess import run
 from typing import cast
@@ -35,7 +36,7 @@ def _mount_device() -> None:
 def _get_runner_token() -> str:
     client = secretmanager_v1.SecretManagerServiceClient()
     name = client.secret_version_path(
-        "711876413525", "GITHUB_RUNNER_APP_TOKEN", "latest")
+        GCP_PROJECT_ID, "GITHUB_RUNNER_APP_TOKEN", "latest")
     access_token = client.access_secret_version(
         name).payload.data.decode('UTF-8')
     headers = {
@@ -52,6 +53,7 @@ def _start_runner() -> None:
     runner_name = f"{hostname}-{today}"
     runner_token = _get_runner_token()
     logging.info("starting runner")
+    os.chdir(GH_RUNNER_PATH.as_posix())
     run(
         [CONFIG_COMMAND,
          "--url", SHORT_URL,
@@ -64,7 +66,6 @@ def _start_runner() -> None:
          ],
         check=True
     )
-    os.chdir(GH_RUNNER_PATH.as_posix())
     run("bin/runsvc.sh", check=True)
 
 

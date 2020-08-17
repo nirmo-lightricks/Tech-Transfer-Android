@@ -7,9 +7,9 @@ import logging
 import requests
 import tarfile
 import zipfile
-# pylint: disable=C0301
 from constants import ANDROID_SDK_ROOT, ANDROID_SDK_VERSION, GH_RUNNER_VERSION, GH_RUNNER_PATH, MOUNT_PATH, \
     setup_environment
+# pylint: disable=C0301
 from pathlib import Path
 from subprocess import run
 
