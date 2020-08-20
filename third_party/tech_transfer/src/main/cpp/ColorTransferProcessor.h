@@ -28,6 +28,10 @@ namespace lit_color_transfer {
         /// kGridSize x kGridSize x kGridSize large.
         static const int kGridSize;
 
+        /// Fills the /c output matrix with pixels from the /c input image if the corresponding mask pixel value is
+        /// above the threshold.
+        static void getMaskedInput(const cv::Mat4b &input, const cv::Mat1b &mask, uchar maskThreshold, cv::Mat *output);
+
     private:
         static const std::vector<const cv::Mat1f> _rotations;
 

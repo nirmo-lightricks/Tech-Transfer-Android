@@ -20,7 +20,24 @@ static void throwJavaException(JNIEnv *env, const std::exception& exception) {
     env->ThrowNew(errorClass, exception.what());
 }
 
-extern "C"
+extern "C" {
+JNIEXPORT void JNICALL
+Java_com_lightricks_tech_1transfer_color_1transfer_ColorTransferProcessor__1generateLUT(JNIEnv *env, jclass clazz,
+                                                                                        jlong inputMat,
+                                                                                        jlong referenceMat,
+                                                                                        jfloat dampingFactor,
+                                                                                        jint iterations,
+                                                                                        jint histogramBins,
+                                                                                        jlong outputMat);
+
+JNIEXPORT void JNICALL
+Java_com_lightricks_tech_1transfer_color_1transfer_ColorTransferProcessor__1getMaskedInput(JNIEnv *env, jclass clazz,
+                                                                                           jlong inputMat,
+                                                                                           jlong maskMat,
+                                                                                           jboolean threshold,
+                                                                                           jlong outputMat);
+}
+
 JNIEXPORT void JNICALL
 Java_com_lightricks_tech_1transfer_color_1transfer_ColorTransferProcessor__1generateLUT(JNIEnv *env, jclass clazz,
                                                                                      jlong inputMat,
@@ -37,6 +54,26 @@ Java_com_lightricks_tech_1transfer_color_1transfer_ColorTransferProcessor__1gene
 
         ColorTransferProcessor colorTransferProcessor(iterations, histogramBins);
         colorTransferProcessor.generateLUT(input, reference, dampingFactor, &output);
+    }
+    catch (std::exception& exception)
+    {
+        throwJavaException(env, exception);
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_com_lightricks_tech_1transfer_color_1transfer_ColorTransferProcessor__1getMaskedInput(JNIEnv *env, jclass clazz,
+                                                                                        jlong inputMat,
+                                                                                        jlong maskMat,
+                                                                                        jboolean threshold,
+                                                                                        jlong outputMat) {
+    try
+    {
+        cv::Mat& input = *reinterpret_cast<cv::Mat*>(inputMat);
+        cv::Mat& mask = *reinterpret_cast<cv::Mat*>(maskMat);
+        cv::Mat& output = *reinterpret_cast<cv::Mat*>(outputMat);
+
+        ColorTransferProcessor::getMaskedInput(input, mask, threshold, &output);
     }
     catch (std::exception& exception)
     {

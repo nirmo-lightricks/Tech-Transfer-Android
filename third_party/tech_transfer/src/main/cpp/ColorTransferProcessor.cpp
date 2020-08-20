@@ -83,6 +83,17 @@ namespace lit_color_transfer {
 
     const std::vector<const cv::Mat1f> ColorTransferProcessor::_rotations = optimalRotations.rotations;
 
+    void ColorTransferProcessor::getMaskedInput(const cv::Mat4b &input, const cv::Mat1b &mask, uchar threshold,
+                                                cv::Mat *output) {
+        for(int row = 0; row < mask.rows; ++row) {
+            for (int col = 0; col < mask.cols; ++col) {
+                if(mask.at<uchar>(row, col) > threshold) {
+                    output -> push_back(input.at<cv::Vec4b>(row, col));
+                }
+            }
+        }
+    }
+
     void ColorTransferProcessor::generateLUT(const cv::Mat4b &input, const cv::Mat4b &reference, float dampingFactor,
                                              cv::Mat *outputLUT) const {
         auto inputNoAlpha = convertToFloat(input);

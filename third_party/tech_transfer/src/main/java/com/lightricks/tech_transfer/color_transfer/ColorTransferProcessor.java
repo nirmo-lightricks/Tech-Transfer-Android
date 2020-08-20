@@ -45,6 +45,21 @@ public final class ColorTransferProcessor {
     }
 
     /**
+     * Returns a matrix with pixels from the {@code input} image if the corresponding mask pixel value is
+     * above the threshold.
+     * @param input Input image, i.e., image specifying the source color distribution.
+     * @param mask Mask to be applied to the input image.
+     * @param threshold Threshold value that is used to determine whether the pixel should be filtered or not.
+     * @return The matrix that contains the pixels from image filtered based on the {@code mask}. The returned matrix is
+     * one dimensional and the number of rows is equal to the number of unfiltered pixels.
+     */
+    public static Mat getMaskedInput(@NonNull Mat input, @NonNull Mat mask, short threshold) {
+        Mat output = new Mat();
+        _getMaskedInput(input.getNativeObjAddr(), mask.getNativeObjAddr(), threshold, output.getNativeObjAddr());
+        return output;
+    }
+
+    /**
      * Generates 3D LUT transferring the color distribution of input to that of reference, using the number of histogram
      * bins.
      * @param input Input image, i.e., image specifying the source color distribution.
@@ -94,4 +109,6 @@ public final class ColorTransferProcessor {
 
     private static native void _generateLUT(long inputMat, long referenceMat, float dampingFactor, int iterations,
                                             int histogramBins, long outputMat);
+
+    private static native void _getMaskedInput(long inputMat, long mask, short threshold, long outputMat);
 }

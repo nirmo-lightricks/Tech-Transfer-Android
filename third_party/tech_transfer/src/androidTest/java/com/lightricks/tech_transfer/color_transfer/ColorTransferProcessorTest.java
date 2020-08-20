@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 
 public class ColorTransferProcessorTest {
     static {
@@ -35,7 +36,9 @@ public class ColorTransferProcessorTest {
     @After
     public void releaseMats() throws Exception {
        input.release();
-       reference.release();
+       if (reference != null) {
+           reference.release();
+       }
        if (result != null) {
            result.release();
        }
@@ -165,5 +168,31 @@ public class ColorTransferProcessorTest {
         input = new Mat(1, 1, CvType.CV_8UC4);
         reference = new Mat(1, 1, CvType.CV_8UC4);
         ColorTransferProcessor.generateLUT(input, reference, 0.5f, 10, 257);
+    }
+
+    @Test
+    public void getMaskedInput() {
+        input = new Mat(2, 2, CvType.CV_8UC4);
+        input.submat(0, 1, 0,1).setTo(new Scalar(255.0, 0.0, 0.0, 255.0));
+        input.submat(1, 2, 0,1).setTo(new Scalar(0.0, 255.0, 0.0, 255.0));
+        input.submat(0, 1, 1,2).setTo(new Scalar(0.0, 0.0, 255.0, 255.0));
+        input.submat(1, 2, 1,2).setTo(new Scalar(0.0, 255.0, 255.0, 255.0));
+
+        Mat mask = new Mat(input.size(), CvType.CV_8UC1, Scalar.all(0.0));
+
+        mask.submat(0, 1, 0,1).setTo(Scalar.all(255.0));
+        mask.submat(1, 2, 1,2).setTo(Scalar.all(255.0));
+
+        Mat expectedMat = new Mat(2,1, input.type());
+        expectedMat.submat(0, 1, 0,1).setTo(new Scalar(255.0, 0.0, 0.0, 255.0));
+        expectedMat.submat(1, 2, 0,1).setTo(new Scalar(0.0, 255.0, 255.0, 255.0));
+
+        short threshold = 178;
+        Mat result = ColorTransferProcessor.getMaskedInput(input, mask, threshold);
+        assertThat(result).closeToMatWithin(expectedMat, 1);
+
+        mask.release();
+        result.release();
+        expectedMat.release();
     }
 }
