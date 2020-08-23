@@ -1,19 +1,27 @@
 #!/usr/bin/python3
-'''
+"""
 This script provisions the ubuntu image
-'''
+"""
 import argparse
 import logging
-import requests
 import tarfile
 import zipfile
-from constants import ANDROID_SDK_ROOT, ANDROID_SDK_VERSION, GH_RUNNER_VERSION, GH_RUNNER_PATH, MOUNT_PATH, \
-    setup_environment
+
 # pylint: disable=C0301
 from pathlib import Path
 from subprocess import run
+import requests
+from constants import (
+    ANDROID_SDK_ROOT,
+    ANDROID_SDK_VERSION,
+    BUNDLETOOL_VERSION,
+    GH_RUNNER_VERSION,
+    GH_RUNNER_PATH,
+    MOUNT_PATH,
+    setup_environment,
+)
 
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 DOCKER_TYPE = "docker"
 GCP_TYPE = "gcp"
@@ -31,11 +39,11 @@ def _setup_cmdline_tools() -> None:
     logging.info("Downloading %s", url)
     response = requests.get(url)
     zip_file = "android_sdk_11111.zip"
-    with open(zip_file, 'wb') as zip_fh:
+    with open(zip_file, "wb") as zip_fh:
         zip_fh.write(response.content)
     to_path = _cmdline_tools().absolute()
     logging.info("Extracting to %s", to_path)
-    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+    with zipfile.ZipFile(zip_file, "r") as zip_ref:
         zip_ref.extractall(to_path)
     # stupid workaround for python zipfile not preserving permissions
     run(["chmod", "-R", "777", _cmdline_tools().as_posix()], check=True)
@@ -44,10 +52,19 @@ def _setup_cmdline_tools() -> None:
 
 def _install_android_sdk() -> None:
     sdk_components = [
-        "build-tools;30.0.0", "build-tools;29.0.0", "build-tools;29.0.3", "build-tools;28.0.3",
-        "cmake;3.10.2.4988404", "emulator", "ndk;21.0.6113669", "patcher;v4",
-        "platforms;android-27", "platforms;android-28", "platforms;android-29",
-        "platform-tools", "system-images;android-28;default;x86",
+        "build-tools;30.0.0",
+        "build-tools;29.0.0",
+        "build-tools;29.0.3",
+        "build-tools;28.0.3",
+        "cmake;3.10.2.4988404",
+        "emulator",
+        "ndk;21.0.6113669",
+        "patcher;v4",
+        "platforms;android-27",
+        "platforms;android-28",
+        "platforms;android-29",
+        "platform-tools",
+        "system-images;android-28;default;x86",
     ]
     logging.info("installing android sdk parts %s", sdk_components)
     sdkmanager_command = (_cmdline_tools() / "tools/bin/sdkmanager").absolute()
@@ -64,7 +81,7 @@ def _install_github_actions() -> None:
     logging.info("Downloading url %s", url)
     response = requests.get(url)
     tgz_file = "actions.tgz"
-    with open(tgz_file, 'wb') as tgz_fh:
+    with open(tgz_file, "wb") as tgz_fh:
         tgz_fh.write(response.content)
     to_path = GH_RUNNER_PATH.absolute()
     logging.info("Extracting to %s", to_path)
@@ -74,24 +91,35 @@ def _install_github_actions() -> None:
     run(deps_command.as_posix(), check=True)
 
 
+def _download_bundle_tool() -> None:
+    logging.info("Downloading bundle tool")
+    url = f"https://github.com/google/bundletool/releases/download/{BUNDLETOOL_VERSION}/bundletool-all-{BUNDLETOOL_VERSION}.jar"
+    logging.info("Downloading url %s", url)
+    response = requests.get(url)
+    bundle_file = "bundletool.jar"
+    with open(bundle_file, "wb") as bundle_fh:
+        bundle_fh.write(response.content)
+
+
 def _create_dirs(machine_type: str) -> None:
     if machine_type == DOCKER_TYPE:
         MOUNT_PATH.mkdir(parents=True)
 
 
 def provision_machine(machine_type: str) -> None:
-    '''
+    """
     python script which provisions system
-    '''
+    """
     setup_environment()
     _setup_cmdline_tools()
     _install_android_sdk()
     _install_github_actions()
+    _download_bundle_tool()
     _create_dirs(machine_type)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('machine_type', choices=[DOCKER_TYPE, GCP_TYPE])
+    parser.add_argument("machine_type", choices=[DOCKER_TYPE, GCP_TYPE])
     args = parser.parse_args()
     provision_machine(args.machine_type)

@@ -1,12 +1,13 @@
-'''
+"""
 these are the constants controlling the proviision and startup script
-'''
+"""
 from os import environ
 from pathlib import Path
 
 ANDROID_SDK_ROOT = "/android-sdk"
 ANDROID_SDK_VERSION = "6514223"
-GH_RUNNER_VERSION = "2.272.0"
+BUNDLETOOL_VERSION = "1.1.0"
+GH_RUNNER_VERSION = "2.273.0"
 GH_RUNNER_PATH = Path("/actions_runner")
 CONFIG_COMMAND = GH_RUNNER_PATH / "config.sh"
 
@@ -25,9 +26,9 @@ GCP_NUMBER_OF_INSTANCES = 2
 
 
 def setup_environment() -> None:
-    '''
+    """
     sets all environment variables wich are needed for shell scripts run from here
-    '''
+    """
     env_variables = {
         "ANDROID_SDK_ROOT": ANDROID_SDK_ROOT,
         "ANDROID_HOME": ANDROID_SDK_ROOT,
@@ -36,6 +37,6 @@ def setup_environment() -> None:
         # pylint: disable=C0301
         "PATH": f"{environ['PATH']}:/snap/bin:{ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:{ANDROID_SDK_ROOT}/platform-tools:{ANDROID_SDK_ROOT}/emulator",
         "GRADLE_USER_HOME": (MOUNT_PATH / "gradle_cache").as_posix(),
-        "RUNNER_ALLOW_RUNASROOT": "1"
+        "RUNNER_ALLOW_RUNASROOT": "1",
     }
     environ.update(env_variables)
