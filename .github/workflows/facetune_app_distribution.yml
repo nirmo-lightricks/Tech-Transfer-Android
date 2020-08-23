@@ -1,0 +1,66 @@
+name: App Distribution Facetune
+env:
+  KEY: release
+  KEY_PASSWORD: secrets.KEY_PASSWORD
+  KEYSTORE_PASSWORD: secrets.KEYSTORE_PASSWORD
+on: 
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: 'From which branch the release is built'
+        required: true
+        default: 'develop'
+      publish:
+        description: 'Select where to publish this build, if successful. <p>archive - Saved under <code>/Artifacts/Facetune Android/</code> on skydive and <code>Lightriks/Tech/Artifacts/Facetune Android</code> on Google Drive.</p><p>firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.</p>'
+        required: true
+        default: 'firebase,archive'
+      firebaseAppDistributionGroups:
+        description: 'The tester groups you want to distribute builds to (see Manage testers in Firebase Console). Groups are specified using group aliases, which you can find in the Testers tab in the Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.'
+        required: false
+        default: 'internal-testers'
+  
+jobs:
+  facetune_distribution:
+    name: "Facetune for Android release builds"
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2.3.2
+        with:
+          lfs: true
+          submodules: recursive
+          ref: ${{inputs.buildBranch}}
+      - name: Set GOOGLE_APPLICATION_CREDENTIALS
+        run: echo echo '::set-env name=GOOGLE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+        env: 
+          SEC: ${{secrets.FACETUNE_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
+      - name: Set KEYSTORE
+        run: echo echo '::set-env name=KEYSTORE::'`python3 tools/runner_provision/secret_file_utils.py text2bin SEC`
+        env: 
+          SEC: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
+      - name: Gradle Clean
+        run: ./gradlew clean
+      - name: Gradle Bundle Release
+        run: ./gradlew :facetune:bundleGmsRelease
+      - name: Upload symbol file with gradle
+        run: ./gradlew :facetune:uploadCrashlyticsSymbolFileGmsRelease
+      - name: Create APK dir
+        run: mkdir -p facetune/build/outputs/apk/gms/release
+      - name: Create APK
+        run: java -jar /bundletool.jar build-apks --bundle=facetune/build/outputs/bundle/gmsRelease/facetune-gms-release.aab --output=facetune/build/outputs/apk/gms/release/facetune-gms-release.apks --ks=$KEYSTORE --ks-pass=pass:$KEYSTORE_PASSWORD --key-pass=$KEY_PASSWORD
+      - name: Copy fles to dist
+        run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune ${{github.run_id}}
+      - name: Firebase upload
+        if: ${{contains(inputs.publish, 'firebase')
+        run: ./gradlew :facetune:appDistributionUploadGmsRelease
+        env: 
+          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebaseAppDistributionGroups}}
+      - name: Archive upload
+        if: ${{contains(inputs.publish, 'archive')
+        run: ./gradlew :facetune:appDistributionUploadGmsRelease
+        env: 
+          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebaseAppDistributionGroups}} 
+      - name: Cleanup
+        if: ${{always()}}
+        run: rm $KEYSTORE $GOOGLE_APPLICATION_CREDENTIALS
+        
