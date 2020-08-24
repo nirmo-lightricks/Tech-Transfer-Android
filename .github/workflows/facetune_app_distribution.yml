@@ -51,13 +51,13 @@ jobs:
       - name: Copy fles to dist
         run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune ${{github.run_id}}
       - name: Firebase upload
-        if: ${{contains(github.event.inputs.publish, 'firebase')
+        if: ${{contains(github.event.inputs.publish, 'firebase')}}
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
         env:
           FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
           GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
       - name: Archive upload
-        if: ${{contains(github.event.inputs.publish, 'archive')
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
         env:
           FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
