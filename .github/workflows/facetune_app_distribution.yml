@@ -29,9 +29,9 @@ jobs:
         with:
           lfs: true
           submodules: recursive
-          ref: ${{inputs.buildBranch}}
+          ref: ${{github.event.inputs.buildBranch}}
       - name: Set GOOGLE_APPLICATION_CREDENTIALS
-        run: echo echo '::set-env name=GOOGLE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+        run: echo echo '::set-env name=FIREBASE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
         env: 
           SEC: ${{secrets.FACETUNE_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
       - name: Set KEYSTORE
@@ -51,15 +51,16 @@ jobs:
       - name: Copy fles to dist
         run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune ${{github.run_id}}
       - name: Firebase upload
-        if: ${{contains(inputs.publish, 'firebase')
+        if: ${{contains(github.event.inputs.publish, 'firebase')
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
-        env: 
-          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebaseAppDistributionGroups}}
+        env:
+          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
       - name: Archive upload
-        if: ${{contains(inputs.publish, 'archive')
+        if: ${{contains(github.event.inputs.publish, 'archive')
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
-        env: 
-          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebaseAppDistributionGroups}} 
+        env:
+          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
       - name: Cleanup
         if: ${{always()}}
         run: rm $KEYSTORE $GOOGLE_APPLICATION_CREDENTIALS
