@@ -6,8 +6,6 @@ import argparse
 import logging
 import tarfile
 import zipfile
-
-# pylint: disable=C0301
 from pathlib import Path
 from subprocess import run
 import requests
@@ -93,10 +91,11 @@ def _install_github_actions() -> None:
 
 def _download_bundle_tool() -> None:
     logging.info("Downloading bundle tool")
+    # pylint: disable=C0301
     url = f"https://github.com/google/bundletool/releases/download/{BUNDLETOOL_VERSION}/bundletool-all-{BUNDLETOOL_VERSION}.jar"
     logging.info("Downloading url %s", url)
     response = requests.get(url)
-    bundle_file = "bundletool.jar"
+    bundle_file = "/bundletool.jar"
     with open(bundle_file, "wb") as bundle_fh:
         bundle_fh.write(response.content)
 
