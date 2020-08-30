@@ -1,15 +1,12 @@
 # Copyright (c) 2019 Lightricks. All rights reserved.
 # Created by Noam Freeman.
-
-import os
-from glob import glob
-
-module_marker_file = "build.gradle"
+import json
+from subprocess import run
+from typing import List
 
 
-def get_module_dirs(a_dir):
-    search_path = os.path.join(a_dir, '**/', module_marker_file)
-    marker_files = glob(search_path, recursive=True)
-    module_dirs = (os.path.dirname(mf) for mf in marker_files)
-
-    return module_dirs
+def get_module_dirs() -> List[str]:
+    command_res = run(
+        ["./gradlew", "-q", "listProjects"], capture_output=True, check=True, text=True
+    )
+    return json.loads(command_res.stdout.splitlines()[-1])
