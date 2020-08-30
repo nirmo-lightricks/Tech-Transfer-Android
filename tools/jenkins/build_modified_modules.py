@@ -32,7 +32,7 @@ def get_modified_dirs(workspace, username, password, repo, pr_id):
     """
     Returns set of modified android directories in a given PR.
     """
-    modules = {basename(m) for m in get_module_dirs(workspace)}
+    modules = {basename(m) for m in get_module_dirs()}
     print(f"[+] Found modules: {modules}")
     assert modules, "Didn't find any build.gradle files in workspace!"
     github = Github(username, password)
