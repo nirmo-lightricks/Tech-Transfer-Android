@@ -7,6 +7,7 @@ jobs:
   bundle_release:
     name: "Bundle Release of all apps on develop "
     runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
     steps:
       - name: Clone repo
         uses: actions/checkout@v2.3.2
