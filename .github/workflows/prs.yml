@@ -88,7 +88,7 @@ jobs:
           # Environment variable holding the Github password.
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
         # Note that this will run tests only on the emulator device defined by the ANDROID_SERIAL variable
-        run: python3 ./tools/jenkins/build_modified_modules.py "$GITHUB_WORKSPACE"
+        run: python3 ./tools/jenkins/build_modified_modules_v2.py
 
       - name: Post test results on GitHub
         if: ${{ failure() || success() }}

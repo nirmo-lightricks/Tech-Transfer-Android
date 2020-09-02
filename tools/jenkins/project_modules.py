@@ -2,11 +2,12 @@
 # Created by Noam Freeman.
 import json
 from subprocess import run
-from typing import List
+from typing import cast, List
 
 
 def get_module_dirs() -> List[str]:
     command_res = run(
         ["./gradlew", "-q", "listProjects"], capture_output=True, check=True, text=True
     )
-    return json.loads(command_res.stdout.splitlines()[-1])
+    modules_list = json.loads(command_res.stdout.splitlines()[-1])
+    return cast(List[str], modules_list)

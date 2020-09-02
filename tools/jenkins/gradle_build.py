@@ -5,7 +5,7 @@ import subprocess
 from typing import List
 
 
-def execute_gradle(tasks: List[str], excluded_tasks: List[str] = None, wrapper_path: str = "./gradlew"):
+def execute_gradle(tasks: List[str], excluded_tasks: List[str] = [], wrapper_path: str = "./gradlew")->int:
     """
     Executes gradle build with the given parameters, and returns the error code.
     """

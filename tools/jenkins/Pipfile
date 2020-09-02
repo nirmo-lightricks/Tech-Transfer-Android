@@ -4,17 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
 pylint = "*"
 mypy = "*"
-black = "*"
 
 [packages]
-requests = "*"
-google-cloud-secret-manager = "*"
 pygithub = "*"
-google-api-python-client = "*"
-falcon = "*"
-gunicorn = "*"
 networkx = "*"
 
 [requires]

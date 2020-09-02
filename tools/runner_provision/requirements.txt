@@ -2,12 +2,13 @@
 cachetools==4.1.1; python_version ~= '3.5'
 certifi==2020.6.20
 chardet==3.0.4
+decorator==4.4.2
 deprecated==1.2.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 falcon==2.0.0
-google-api-core[grpc]==1.22.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
-google-api-python-client==1.10.0
+google-api-core[grpc]==1.22.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-api-python-client==1.11.0
 google-auth-httplib2==0.0.4
-google-auth==1.20.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-auth==1.21.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 google-cloud-secret-manager==1.0.0
 googleapis-common-protos[grpc]==1.52.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 grpc-google-iam-v1==0.12.3
@@ -15,10 +16,11 @@ grpcio==1.31.0
 gunicorn==20.0.4
 httplib2==0.18.1
 idna==2.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
-protobuf==3.12.4
+networkx==2.5
+protobuf==3.13.0
 pyasn1-modules==0.2.8
 pyasn1==0.4.8
-pygithub==1.52
+pygithub==1.53
 pyjwt==1.7.1
 pytz==2020.1
 requests==2.24.0
