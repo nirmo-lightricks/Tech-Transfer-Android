@@ -77,7 +77,7 @@ def _get_project_dependencies() -> nx.DiGraph:
         text=True,
     )
     lines = command_res.stdout.splitlines()
-    project_dependencies = (json.loads(line) for line in lines if line.startswith("{"))
+    project_dependencies = [json.loads(line) for line in lines if line.startswith("{")]
     graph = nx.DiGraph()
     graph.add_nodes_from(
         project_dependency["name"] for project_dependency in project_dependencies
