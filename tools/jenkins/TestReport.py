@@ -111,7 +111,7 @@ def is_in_module(file, module_name):
 
 
 def module_of_file(file_path, root_dir):
-    all_mods = project_modules.get_module_dirs(root_dir)
+    all_mods = project_modules.get_module_dirs()
     dir_gen = (dir for dir in file_path.split(os.path.sep) if dir in all_mods)
     return next(dir_gen, None)
 
@@ -217,7 +217,7 @@ def _test_reports_for_type(module_path, test_type):
         yield _test_report(results_paths[flavor], flavor)
 
 def _create_test_entries_for_all_modules(workspace):
-    all_modules = project_modules.get_module_dirs(workspace)
+    all_modules = project_modules.get_module_dirs()
     filtered_modules = filter(_exclude_module, all_modules)
 
     for module in filtered_modules:

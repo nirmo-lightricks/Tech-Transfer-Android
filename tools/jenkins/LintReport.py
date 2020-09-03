@@ -56,7 +56,7 @@ def lint_comment(workspace, lint_report):
     return markdown_table(workspace, lint_report[:MAX_LINT_ISSUES_TO_PREVIEW])
 
 def create_lint_entries(workspace):
-    modules = project_modules.get_module_dirs(workspace)
+    modules = project_modules.get_module_dirs()
 
     for module in modules:
         # a list of LintReport('id priority location')
