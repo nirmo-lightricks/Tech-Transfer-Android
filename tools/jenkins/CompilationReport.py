@@ -69,7 +69,7 @@ def compilation_comment(compilation_errors, workspace):
 
 
 def create_compilation_entries(workspace):
-    modules = project_modules.get_module_dirs(workspace)
+    modules = project_modules.get_module_dirs()
 
     for module in modules:
         module_name = os.path.basename(module)
