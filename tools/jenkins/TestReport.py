@@ -109,13 +109,6 @@ def is_in_module(file, module_name):
     # we assume the file is in the form of "./module/build/..."
     return file.split(os.path.sep)[1] == module_name
 
-
-def module_of_file(file_path, root_dir):
-    all_mods = project_modules.get_module_dirs()
-    dir_gen = (dir for dir in file_path.split(os.path.sep) if dir in all_mods)
-    return next(dir_gen, None)
-
-
 def _test_paths_by_flavors(module_path, test_type):
     result_dirs = {}
     if test_type == TestType.UNIT_TEST:
