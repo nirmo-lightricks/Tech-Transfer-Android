@@ -4,7 +4,6 @@ env:
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
   KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
   ABI_FILTERS_OVERRIDE: armeabi-v7a:arm64-v8a
-  TECHNICAL_VERSION: ${{github.run_number}}
 on:
   workflow_dispatch:
     inputs:
@@ -34,6 +33,11 @@ jobs:
           # To access submodules in Lightricks repo, we need a personal access token
           token: ${{ secrets.GITHUBCIPAT }}
           ref: ${{github.event.inputs.buildBranch}}
+      - name: Set technical version
+        env:
+          NUM: ${{ github.run_number }}
+        run: echo ::set-env name=TECHNICAL_VERSION::$(($NUM+1200))
+      - run: echo $TECHNICAL_VERSION
       - name: Set FIREBASE_APPLICATION_CREDENTIALS
         run: echo '::set-env name=FIREBASE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
         env:
@@ -51,7 +55,7 @@ jobs:
       - name: Create APK from Bundle
         run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py facetune
       - name: Copy fles to dist
-        run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune ${{github.run_number}}
+        run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune $TECHNICAL_VERSION
       - name: Firebase upload
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
@@ -60,9 +64,10 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
       - name: Archive upload
         if: ${{contains(github.event.inputs.publish, 'archive')}}
-        run: ./gradlew :facetune:appDistributionUploadGmsRelease
-        env:
-          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
+        uses: actions/upload-artifact@v2
+        with:
+          name: android_binaries
+          path: facetune/build/dist
       - name: Cleanup
         if: ${{always()}}
         run: rm $KEYSTORE $FIREBASE_APPLICATION_CREDENTIALS
