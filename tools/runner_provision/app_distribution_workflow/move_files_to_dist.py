@@ -12,7 +12,9 @@ logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 def _copy_aab_files_to_dist(build_dir: Path, dist_dir: Path, run_number: str) -> None:
     bundle_dir = (build_dir / "bundle").as_posix()
-    aab_files = [Path(path) for path in glob(f"{bundle_dir}/**/*-release.aab")]
+    aab_files = [
+        Path(path) for path in glob(f"{bundle_dir}/**/*-release.aab", recursive=True)
+    ]
     for aab_file in aab_files:
         dest_file = dist_dir / f"{aab_file.stem}-{run_number}.aab"
         logging.info("Copying %s to %s", aab_file, dest_file)
@@ -21,7 +23,9 @@ def _copy_aab_files_to_dist(build_dir: Path, dist_dir: Path, run_number: str) ->
 
 def _copy_apk_files_to_dist(build_dir: Path, dist_dir: Path, run_number: str) -> None:
     apk_dir = (build_dir / "apk").as_posix()
-    apk_files = [Path(path) for path in glob(f"{apk_dir}/**/*-release.apk")]
+    apk_files = [
+        Path(path) for path in glob(f"{apk_dir}/**/*-release.apk", recursive=True)
+    ]
     for apk_file in apk_files:
         dest_file = dist_dir / f"{apk_file.stem}-{run_number}.apk"
         logging.info("Copying %s to %s", apk_file, dest_file)
