@@ -1,4 +1,4 @@
-name: App Distribution Facetune
+name: Apk Distribution Facetune China
 env:
   KEY: release
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
