@@ -22,7 +22,7 @@ jobs:
     runs-on: android
     strategy:
       matrix:
-        app_store:[huawei, bytedance_int, baidu, 360, tencent, xiaomi, oppo]
+        app_store: [huawei, bytedance_int, baidu, 360, tencent, xiaomi, oppo]
     steps:
       - name: Clone repo
         uses: actions/checkout@v2.3.2
