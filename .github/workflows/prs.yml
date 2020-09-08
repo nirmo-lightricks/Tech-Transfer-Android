@@ -80,7 +80,7 @@ jobs:
 
       - name: Gradle clean
         run: ./gradlew clean
-        
+
       - name: Build and test modified modules with gradle
         timeout-minutes: 30
         env:
@@ -91,6 +91,9 @@ jobs:
         # Note that this will run tests only on the emulator device defined by the ANDROID_SERIAL variable
         run: python3 ./tools/jenkins/build_modified_modules_v2.py
 
+      - name: Print adb logcat on failure
+        if: ${{ failure() }}
+        run: adb logcat -d
       - name: Post test results on GitHub
         if: ${{ failure() || success() }}
         env:
@@ -107,7 +110,9 @@ jobs:
           name: test-logs
           path: |
             ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
             facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests
 
       - name: Kill emulator
         if: ${{ always() }}
