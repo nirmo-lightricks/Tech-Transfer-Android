@@ -47,8 +47,11 @@ jobs:
         run: ./gradlew  :facetune:assembleChinaRelease
         env:
           STORE: ${{matrix.app_store}}
-      - name: Copy files to dist
-        run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune $TECHNICAL_VERSION
+      - name: Archive files
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
+        run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py facetune ${{matrix.app_store}} $TECHNICAL_VERSION
+        env:
+          ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
       - name: Cleanup
         if: ${{always()}}
         run: rm $KEYSTORE

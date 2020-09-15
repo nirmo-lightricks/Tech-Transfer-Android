@@ -54,20 +54,17 @@ jobs:
         run: ./gradlew :facetune:uploadCrashlyticsSymbolFileGmsRelease
       - name: Create APK from Bundle
         run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py facetune
-      - name: Copy fles to dist
-        run: python3 tools/runner_provision/app_distribution_workflow/move_files_to_dist.py facetune $TECHNICAL_VERSION
+      - name: Archive upload
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
+        run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py facetune google $TECHNICAL_VERSION
+        env:
+          ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
       - name: Firebase upload
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
         run: ./gradlew :facetune:appDistributionUploadGmsRelease
         env:
           FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
           GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
-      - name: Archive upload
-        if: ${{contains(github.event.inputs.publish, 'archive')}}
-        uses: actions/upload-artifact@v2
-        with:
-          name: android_binaries
-          path: facetune/build/dist
       - name: Cleanup
         if: ${{always()}}
         run: rm $KEYSTORE $FIREBASE_APPLICATION_CREDENTIALS

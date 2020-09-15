@@ -4,8 +4,14 @@ Script which prepares all files to upload to skydive
 import argparse
 import shutil
 from glob import glob
+from os import environ
 from pathlib import Path
+from subprocess import run
 import logging
+
+ARTIFACTORY_BASE_URL = (
+    "https://artifactory.lightricks.com/artifactory/android-apps-local"
+)
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
@@ -48,13 +54,7 @@ def _create_zip_files(build_dir: Path, dist_dir: Path) -> None:
         shutil.make_archive(dest_file, "zip", source_dir)
 
 
-def archive_files(base_dir: str, run_number: str) -> None:
-    """
-    Function which prepares all relevant files for uploading to skydive
-    """
-    build_dir = Path(base_dir, "build/outputs")
-    dist_dir = Path(base_dir, "build/dist")
-    _create_clean_dist_dir(dist_dir)
+def _copy_files_to_dist(build_dir: Path, dist_dir: Path, run_number: str) -> None:
     _create_zip_files(build_dir=build_dir, dist_dir=dist_dir)
 
     _copy_aab_files_to_dist(
@@ -65,9 +65,50 @@ def archive_files(base_dir: str, run_number: str) -> None:
     )
 
 
+def _upload_to_artifactory(dist_dir: Path, artifactory_dir: str, api_key: str):
+    for dist_file in dist_dir.iterdir():
+        target = f"{ARTIFACTORY_BASE_URL}/{artifactory_dir}/{dist_file.name}"
+        logging.info("Uploading file %s to %s", dist_file, target)
+        run(
+            [
+                "curl",
+                "-H",
+                f"X-JFrog-Art-Api:{api_key}",
+                "-T",
+                dist_file.as_posix(),
+                target,
+            ],
+            check=True,
+        )
+
+
+def archive_files(
+    base_dir: str, artifactory_group: str, run_number: str, api_key: str
+) -> None:
+    """
+    Function which prepares all relevant files for uploading to skydive
+    """
+    build_dir = Path(base_dir, "build/outputs")
+    dist_dir = Path(base_dir, "build/dist")
+    _create_clean_dist_dir(dist_dir)
+    _copy_files_to_dist(build_dir, dist_dir, run_number)
+    artifactory_dir = f"{base_dir}/{artifactory_group}/{run_number}"
+    _upload_to_artifactory(
+        dist_dir=dist_dir, artifactory_dir=artifactory_dir, api_key=api_key
+    )
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("app", help="The application we want to add to dist")
+    parser.add_argument(
+        "artifactory_group", help="Under which subdir to store the files"
+    )
     parser.add_argument("run_number", help="The run number")
     args = parser.parse_args()
-    archive_files(args.app, args.run_number)
+    archive_files(
+        base_dir=args.app,
+        artifactory_group=args.artifactory_group,
+        run_number=args.run_number,
+        api_key=environ["ARTIFACTORY_ANDROID_API_KEY"],
+    )
