@@ -3,7 +3,7 @@
 # Install dependencies
 dpkg --add-architecture i386 && \
     apt-get update && \
-    apt-get install -y  --no-install-recommends \
+    apt-get install -y  --no-install-recommends -o APT::Immediate-Configure=false \
     libncurses5:i386 \
     libc6:i386 \
     libstdc++6:i386 \
