@@ -84,14 +84,14 @@ SAMPLE_MESSAGE = {
     # Set to ``True`` if the message is addressed to subscribers as well. Relevant after Pixaloop 1.2.5.
     'should_show_to_subscribers': None,
 
-    # Holds list of offers. for example:
+    # Holds list of vouchers. for example:
     # [{
     #     "priority": 0,
     #     "configuration_id": "test_configuration_2",
-    #     "name": "test_offer_2",
+    #     "name": "test_voucher_2",
     #     "end_date": "2030-02-01"
     # }]
-    'offers': None,
+    'vouchers': None,
 
     # Use to pick the sku to show for the subscription offer dialog.
     # If null, and the push is a push offer, then Yearly is used by default.
