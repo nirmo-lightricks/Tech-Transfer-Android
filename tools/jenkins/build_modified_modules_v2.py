@@ -124,8 +124,11 @@ def main() -> int:
     if not build_tasks:
         logging.info("Nothing to execute")
         return 0
-    tasks = ["clean"] + build_tasks
-    return execute_gradle(tasks, [])
+    gradle_arguments = [
+                           "-Paandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest",
+                           "clean",
+                       ] + build_tasks
+    return execute_gradle(gradle_arguments, [])
 
 
 if __name__ == "__main__":

@@ -21,3 +21,45 @@ jobs:
         run: ./gradlew clean
       - name: Gradle Bundle Release
         run: ./gradlew bundleRelease
+  run_tests:
+    name: "Run all tests including the large ones"
+    runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2.3.2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: develop
+      - name: Setup emulator
+        run: |
+            set -x
+            # Setup new avd every time with --force
+            echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
+            emulator -list-avds
+            emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 -memory 2048 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &
+      - name: Tests including large test
+        run: ./gradlew buildForPR
+      - name: Print adb logcat on failure
+        if: ${{ failure() }}
+        run: adb logcat -d
+      - name: Upload unit-test logs to GitHub
+        if: ${{ failure()}}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: |
+            ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
+            facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests
+
+      - name: Kill emulator
+        if: ${{ always() }}
+        run: |
+          #TODO: Make terminate_emulators.py use adb from PATH, delete env varaible "ADB_HOME"
+          export ADB_HOME=$ANDROID_HOME/platform-tools
+          python3 tools/jenkins/terminate_emulators.py
