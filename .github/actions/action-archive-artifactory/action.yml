@@ -1,0 +1,24 @@
+name: 'Archive APK/Bundle into Artifactory'
+description: Archive APK/Bundle into Artifactory
+inputs:
+  technical-version:
+    required: true
+    description: The technical version of the build.
+
+  app:
+    required: true
+    description: 'Application name, for example: facetune, pixaloop, etc...'
+
+  api-key:
+    required: false
+    default: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+    description: Artifactory API key.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Archive upload
+      shell: bash
+      run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py ${{inputs.app}} google ${{inputs.technical-version}}
+      env:
+        ARTIFACTORY_ANDROID_API_KEY: ${{inputs.api-key}}
