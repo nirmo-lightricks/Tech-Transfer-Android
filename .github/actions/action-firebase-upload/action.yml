@@ -1,0 +1,47 @@
+name: 'Firebase distribution upload'
+description: >
+  Upload APK file to Firebase.
+  Notes:
+    1) The `firebase-secret` is a raw value (string) of the firebase credential file.
+    2) flavor is optional. use when needed, for example you can state `Gms` if you compile with GMS.
+inputs:
+  app:
+    required: true
+    description: 'Application name, for example: facetune, pixaloop, etc...'
+
+  firebase-secret:
+    required: true
+    description: Firebase distribution secret file as a raw text.
+
+  firebase-app-distribution-groups:
+    required: false
+    description: >
+      The tester groups you want to distribute builds to (see Manage testers in Firebase Console).
+      Groups are specified using group aliases, which you can find in the Testers tab in the
+      Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
+    default: 'internal-testers'
+
+  flavor:
+    required: false
+    description: "Optional. Android release flavor (like `Gms` for example)"
+    default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set FIREBASE_APPLICATION_CREDENTIALS"
+      shell: bash
+      run: echo '::set-env name=FIREBASE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+      env:
+        SEC: ${{inputs.firebase-secret}}
+
+    - name: "Upload to Firebase"
+      run: ./gradlew :${{ inputs.app }}:appDistributionUpload${{ inputs.flavor }}Release
+      shell: bash
+      env:
+        FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebase-app-distribution-groups}}
+        GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
+
+    - name: "clean up"
+      run: rm $FIREBASE_APPLICATION_CREDENTIALS
+      shell: bash

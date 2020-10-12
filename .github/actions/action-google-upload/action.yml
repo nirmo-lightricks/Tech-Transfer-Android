@@ -1,0 +1,42 @@
+name: 'Google Play distribution upload'
+description: >
+  Upload APK file to Google Play.
+  Notes:
+    1) This action is based on the following gradle plugin: https://github.com/Triple-T/gradle-play-publisher
+       You can not use this action without the right support in your `build.gradle`.
+
+inputs:
+  app:
+    required: true
+    description: 'Application name, for example: facetune, pixaloop, etc...'
+
+  google-play-secret-json:
+    required: true
+    description: Raw text of the Google Play credential file.
+
+  google-play-track:
+    required: false
+    default: 'internal'
+    description: >
+      track is the target stage for an artifact, i.e. internal/alpha/beta/production or any custom track.
+      By default the track is 'internal'.
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set GOOGLE_PLAY_SECRET_FILE"
+      shell: bash
+      run: echo '::set-env name=GOOGLE_PLAY_SECRET_FILE::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+      env:
+        SEC: ${{ inputs.google-play-secret-json }}
+
+    - name: "Upload to Google Play"
+      run: ./gradlew :${{ inputs.app }}:publishReleaseApk
+      shell: bash
+      env:
+        GOOGLE_PLAY_TRACK: ${{inputs.google-play-track}}
+        GOOGLE_PLAY_SECRET_FILE: ${{env.GOOGLE_PLAY_SECRET_FILE}}
+
+    - name: "clean up"
+      run: rm $GOOGLE_PLAY_SECRET_FILE
+      shell: bash
