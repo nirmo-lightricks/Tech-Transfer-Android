@@ -86,3 +86,4 @@ jobs:
         with:
           app: pixaloop
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}

@@ -10,8 +10,7 @@ inputs:
     description: 'Application name, for example: facetune, pixaloop, etc...'
 
   api-key:
-    required: false
-    default: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+    required: true
     description: Artifactory API key.
 
 runs:
