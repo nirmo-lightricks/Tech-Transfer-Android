@@ -4,3 +4,7 @@ updates:
     directory: "billing"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+      directory: "login"
+      schedule:
+        interval: "daily"
