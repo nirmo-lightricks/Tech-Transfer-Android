@@ -52,6 +52,7 @@ def _install_android_sdk() -> None:
     sdk_components = [
         "build-tools;30.0.0",
         "build-tools;29.0.0",
+        "build-tools;29.0.2",
         "build-tools;29.0.3",
         "build-tools;28.0.3",
         "cmake;3.10.2.4988404",
