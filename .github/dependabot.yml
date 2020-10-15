@@ -5,6 +5,6 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "gradle"
-    directory: "login"
+    directory: "authentication"
     schedule:
       interval: "daily"
