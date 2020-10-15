@@ -4,6 +4,7 @@ description: >
   Notes:
     1) This action is based on the following gradle plugin: https://github.com/Triple-T/gradle-play-publisher
        You can not use this action without the right support in your `build.gradle`.
+    2) You MUST execute the KEYSTORE action before executing this task!
 
 inputs:
   app:
@@ -26,17 +27,22 @@ runs:
   steps:
     - name: "Set GOOGLE_PLAY_SECRET_FILE"
       shell: bash
-      run: echo '::set-env name=GOOGLE_PLAY_SECRET_FILE::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+      run: echo '::set-env name=TEMP_GOOGLE_PLAY_SECRET_FILE::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
       env:
         SEC: ${{ inputs.google-play-secret-json }}
+
+    # This is a dirty trick so the g-play plugin will be able to detect the credentials file.
+    - name: "change secret file extension"
+      shell: bash
+      run: mv "${TEMP_GOOGLE_PLAY_SECRET_FILE}" "${TEMP_GOOGLE_PLAY_SECRET_FILE}.json"
 
     - name: "Upload to Google Play"
       run: ./gradlew :${{ inputs.app }}:publishReleaseApk
       shell: bash
       env:
         GOOGLE_PLAY_TRACK: ${{inputs.google-play-track}}
-        GOOGLE_PLAY_SECRET_FILE: ${{env.GOOGLE_PLAY_SECRET_FILE}}
+        GOOGLE_PLAY_SECRET_FILE: ${{env.TEMP_GOOGLE_PLAY_SECRET_FILE}}.json
 
     - name: "clean up"
-      run: rm $GOOGLE_PLAY_SECRET_FILE
+      run: rm ${{env.TEMP_GOOGLE_PLAY_SECRET_FILE}}.json
       shell: bash
