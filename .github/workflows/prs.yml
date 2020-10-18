@@ -92,6 +92,7 @@ jobs:
         run: python3 ./tools/jenkins/build_modified_modules_v2.py
 
       - name: Print adb logcat on failure
+        timeout-minutes: 1
         if: ${{ failure() }}
         run: adb logcat -d
       - name: Post test results on GitHub
