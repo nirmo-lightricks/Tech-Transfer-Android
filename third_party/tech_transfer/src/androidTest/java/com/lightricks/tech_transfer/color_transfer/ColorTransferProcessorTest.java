@@ -21,7 +21,7 @@ import org.opencv.core.Scalar;
 public class ColorTransferProcessorTest {
     static {
         System.loadLibrary("c++_shared");
-        System.loadLibrary("opencv_java3");
+        System.loadLibrary("opencv_java4");
         System.loadLibrary("tech_transfer");
     }
 

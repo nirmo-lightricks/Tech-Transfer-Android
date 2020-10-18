@@ -5,12 +5,12 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # Path to pre-built opencv installation
 set(LT_OPENCV_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../../../opencv-android)
-add_library(opencv_java3 SHARED IMPORTED)
+add_library(opencv_java4 SHARED IMPORTED)
 set_target_properties(
-    opencv_java3
+    opencv_java4
     PROPERTIES
     IMPORTED_LOCATION
-    ${LT_OPENCV_HOME}/sdk/native/libs/${ANDROID_ABI}/libopencv_java3.so
+    ${LT_OPENCV_HOME}/sdk/native/libs/${ANDROID_ABI}/libopencv_java4.so
 )
 
 include_directories(
@@ -36,5 +36,5 @@ target_compile_options(
 
 target_link_libraries(
     tech_transfer
-    opencv_java3
+    opencv_java4
 )

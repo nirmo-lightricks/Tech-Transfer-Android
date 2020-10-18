@@ -32,7 +32,6 @@ THIRD_PARTY_MODULES = {
     "botan",
     "gif_encoder",
     "protobuf-android",
-    "dlib-android",
     "opencv-android",
     "sdk",
     "facetune-android",
