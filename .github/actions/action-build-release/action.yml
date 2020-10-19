@@ -2,18 +2,13 @@ name: 'Build APK/Bundle in release mode'
 description: >
   The purpose of this action is a safe environment for executing your gradle tasks.
   The tasks:
-    1) Sets the KEYSTORE in the system (and remove it afterwords).
-    2) Cleans the environment using `./gradlew clean` before the compilation.
-    3) Executes your specific build commands.
+    1) Cleans the environment using `./gradlew clean` before the compilation.
+    2) Executes your specific build commands.
 
 inputs:
   technical-version:
     required: true
     description: The technical version of the build.
-
-  base64-keystore:
-    required: true
-    description: The content of the keystore file encoded as base64.
 
   build-commands:
     required: true
@@ -26,14 +21,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-      # FIXME: (nirmo) step should have its own composite action (at the moment this feature is not supported and
-      # under development).
-    - name: "Set KEYSTORE"
-      shell: bash
-      run: echo '::set-env name=KEYSTORE::'`python3 tools/runner_provision/secret_file_utils.py text2bin SEC`
-      env:
-        SEC: ${{inputs.base64-keystore}}
-
     - name: "Set TECHNICAL VERSION"
       shell: bash
       run: echo ::set-env name=TECHNICAL_VERSION::${{inputs.technical-version}}
@@ -44,8 +31,4 @@ runs:
 
     - name: "Execute build commands"
       run: ${{inputs.build-commands}}
-      shell: bash
-
-    - name: "clean up"
-      run: rm $KEYSTORE
       shell: bash
