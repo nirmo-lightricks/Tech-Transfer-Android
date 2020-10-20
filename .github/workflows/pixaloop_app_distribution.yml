@@ -13,14 +13,11 @@ on:
         default: 'develop'
 
       publish:
-        # TODO: (nirmo) update description...
         description: >
           Select where to publish this build, if successful.
-          archive - Saved under <code>/Artifacts/Facetune Android/</code> on skydive and
-          <code>
-            Lightriks/Tech/Artifacts/Facetune Android
-          </code> on Google Drive.
+          archive - Saved under "Artifactory" (under android-apps-local)
           firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.
+          Google play - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
         required: true
         default: 'firebase,archive,google'
 
@@ -40,7 +37,7 @@ on:
           By default the track is 'internal'.
 
 jobs:
-  pixaloop_distribution:
+  distribution:
     name: "Pixaloop for Android release builds"
     runs-on: android
     steps:
@@ -66,8 +63,7 @@ jobs:
         uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
         with:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
-          base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
-          build-commands: ./gradlew :pixaloop:assembleRelease
+          app: pixaloop
 
       - name: "Upload to FirebaseDistribution"
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
@@ -83,6 +79,7 @@ jobs:
         with:
           app: pixaloop
           google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
+          google-play-track: ${{inputs.googlePlayTrack}}
 
       - name: "Upload to Artifactory"
         if: ${{contains(github.event.inputs.publish, 'archive')}}
@@ -92,6 +89,6 @@ jobs:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
           api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
 
-      - name: "Clenaup"
+      - name: "Cleanup"
         if: ${{always()}}
         run: rm ${{env.KEYSTORE}}
