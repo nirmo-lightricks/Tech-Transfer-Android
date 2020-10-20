@@ -1,0 +1,100 @@
+name: App Distribution VideoBoost
+env:
+  KEY: release
+  KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
+  KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
+  ABI_FILTERS_OVERRIDE: armeabi-v7a:arm64-v8a
+on:
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: 'From which branch the release is built'
+        required: true
+        default: 'develop'
+
+      publish:
+        description: >
+          Select where to publish this build, if successful.
+          archive - Saved under "Artifactory" (under android-apps-local)
+          firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.
+          Google play - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
+        required: true
+        default: 'firebase,archive,google'
+
+      firebaseAppDistributionGroups:
+        description: >
+          The tester groups you want to distribute builds to (see Manage testers in Firebase Console).
+          Groups are specified using group aliases, which you can find in the Testers tab in the
+          Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
+        required: false
+        default: 'internal-testers'
+
+      firebaseAppDistributionReleaseNotes:
+        description: Release notes for this build.
+        required: false
+        default: ''
+
+      googlePlayTrack:
+        required: false
+        default: 'internal'
+        description: >
+          track is the target stage for an artifact, i.e. internal/alpha/beta/production or any custom track.
+          By default the track is 'internal'.
+
+jobs:
+  distribution:
+    name: "VideoBoost for Android release builds"
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2.3.2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: ${{github.event.inputs.buildBranch}}
+
+      - name: "Set technical version"
+        id: technical_version
+        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@develop
+
+      - name: "Set KeyStore"
+        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@develop
+        with:
+          base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
+
+      - name: "Build APK in Release mode"
+        uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
+        with:
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          app: swish
+
+      - name: "Upload to FirebaseDistribution"
+        if: ${{contains(github.event.inputs.publish, 'firebase')}}
+        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
+        with:
+          app: swish
+          firebase-secret: ${{secrets.VIDEOBOOST_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
+          firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          firebase-app-distribution-release-notes: ${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
+
+      - name: "Upload to Google Play"
+        if: ${{contains(github.event.inputs.publish, 'google')}}
+        uses: Lightricks/facetune-android/.github/actions/action-google-upload@develop
+        with:
+          app: swish
+          google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
+          google-play-track: ${{inputs.googlePlayTrack}}
+
+      - name: "Upload to Artifactory"
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
+        uses: Lightricks/facetune-android/.github/actions/action-archive-artifactory@develop
+        with:
+          app: swish
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+      - name: "Cleanup"
+        if: ${{always()}}
+        run: rm ${{env.KEYSTORE}}
