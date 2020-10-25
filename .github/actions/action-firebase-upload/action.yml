@@ -21,6 +21,11 @@ inputs:
       Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
     default: 'internal-testers'
 
+  firebase-app-distribution-release-notes:
+    required: false
+    default: ''
+    description: Release notes for this build.
+
   flavor:
     required: false
     description: "Optional. Android release flavor (like `Gms` for example)"
@@ -34,6 +39,10 @@ runs:
       run: echo '::set-env name=FIREBASE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
       env:
         SEC: ${{inputs.firebase-secret}}
+
+    - name: "Set FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES"
+      shell: bash
+      run: echo '::set-env name=FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES::${{inputs.firebase-app-distribution-release-notes}}'
 
     - name: "Upload to Firebase"
       run: ./gradlew :${{ inputs.app }}:appDistributionUpload${{ inputs.flavor }}Release

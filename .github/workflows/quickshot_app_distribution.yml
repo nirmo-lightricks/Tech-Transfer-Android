@@ -1,4 +1,4 @@
-name: App Distribution Pixaloop
+name: App Distribution Quickshot
 env:
   KEY: release
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
@@ -38,7 +38,7 @@ on:
 
 jobs:
   distribution:
-    name: "Pixaloop for Android release builds"
+    name: "Quickshot for Android release builds"
     runs-on: android
     steps:
       - name: Clone repo
@@ -63,21 +63,22 @@ jobs:
         uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
         with:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
-          app: pixaloop
+          app: quickshot
+          flavor: Gms
 
       - name: "Upload to FirebaseDistribution"
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
         uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
         with:
-          app: pixaloop
-          firebase-secret: ${{secrets.PIXALOOP_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
+          app: quickshot
+          firebase-secret: ${{secrets.QUICKSHOT_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
           firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
 
       - name: "Upload to Google Play"
         if: ${{contains(github.event.inputs.publish, 'google')}}
         uses: Lightricks/facetune-android/.github/actions/action-google-upload@develop
         with:
-          app: pixaloop
+          app: quickshot
           google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
           google-play-track: ${{inputs.googlePlayTrack}}
 
@@ -85,7 +86,7 @@ jobs:
         if: ${{contains(github.event.inputs.publish, 'archive')}}
         uses: Lightricks/facetune-android/.github/actions/action-archive-artifactory@develop
         with:
-          app: pixaloop
+          app: quickshot
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
           api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
 
