@@ -79,7 +79,7 @@ jobs:
         with:
           app: pixaloop
           google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
-          google-play-track: ${{inputs.googlePlayTrack}}
+          google-play-track: ${{github.event.inputs.googlePlayTrack}}
 
       - name: "Upload to Artifactory"
         if: ${{contains(github.event.inputs.publish, 'archive')}}
