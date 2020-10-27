@@ -35,10 +35,10 @@ jobs:
       - name: Set technical version
         env:
           NUM: ${{ github.run_number }}
-        run: echo ::set-env name=TECHNICAL_VERSION::$(($NUM+1200))
+        run: echo TECHNICAL_VERSION=$(($NUM+1200)) >> $GITHUB_ENV
       - run: echo $TECHNICAL_VERSION
       - name: Set KEYSTORE
-        run: echo '::set-env name=KEYSTORE::'`python3 tools/runner_provision/secret_file_utils.py text2bin SEC`
+        run: echo 'KEYSTORE='`python3 tools/runner_provision/secret_file_utils.py text2bin SEC` >> $GITHUB_ENV
         env:
           SEC: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
       - name: Gradle Clean

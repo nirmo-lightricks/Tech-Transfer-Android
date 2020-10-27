@@ -36,13 +36,13 @@ runs:
   steps:
     - name: "Set FIREBASE_APPLICATION_CREDENTIALS"
       shell: bash
-      run: echo '::set-env name=FIREBASE_APPLICATION_CREDENTIALS::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+      run: echo 'FIREBASE_APPLICATION_CREDENTIALS='`python3 tools/runner_provision/secret_file_utils.py env2text SEC` >> $GITHUB_ENV
       env:
         SEC: ${{inputs.firebase-secret}}
 
     - name: "Set FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES"
       shell: bash
-      run: echo '::set-env name=FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES::${{inputs.firebase-app-distribution-release-notes}}'
+      run: echo 'FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES=${{inputs.firebase-app-distribution-release-notes}}' >> $GITHUB_ENV
 
     - name: "Upload to Firebase"
       run: ./gradlew :${{ inputs.app }}:appDistributionUpload${{ inputs.flavor }}Release

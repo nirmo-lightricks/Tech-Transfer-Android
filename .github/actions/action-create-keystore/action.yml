@@ -17,7 +17,7 @@ runs:
       id: set_keystore
       shell: bash
       run: |
-        echo '::set-env name=KEYSTORE::'`python3 tools/runner_provision/secret_file_utils.py text2bin SEC`
+        echo 'KEYSTORE='`python3 tools/runner_provision/secret_file_utils.py text2bin SEC` >> $GITHUB_ENV
         echo ::set-output name=keystore_location::$KEYSTORE
       env:
         SEC: ${{inputs.base64-keystore}}

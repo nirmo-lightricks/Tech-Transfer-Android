@@ -25,7 +25,7 @@ runs:
   steps:
     - name: "Set TECHNICAL VERSION"
       shell: bash
-      run: echo ::set-env name=TECHNICAL_VERSION::${{inputs.technical-version}}
+      run: echo TECHNICAL_VERSION=${{inputs.technical-version}} >> $GITHUB_ENV
 
     - name: "Clean environment"
       shell: bash

@@ -27,7 +27,7 @@ runs:
   steps:
     - name: "Set GOOGLE_PLAY_SECRET_FILE"
       shell: bash
-      run: echo '::set-env name=TEMP_GOOGLE_PLAY_SECRET_FILE::'`python3 tools/runner_provision/secret_file_utils.py env2text SEC`
+      run: echo 'TEMP_GOOGLE_PLAY_SECRET_FILE='`python3 tools/runner_provision/secret_file_utils.py env2text SEC` >> $GITHUB_ENV
       env:
         SEC: ${{ inputs.google-play-secret-json }}
 
