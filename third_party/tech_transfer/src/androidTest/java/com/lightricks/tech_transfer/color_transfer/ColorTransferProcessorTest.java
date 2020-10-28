@@ -4,6 +4,7 @@
 package com.lightricks.tech_transfer.color_transfer;
 
 import static com.lightricks.common.testutils.MatSubject.assertThat;
+import static com.google.common.truth.Truth.assertThat;
 
 import java.io.InputStream;
 
@@ -190,6 +191,28 @@ public class ColorTransferProcessorTest {
         short threshold = 178;
         Mat result = ColorTransferProcessor.getMaskedInput(input, mask, threshold);
         assertThat(result).closeToMatWithin(expectedMat, 1);
+
+        mask.release();
+        result.release();
+        expectedMat.release();
+    }
+
+    @Test
+    public void getMaskedInput_withAnEmptyMask_shouldReturnAnEmptyMatWithTheSameTypeAsTheInputMat() {
+        input = new Mat(2, 2, CvType.CV_8UC4);
+        input.submat(0, 1, 0,1).setTo(new Scalar(255.0, 0.0, 0.0, 255.0));
+        input.submat(1, 2, 0,1).setTo(new Scalar(0.0, 255.0, 0.0, 255.0));
+        input.submat(0, 1, 1,2).setTo(new Scalar(0.0, 0.0, 255.0, 255.0));
+        input.submat(1, 2, 1,2).setTo(new Scalar(0.0, 255.0, 255.0, 255.0));
+
+        Mat mask = new Mat(input.size(), CvType.CV_8UC1, Scalar.all(0.0));
+
+        Mat expectedMat = new Mat(0,0, input.type());
+
+        short threshold = 178;
+        Mat result = ColorTransferProcessor.getMaskedInput(input, mask, threshold);
+        assertThat(result).closeToMatWithin(expectedMat, 1);
+        assertThat(result.type()).isEqualTo(input.type());
 
         mask.release();
         result.release();

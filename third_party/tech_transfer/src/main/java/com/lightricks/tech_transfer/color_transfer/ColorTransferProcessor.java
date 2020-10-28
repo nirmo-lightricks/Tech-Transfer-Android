@@ -7,6 +7,7 @@ import com.google.common.base.Preconditions;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 
 import androidx.annotation.NonNull;
 
@@ -54,7 +55,7 @@ public final class ColorTransferProcessor {
      * one dimensional and the number of rows is equal to the number of unfiltered pixels.
      */
     public static Mat getMaskedInput(@NonNull Mat input, @NonNull Mat mask, short threshold) {
-        Mat output = new Mat();
+        Mat output = new Mat(0, 0, input.type());
         _getMaskedInput(input.getNativeObjAddr(), mask.getNativeObjAddr(), threshold, output.getNativeObjAddr());
         return output;
     }
