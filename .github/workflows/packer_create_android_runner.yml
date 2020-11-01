@@ -1,0 +1,39 @@
+# This action enables to create a new Android runner image on demand
+# Creating a new image is needed when installing new software, updating github runner client and/or updating to
+# a new android gradle plugin (New ndk).
+name: Create Android Runner Image in GCP
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+
+
+      - name: "Set GOOGLE_APPLICATION_CREDENTIALS"
+        shell: bash
+        run: echo 'GOOGLE_APPLICATION_CREDENTIALS='`python3 tools/runner_provision/secret_file_utils.py env2text SEC` >> $GITHUB_ENV
+        env:
+          SEC: ${{secrets.PACKER_GCP_CREDENTIALS_ANDROID_CI}}
+
+
+      - name: Download packer
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install packer
+
+      # Runs a set of commands using the runners shell
+      - name: Build image
+        run: |
+          cd tools/runner_provision
+          packer build -force packer-gcp.json
+
+      # Runs a set of commands using the runners shell
+      - name: Delete secret file
+        run: rm $GOOGLE_APPLICATION_CREDENTIALS

@@ -31,6 +31,8 @@ def decode_file(env_variable: str) -> str:
     a temp file and returns it's path
     """
     base64_content = os.environ[env_variable]
+    if not base64_content.strip():
+        raise AssertionError(f"{env_variable} is empty")
     binary_content = base64.b64decode(base64_content)
     fd, filepath = mkstemp()
     with open(fd, "wb") as fh:
@@ -44,6 +46,8 @@ def env_variable_to_file(env_variable: str) -> str:
     temp file and returns it's path
     """
     content = os.environ[env_variable]
+    if not content.strip():
+        raise AssertionError(f"{env_variable} is empty")
     fd, filepath = mkstemp()
     with open(fd, "w") as fh:
         fh.write(content)
