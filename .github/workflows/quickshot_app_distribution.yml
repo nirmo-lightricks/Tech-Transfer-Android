@@ -73,6 +73,7 @@ jobs:
           app: quickshot
           firebase-secret: ${{secrets.QUICKSHOT_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
           firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          flavor: Gms
 
       - name: "Upload to Google Play"
         if: ${{contains(github.event.inputs.publish, 'google')}}
