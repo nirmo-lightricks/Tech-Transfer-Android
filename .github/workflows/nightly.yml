@@ -47,9 +47,9 @@ jobs:
         if: ${{ failure() }}
         run: adb logcat -d
       - name: Post failure to slack
-          if: ${{ failure() }}
-          run: |
-            curl -X POST -H 'Content-type: application/jn' --data '{"text":"Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID"}' ${{secrets.CI_NOTIFICATION_WEBHOOK}}
+        if: ${{ failure() }}
+        run: |
+          curl -X POST -H 'Content-type: application/jn' --data '{"text":"Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID"}' ${{secrets.CI_NOTIFICATION_WEBHOOK}}
       - name: Upload unit-test logs to GitHub
         if: ${{ failure()}}
         uses: actions/upload-artifact@v2
