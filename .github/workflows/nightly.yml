@@ -36,16 +36,20 @@ jobs:
           ref: develop
       - name: Setup emulator
         run: |
-            set -x
-            # Setup new avd every time with --force
-            echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
-            emulator -list-avds
-            emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 -memory 2048 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &
+          set -x
+          # Setup new avd every time with --force
+          echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
+          emulator -list-avds
+          emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 -memory 2048 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &
       - name: Tests including large test
         run: ./gradlew buildForPR
       - name: Print adb logcat on failure
         if: ${{ failure() }}
         run: adb logcat -d
+      - name: Post failure to slack
+          if: ${{ failure() }}
+          run: |
+            curl -X POST -H 'Content-type: application/jn' --data '{"text":"Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID"}' ${{secrets.CI_NOTIFICATION_WEBHOOK}}
       - name: Upload unit-test logs to GitHub
         if: ${{ failure()}}
         uses: actions/upload-artifact@v2
