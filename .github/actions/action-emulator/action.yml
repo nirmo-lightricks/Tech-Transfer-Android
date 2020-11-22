@@ -1,0 +1,10 @@
+name: 'Emulator Action'
+description: 'Starts and terminates emulator'
+inputs:
+  version: 
+    description: 'Version of emulator'
+    required: false
+    default: '28'
+runs:
+  using: 'node12'
+  main: 'index.js'
