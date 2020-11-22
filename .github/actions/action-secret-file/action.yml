@@ -1,0 +1,19 @@
+name: 'Secret file creator'
+description: 'Creates secret files from github secrets. It both supports plaintext and base64 binaries'
+inputs:
+  type:  
+    description: 'Type of the secret. It can be both text and base64'
+    required: true
+  secret:  
+    description: 'The secret itself'
+    required: true
+  file_path:  
+    description: 'Where to store the file path'
+    required: false
+outputs:
+  file_path: # id of output
+    description: 'Location of file'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+  post: 'dist/index.js'
