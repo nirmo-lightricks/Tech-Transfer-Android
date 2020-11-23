@@ -2,12 +2,13 @@
 Actual class which manages the gcp instances. It uses googleapiclient which is a
 really horrible library but unfortunately it is the best library available
 """
+import argparse
 import datetime
 import logging
 import time
 from typing import List, Dict, cast
 from googleapiclient.discovery import build, Resource  # type: ignore
-from constants import GCP_PROJECT_ID, GCP_ZONE, GCP_IMAGE_NAME, GCP_NUMBER_OF_INSTANCES
+from constants import GCP_PROJECT_ID, GCP_ZONE, GCP_IMAGE_NAME
 
 MACHINE_PREFIX = "gh-runner"
 
@@ -40,7 +41,9 @@ def _create_instance(compute: Resource, image_name: str) -> Dict[str, str]:
             {
                 "boot": True,
                 "autoDelete": True,
-                "initializeParams": {"sourceImage": source_disk_image,},
+                "initializeParams": {
+                    "sourceImage": source_disk_image,
+                },
             },
             {
                 "boot": False,
@@ -93,16 +96,16 @@ def _wait_for_operation(compute: Resource, operation: Dict[str, str]) -> Dict[st
 
 def _create_instances(compute: Resource, num_instances: int) -> List[Dict[str, str]]:
     operations = []
-    today = datetime.date.today().isoformat()
+    time_string = datetime.datetime.utcnow().strftime("%m-%d-%H-%M")
     for image_num in range(num_instances):
-        image_name = f"{MACHINE_PREFIX}-{today}-{image_num}"
+        image_name = f"{MACHINE_PREFIX}-{time_string}-{image_num}"
         logging.info("creating new instance %s", image_name)
         create_operation = _create_instance(compute, image_name)
         operations.append(create_operation)
     return [_wait_for_operation(compute, operation) for operation in operations]
 
 
-# pylint:disable=C0301,C0330
+# pylint:disable=C0301
 def _delete_old_instances(
     compute: Resource, old_instances: List[Dict[str, str]]
 ) -> List[Dict[str, str]]:
@@ -118,7 +121,9 @@ def _delete_old_instances(
     return [_wait_for_operation(compute, operation) for operation in operations]
 
 
-def manage_instances(num_instances: int) -> Dict[str, List[Dict[str, str]]]:
+def manage_instances(
+    num_instances: int, delete_old: bool
+) -> Dict[str, List[Dict[str, str]]]:
     """
     main function which creates the new instances and deletes the old ones
     """
@@ -127,10 +132,19 @@ def manage_instances(num_instances: int) -> Dict[str, List[Dict[str, str]]]:
     logging.info("old instances are %s", old_instances)
     instances_res = _create_instances(compute, num_instances)
     logging.info("creating instances resulted in %s", instances_res)
-    deletion_res = _delete_old_instances(compute, old_instances)
-    logging.info("deleting instances resulted in %s", deletion_res)
+    if delete_old:
+        deletion_res = _delete_old_instances(compute, old_instances)
+        logging.info("deleting instances resulted in %s", deletion_res)
+    else:
+        deletion_res = []
+        logging.info("Not deleting instances because flag was not set")
     return {"creation_res": instances_res, "deletion_res": deletion_res}
 
 
 if __name__ == "__main__":
-    manage_instances(GCP_NUMBER_OF_INSTANCES)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("instance_num", type=int, help="number of instances")
+    parser.add_argument("delete_old", choices=["yes", "no"])
+    args = parser.parse_args()
+    res = manage_instances(args.instance_num, args.delete_old == "yes")
+    print(res)

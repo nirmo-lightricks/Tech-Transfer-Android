@@ -1,0 +1,32 @@
+name: Scheduled Creation of runner images
+on:
+  workflow_dispatch:
+    inputs:
+      instance_num:
+        description: Number of instances we want to add
+        required: true
+        default: 2
+      delete_old:
+        description: If we want to delete all old instances. Can be either yes or no
+        required: true
+        default: no
+
+jobs:
+  create_runner:
+    runs-on: ubuntu-latest
+    name: Create Android runner
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Run instance creation
+        uses: Lightricks/facetune-android/.github/actions/action-create-gcp-runner@develop
+        with:
+          instance_num: ${{github.event.inputs.instance_num}}
+          delete_old: ${{github.event.inputs.delete_old}

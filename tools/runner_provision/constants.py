@@ -22,7 +22,6 @@ API_URL = "https://api.github.com/orgs/Lightricks/actions/runners/registration-t
 GCP_PROJECT_ID = "android-ci-286617"
 GCP_ZONE = "us-central1-a"
 GCP_IMAGE_NAME = "github-action-runner-v1"
-GCP_NUMBER_OF_INSTANCES = 2
 
 
 def setup_environment() -> None:

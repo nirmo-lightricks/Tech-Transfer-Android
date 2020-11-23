@@ -1,0 +1,25 @@
+name: Scheduled Creation of runner images
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  create_runner:
+    name: Create Android runner
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Run instance creation
+        uses: Lightricks/facetune-android/.github/actions/action-create-gcp-runner@develop
+        with:
+          instance_num: 2
+          delete_old: yes
