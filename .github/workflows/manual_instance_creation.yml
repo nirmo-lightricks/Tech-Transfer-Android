@@ -1,4 +1,4 @@
-name: Scheduled Creation of runner images
+name: Manual Creation of runner instances
 on:
   workflow_dispatch:
     inputs:

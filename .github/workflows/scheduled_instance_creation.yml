@@ -1,4 +1,4 @@
-name: Scheduled Creation of runner images
+name: Scheduled Creation of runner instances
 on:
   schedule:
     - cron:  '0 0 * * *'
