@@ -60,10 +60,11 @@ def _mount_device() -> None:
 
 def _get_runner_token() -> str:
     client = secretmanager_v1.SecretManagerServiceClient()
-    name = client.secret_version_path(
-        GCP_PROJECT_ID, "GITHUB_RUNNER_APP_TOKEN", "latest"
-    )
-    access_token = client.access_secret_version(name).payload.data.decode("UTF-8")
+    secret = "GITHUB_RUNNER_APP_TOKEN"
+    secret_version_path = f"projects/{GCP_PROJECT_ID}/secrets/{secret}/versions/latest"
+    access_token = client.access_secret_version(
+        request={"name": secret_version_path}
+    ).payload.data.decode("UTF-8")
     headers = {
         "Accept": "application/vnd.github.v3+json",
         "Authorization": f"token {access_token}",

@@ -13,8 +13,6 @@ requests = "*"
 google-cloud-secret-manager = "*"
 pygithub = "*"
 google-api-python-client = "*"
-falcon = "*"
-gunicorn = "*"
 networkx = "*"
 
 [requires]
