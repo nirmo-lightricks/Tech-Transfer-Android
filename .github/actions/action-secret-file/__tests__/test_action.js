@@ -2,20 +2,23 @@ const action = require('../action')
 const fs = require("fs").promises;
 
 test('test cleanup', async () => {
-    process.env['STATE_isPost'] = "true"
     const filePath =  "foo"
     await fs.writeFile(filePath, "foofoo")
     core = {
-        getState: createKeyedFunction({"file_path": filePath})
+        getState: createKeyedFunction({
+            "file_path": filePath,
+            "isPost": true
+    })
     }
     await action(core,{})
     await expect(fs.access(filePath)).rejects.toThrow(`ENOENT: no such file or directory, access '${filePath}'`)
-    delete process.env['STATE_isPost']
   });
 
 test('invalid secret type', async() => {
     core = {
         getInput: createKeyedFunction({"type": "invalid foo"}),
+        getState: createKeyedFunction({"isPost": ""}),
+        saveState: jest.fn(),
         setFailed: jest.fn()
     }
     await action(core,{})
@@ -40,13 +43,15 @@ test('file action', async() => {
             "file_path":fileName
         }),
         setOutput: jest.fn(),
+        getState: createKeyedFunction({"isPost": ""}),
         saveState: jest.fn()
     }
     await action(core,lib)
     expect(lib.getFilePath.mock.calls[0][0]).toBe(fileName)
     expect(lib.writeSecretToFile.mock.calls[0]).toEqual([secretType, secret, fileName])
     expect(core.setOutput.mock.calls[0]).toEqual(["file_path", fileName]);
-    expect(core.saveState.mock.calls[0]).toEqual(["file_path", fileName]);
+    expect(core.saveState.mock.calls[0]).toEqual(["isPost", true]);
+    expect(core.saveState.mock.calls[1]).toEqual(["file_path", fileName]);
 });
 
   function createKeyedFunction(input){
@@ -54,7 +59,6 @@ test('file action', async() => {
           if(key in input){
               return input[key];
           }
-          console.log(input)
           throw  new Error(`key ${key} does not exist`); 
       }
   }
