@@ -2,11 +2,13 @@ const fs = require("fs").promises;
 
 module.exports = async (core, lib) => {
     try {
-        const IsPost = !!process.env['STATE_isPost']
+        const IsPost = core.getState("isPost")
         if (IsPost) {
             await runCleanup(core)
         }
         else {
+            //This is needed for identifying the post action
+            core.saveState("isPost", true)
             await runAction(core, lib)
         }
     
