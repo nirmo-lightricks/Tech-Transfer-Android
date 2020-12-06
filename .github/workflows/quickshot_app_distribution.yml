@@ -82,6 +82,7 @@ jobs:
           app: quickshot
           google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
           google-play-track: ${{github.event.inputs.googlePlayTrack}}
+          flavor: Gms
 
       - name: "Upload to Artifactory"
         if: ${{contains(github.event.inputs.publish, 'archive')}}

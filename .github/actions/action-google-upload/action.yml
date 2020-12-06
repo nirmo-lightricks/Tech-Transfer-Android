@@ -21,6 +21,10 @@ inputs:
     description: >
       track is the target stage for an artifact, i.e. internal/alpha/beta/production or any custom track.
       By default the track is 'internal'.
+  flavor:
+    required: false
+    description: "Optional. Android release flavor (like `Gms` for example)"
+    default: ''
 
 runs:
   using: "composite"
@@ -37,7 +41,7 @@ runs:
       run: mv "${TEMP_GOOGLE_PLAY_SECRET_FILE}" "${TEMP_GOOGLE_PLAY_SECRET_FILE}.json"
 
     - name: "Upload to Google Play"
-      run: ./gradlew :${{ inputs.app }}:publishReleaseApk
+      run: ./gradlew :${{ inputs.app }}:publish${{ inputs.flavor }}ReleaseApk
       shell: bash
       env:
         GOOGLE_PLAY_TRACK: ${{inputs.google-play-track}}
