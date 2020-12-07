@@ -21,12 +21,7 @@ jobs:
           token: ${{ secrets.GITHUBCIPAT }}
           ref: ${{github.event.inputs.testBranch}}
       - name: Setup emulator
-        run: |
-          set -x
-          # Setup new avd every time with --force
-          echo no | avdmanager create avd -n android28 -k "system-images;android-28;default;x86" --force
-          emulator -list-avds
-          emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android28 -memory 2048 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &
+        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
       - name: Tests including large test
         run: ./gradlew buildForPR
       - name: Print adb logcat on failure
@@ -42,12 +37,3 @@ jobs:
             ./**/build/reports/androidTests
             facetune-android/**/build/test-results/**/*.xml
             facetune-android/**/build/reports/androidTests
-
-      - name: Kill emulator
-        if: ${{ always() }}
-        run: |
-          #TODO: Make terminate_emulators.py use adb from PATH, delete env varaible "ADB_HOME"
-          export ADB_HOME=$ANDROID_HOME/platform-tools
-          python3 tools/jenkins/terminate_emulators.py
-
-
