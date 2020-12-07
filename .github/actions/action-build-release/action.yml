@@ -20,6 +20,10 @@ inputs:
     default: ''
     description: "Optional. Android release flavor (like `Gms` for example)"
 
+  buildType:
+    required: false
+    default: 'Release'
+    description: "Can be either Release or DebugMenu"
 runs:
   using: "composite"
   steps:
@@ -33,7 +37,7 @@ runs:
 
     - name: "Build APK in release"
       shell: bash
-      run: ./gradlew :${{inputs.app}}:assemble${{inputs.flavor}}Release
+      run: ./gradlew :${{inputs.app}}:assemble${{inputs.flavor}}${{inputs.buildType}}
 
     - name: "Upload symbols to Crashlytics"
       shell: bash
