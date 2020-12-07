@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
-const IsPost = !!process.env['STATE_isPost']
 
 async function runEmulator() {
     const version = core.getInput("version")
@@ -19,7 +18,11 @@ async function runEmulator() {
 
 async function terminateEmulator() {
     process.env["ADB_HOME"]=process.env["ANDROID_HOME"] + "/platform-tools"
-    await exec("python3 tools/jenkins/terminate_emulators.py")
+    console.log("terminating emulator")
+    const { stdout, stderr } = await exec("python3 tools/jenkins/terminate_emulators.py")
+    console.log(stdout)
+    console.log(stderr)
+
 }
 
 function isNumeric(str) {
@@ -30,12 +33,7 @@ function isNumeric(str) {
 
   async function run () {
     try {
-        if (IsPost) {
-            await terminateEmulator()
-        }
-        else {
-            await runEmulator()
-        }
+        await runEmulator()
 
     } catch (error) {
         core.setFailed(error.message);
