@@ -8,6 +8,7 @@ import logging
 import os
 import signal
 import socket
+import traceback
 from subprocess import run
 from typing import cast
 import requests
@@ -58,18 +59,25 @@ def _mount_device() -> None:
     )
 
 
-def _get_runner_token() -> str:
+def _get_secret_string(secret_name: str) -> str:
     client = secretmanager_v1.SecretManagerServiceClient()
-    secret = "GITHUB_RUNNER_APP_TOKEN"
-    secret_version_path = f"projects/{GCP_PROJECT_ID}/secrets/{secret}/versions/latest"
-    access_token = client.access_secret_version(
+    secret_version_path = (
+        f"projects/{GCP_PROJECT_ID}/secrets/{secret_name}/versions/latest"
+    )
+    secret_value = client.access_secret_version(
         request={"name": secret_version_path}
     ).payload.data.decode("UTF-8")
+    return cast(str, secret_value)
+
+
+def _get_runner_token() -> str:
+    access_token = _get_secret_string("GITHUB_RUNNER_APP_TOKEN")
     headers = {
         "Accept": "application/vnd.github.v3+json",
         "Authorization": f"token {access_token}",
     }
     response = requests.post(API_URL, headers=headers)
+    response.raise_for_status()
     return cast(str, response.json()["token"])
 
 
@@ -108,10 +116,7 @@ def _remove_runner(signal_num: int, stack_frame) -> None:  # type: ignore
     run([CONFIG_COMMAND, "remove", "--token", runner_token], check=True)
 
 
-def startup_script() -> None:
-    """
-    main function which runs the startup seequence
-    """
+def _startup_script() -> None:
     setup_environment()
     signal.signal(signal.SIGINT, _remove_runner)
     signal.signal(signal.SIGTERM, _remove_runner)
@@ -122,5 +127,26 @@ def startup_script() -> None:
     _start_runner()
 
 
+def _slack_exception(exception: Exception, stack_trace: str) -> None:
+    webhook = _get_secret_string("SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK")
+    data = {
+        "text": f"Could not create runner! Got exception {exception}. Stack trace is: {stack_trace} This needs to be fixed immediately"
+    }
+    response = requests.post(webhook, json=data)
+    response.raise_for_status()
+
+
+def run_startup_script() -> None:
+    """
+    main function which runs the startup sequence
+    """
+    try:
+        _startup_script()
+    # pylint: disable=W0703
+    except Exception as exception:
+        stack_trace = traceback.format_exc()
+        _slack_exception(exception, stack_trace)
+
+
 if __name__ == "__main__":
-    startup_script()
+    run_startup_script()

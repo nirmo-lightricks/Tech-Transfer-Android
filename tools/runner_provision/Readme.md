@@ -30,7 +30,7 @@ There are different parts of the process
 * Install gcloud commandline
 
 * set default project as android-ci 
->gcloud config set-value project android-ci-286617
+>gcloud config set project android-ci-286617
 
 * Management of all python modules locally is done through pipenv. Howere it is installed through pip and requirements.txt. 
 So whenever you install  a new python dependency with pipenv don't forget to run 
@@ -42,12 +42,37 @@ This needs to be done at first time
 
 > gcloud services enable secretmanager.googleapis.com
 
-create the secret. Take the "Android Runner App Access Token" secret value from 1password 
+create the secrets. Take the "Android Runner App Access Token" secret value from 1password 
 
 > printf "value of secret"| gcloud secrets create GITHUB_RUNNER_APP_TOKEN --data-file=-
 
+Take the "slack android ci notification webhook" secret value from 1password 
+
+>printf "value of secret"| gcloud secrets create SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK --data-file=-
+
 
 # Creation of the image
+
+## Creation of the secrets
+This section should normally not be run but it may once break.
+
+### Creation of GITHUB_RUNNER_APP_TOKEN
+This command needs to be run: (It may need to be run by barak weiss or another github administrator)
+
+> curl -X POST https://github.com/login/oauth/access_token?client_id=<app_client_id>&client_secret=<app_client_secret>&code=<your_code>
+
+the access token is returned
+
+the parameters are taken from : https://github.com/organizations/Lightricks/settings/apps/androidrunnermanager
+* app_client_id is taken from Client ID field
+* app_client_secret needs to be generated
+* your_code is generated when uninstalling the app and installing again. then code is part of the url
+
+### SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK
+
+It can be taken from https://api.slack.com/apps/A01DCJUBUA3/incoming-webhooks?
+when creating a new web hook (which is unplausible) tthe changed web hook needs to be taken from here
+
 
 ## Creation of the GCP image
 
@@ -55,7 +80,7 @@ create the secret. Take the "Android Runner App Access Token" secret value from 
 Needs just to be done in the first time
 > gcloud iam service-accounts create gh-runner --display-name "Service account which runs the github actions"
 
-Get the description of the secret needed:
+Get the description of the secrets needed:
 
 > gcloud secrets versions describe latest --secret=GITHUB_RUNNER_APP_TOKEN
 
@@ -63,6 +88,13 @@ Add permisssions to this secret:
 > gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner@android-ci-286617.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor --condition="expression=resource.name=='projects/24917401109/secrets/GITHUB_RUNNER_APP_TOKEN/versions/latest',title=Restrict access to GITHUB_RUNNER_APP_TOKEN" 
 
 just change version 1 to latest
+
+> gcloud secrets versions describe latest --secret=SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK
+
+Add permisssions to this secret:
+
+>gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner@android-ci-286617.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor --condition="expression=resource.name=='projects/24917401109/secrets/SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK/versions/latest',title=Restrict access to SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK"
+
 
 ### Creation of service acccount which runs packer
 
@@ -134,26 +166,12 @@ Now add permissions:
 > gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner-admin@android-ci-286617.iam.gserviceaccount.com --role=roles/compute.instanceAdmin.v1 --condition=None
 
 > gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner-admin@android-ci-286617.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser --condition=None
-## Creation of the gcloud run image
-> gcloud builds submit --tag gcr.io/android-ci-286617/gh-runner-admin
 
-## Creation of the gcloud run service
+All the instance creation is done through github actions
 
-> gcloud run deploy gh-runner-admin --image=gcr.io/android-ci-286617/gh-runner-admin --no-allow-unauthenticated --service-account=gh-runner-admin@android-ci-286617.iam.gserviceaccount.com --region=us-central1 --platform=managed
 
-* --no-allow-unauthenticated means that just an authenticated user can run it It is very important to limit to a specific user because otherwise any person could run this cloud run through the http endpoint
+# Diagnosing issues with GCP:
 
-The process will return a service url. In my case it was: https://gh-runner-admin-zwq4vjawda-uc.a.run.app 
-
-## Create the user which invokes the cloud run
-
-> gcloud iam service-accounts create gh-runner-admin-invoker --display-name "Invoker of cloud run gh-runner-admin"
-
-## Giving it the right permissions
-gcloud run services add-iam-policy-binding gh-runner-admin --member=serviceAccount:gh-runner-admin-invoker@android-ci-286617.iam.gserviceaccount.com --role=roles/run.invoker --region=us-central1 --platform=managed
-
-## Creation of the google scheduler service
-
->  gcloud scheduler jobs create http gh-runner-admin-invoker --schedule "01 00 * * *" --http-method=GET --uri=https://gh-runner-admin-zwq4vjawda-uc.a.run.app  --oidc-service-account-email=gh-runner-admin-invoker@android-ci-286617.iam.gserviceaccount.com --oidc-token-audience=https://gh-runner-admin-zwq4vjawda-uc.a.run.app 
-
-Unfortunately this created an app engine app (I hate app engine)
+The instances are at: https://console.cloud.google.com/compute/instances?project=android-ci-286617&instancessize=50
+* Login into the problematic machine through ssh
+* The interesting logs are /var/log/supervisor/ for supervisord and /actions_runner/_diag/ for github actions runner
