@@ -3,15 +3,16 @@ This module decides which projects pr tests are run with gradle
 """
 # Copyright (c) 2020 Lightricks. All rights reserved.
 # Created by Geva Kipper.
-import json
 import logging
-import networkx as nx  # type: ignore
 import os
+import re
 import sys
-from github import Github
-from gradle_build import execute_gradle
 from subprocess import run
 from typing import Set
+import networkx as nx  # type: ignore
+from github import Github
+from gradle_build import execute_gradle
+from project_modules import get_application_dirs, get_module_dirs
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
@@ -64,33 +65,39 @@ def _get_modified_dirs(
     return modified_dirnames
 
 
-def _get_project_dependencies() -> nx.DiGraph:
-    command_res = run(
-        [
-            "./gradlew",
-            "-q",
-            "printDependencies",
-        ],
+def _get_module_dependencies(module: str) -> Set[str]:
+    pattern = re.compile(r"--- :([\w-]+)")
+    cmd = run(
+        ["./gradlew", "-q", f"{module}:androidDependencies"],
         capture_output=True,
-        check=True,
         text=True,
+        check=True,
     )
-    lines = command_res.stdout.splitlines()
-    project_dependencies = [json.loads(line) for line in lines if line.startswith("{")]
+    match_gen = (pattern.search(line) for line in cmd.stdout.splitlines())
+    dependencies = {match.groups()[0] for match in match_gen if match} - {module}
+    return dependencies
+
+
+def _get_project_dependencies() -> nx.DiGraph:
+    all_modules = set(get_module_dirs())
+    project_dependencies = {
+        module: _get_module_dependencies(module) for module in all_modules
+    }
     graph = nx.DiGraph()
-    graph.add_nodes_from(
-        project_dependency["name"] for project_dependency in project_dependencies
-    )
+    graph.add_nodes_from(all_modules)
     dependencies_gen = (
-        (project_dependency["name"], dependency)
-        for project_dependency in project_dependencies
-        for dependency in project_dependency["dependencies"]
+        (module, dependency)
+        for module in project_dependencies
+        for dependency in project_dependencies[module]
     )
     graph.add_edges_from(dependencies_gen)
     return graph
 
 
 def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
+    application_dirs = set(get_application_dirs())
+    if modified_dirs.issubset(application_dirs):
+        return modified_dirs
     dependency_graph = _get_project_dependencies()
     all_modules = set(dependency_graph.nodes)
     # if there are non gradle directories we cannot know the impact of the change
@@ -123,10 +130,11 @@ def main() -> int:
     if not build_tasks:
         logging.info("Nothing to execute")
         return 0
+    # pylint: disable=C0301
     gradle_arguments = [
-                           "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest",
-                           "clean",
-                       ] + build_tasks
+        "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest",
+        "clean",
+    ] + build_tasks
     return execute_gradle(gradle_arguments, [])
 
 
