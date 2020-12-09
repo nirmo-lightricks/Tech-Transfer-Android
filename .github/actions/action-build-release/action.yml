@@ -38,7 +38,3 @@ runs:
     - name: "Build APK in release"
       shell: bash
       run: ./gradlew :${{inputs.app}}:assemble${{inputs.flavor}}${{inputs.buildType}}
-
-    - name: "Upload symbols to Crashlytics"
-      shell: bash
-      run: ./gradlew :${{inputs.app}}:uploadCrashlyticsSymbolFile${{inputs.flavor}}Release

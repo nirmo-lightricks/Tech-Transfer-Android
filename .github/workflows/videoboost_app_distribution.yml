@@ -70,6 +70,11 @@ jobs:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
           app: swish
 
+      - name: "Upload native symbol file to crashlytics"
+        uses: Lightricks/facetune-android/.github/actions/action-crashlytics-release-symbol-upload@develop
+        with:
+          app: swish
+
       - name: "Upload to FirebaseDistribution"
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
         uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
