@@ -1,4 +1,4 @@
-name: 'Build APK/Bundle in release mode'
+name: 'Upload the symbols to Crashlytics'
 description: This action uploads the crashlytics symbol file
 
 inputs:
