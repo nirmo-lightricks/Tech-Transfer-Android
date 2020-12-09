@@ -41,7 +41,7 @@ runs:
       run: mv "${TEMP_GOOGLE_PLAY_SECRET_FILE}" "${TEMP_GOOGLE_PLAY_SECRET_FILE}.json"
 
     - name: "Upload to Google Play"
-      run: ./gradlew :${{ inputs.app }}:publish${{ inputs.flavor }}ReleaseApk
+      run: ./gradlew :${{ inputs.app }}:publish${{ inputs.flavor }}ReleaseBundle
       shell: bash
       env:
         GOOGLE_PLAY_TRACK: ${{inputs.google-play-track}}

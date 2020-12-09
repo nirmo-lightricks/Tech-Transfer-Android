@@ -1,10 +1,11 @@
-name: 'Build APK/Bundle in release mode'
+name: 'Build Bundle and APK in release mode'
 description: >
   The purpose of this action is a safe environment for executing your gradle tasks.
   The tasks:
     1) Cleans the environment using `./gradlew clean` before the compilation.
-    2) Builds an APK in release mode.
-    3) Upload the symbols file to Crashlytics.
+    2) Builds a Bundle in release mode.
+    3) Generate APK file from the Bundle.
+    4) Upload the symbols file to Crashlytics.
 
 inputs:
   technical-version:
@@ -35,6 +36,10 @@ runs:
       shell: bash
       run: ./gradlew clean
 
-    - name: "Build APK in release"
+    - name: "Build Bundle in release"
       shell: bash
-      run: ./gradlew :${{inputs.app}}:assemble${{inputs.flavor}}${{inputs.buildType}}
+      run: ./gradlew :${{inputs.app}}:bundle${{inputs.flavor}}${{inputs.buildType}}
+
+    - name: "Create APK from Bundle"
+      shell: bash
+      run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py ${{inputs.app}}
