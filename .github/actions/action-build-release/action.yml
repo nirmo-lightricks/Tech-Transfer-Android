@@ -43,7 +43,3 @@ runs:
     - name: "Create APK from Bundle"
       shell: bash
       run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py ${{inputs.app}}
-
-    - name: "Upload symbols to Crashlytics"
-      shell: bash
-      run: ./gradlew :${{inputs.app}}:uploadCrashlyticsSymbolFile${{inputs.flavor}}Release
