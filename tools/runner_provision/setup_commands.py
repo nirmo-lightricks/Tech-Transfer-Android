@@ -65,6 +65,7 @@ def _install_android_sdk() -> None:
         "platforms;android-29",
         "platform-tools",
         "system-images;android-28;default;x86",
+        "system-images;android-29;default;x86",
     ]
     logging.info("installing android sdk parts %s", sdk_components)
     sdkmanager_command = (_cmdline_tools() / "tools/bin/sdkmanager").absolute()
