@@ -115,7 +115,7 @@ def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
     return dependent_modules | modified_modules
 
 
-def main() -> int:
+def modules_to_build() -> Set[str]:
     """
     This function decides which modules tests are run
     """
@@ -124,9 +124,13 @@ def main() -> int:
     repo = os.environ[GHPRB_REPO_ENV]
     pr_id = os.environ[GHPRB_PR_ID_ENV]
     modified_dirs = _get_modified_dirs(username, password, repo, pr_id)
-    modules_to_build = _get_modules_to_build(modified_dirs)
+    return _get_modules_to_build(modified_dirs)
 
-    build_tasks = [f":{module}:{GRADLE_PR_TASK_NAME}" for module in modules_to_build]
+
+def main() -> int:
+    modules = modules_to_build()
+
+    build_tasks = [f":{module}:{GRADLE_PR_TASK_NAME}" for module in modules]
     if not build_tasks:
         logging.info("Nothing to execute")
         return 0

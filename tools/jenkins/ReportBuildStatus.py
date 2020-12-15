@@ -10,6 +10,8 @@ import MarkdownUtils
 import TestReport
 import CompilationReport
 import github_message as message
+import build_modified_modules_v2
+import logging
 
 TESTS_SIGNATURE = "generated_by_comment_test_failures_script"
 
@@ -38,7 +40,11 @@ if __name__ == "__main__":
     workspace = args.workspace_dir
 
     entries = collect_entries(workspace)
-    report = BuildReport.report_markdown(entries)
+    modules_that_should_be_built = build_modified_modules_v2.modules_to_build()
+
+    built_modules_entries = filter(lambda x: x.module in modules_that_should_be_built, entries)
+    report = BuildReport.report_markdown(built_modules_entries)
+
 
     tests_signature = MarkdownUtils.hidden_html_tag(TESTS_SIGNATURE)
     message.post_comment_on_current_pr(tests_signature + report, tests_signature)
