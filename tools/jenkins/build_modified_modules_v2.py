@@ -38,6 +38,12 @@ THIRD_PARTY_MODULES = {
     "facetune-android",
 }
 
+# list of modules that contain only assets.
+# those module don't have any dependencies and don't need to be build
+ASSET_MODULES = {
+    "facetune_asset_packs"
+}
+
 GRADLE_PR_TASK_NAME = "buildForPR"
 
 
@@ -66,6 +72,8 @@ def _get_modified_dirs(
 
 
 def _get_module_dependencies(module: str) -> Set[str]:
+    if module in ASSET_MODULES:
+        return {}
     pattern = re.compile(r"--- :([\w-]+)")
     cmd = run(
         ["./gradlew", "-q", f"{module}:androidDependencies"],
