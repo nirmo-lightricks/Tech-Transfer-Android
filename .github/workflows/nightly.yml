@@ -21,6 +21,12 @@ jobs:
         run: ./gradlew clean
       - name: Gradle Bundle Release
         run: ./gradlew bundleRelease
+      - name: Post failure to slack
+        if: ${{ failure() }}
+        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        with:
+          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID
+          webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
   run_tests:
     name: "Run all tests including the large ones"
     runs-on: android
@@ -44,8 +50,10 @@ jobs:
         run: adb logcat -d
       - name: Post failure to slack
         if: ${{ failure() }}
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/'$GITHUB_RUN_ID'"}' ${{secrets.CI_NOTIFICATION_WEBHOOK}}
+        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        with:
+          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID
+          webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
       - name: Upload unit-test logs to GitHub
         if: ${{ failure()}}
         uses: actions/upload-artifact@v2
