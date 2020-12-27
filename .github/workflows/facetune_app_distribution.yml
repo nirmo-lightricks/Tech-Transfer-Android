@@ -53,7 +53,7 @@ jobs:
       - name: Upload symbol file with gradle
         run: ./gradlew :facetune:uploadCrashlyticsSymbolFileGmsRelease
       - name: Create APK from Bundle
-        run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py facetune
+        run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py facetune release -f gms
       - name: Archive upload
         if: ${{contains(github.event.inputs.publish, 'archive')}}
         run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py facetune google $TECHNICAL_VERSION

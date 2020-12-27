@@ -8,32 +8,22 @@ import zipfile
 from glob import glob
 from os import environ
 from pathlib import Path
-from re import finditer
 from subprocess import run
-from typing import List
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 
-def _camel_case_split(identifier: str) -> List[str]:
-    """
-    split on camel case taken from brilliant answer: https://stackoverflow.com/a/29920015/2343743
-    """
-    matches = finditer(
-        ".+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)", identifier
-    )
-    return [m.group(0) for m in matches]
+def _first_char_lowercase(text: str) -> str:
+    if not text:
+        return text
+    return text[0].lower() + text[1:]
 
 
-def _get_required_apk_dir(bundle_dir: Path, apk_base_dir: Path, aab_file: Path) -> Path:
-    aab_file_parts = aab_file.relative_to(bundle_dir).parts
-    if len(aab_file_parts) != 2:
-        raise Exception(
-            "the assumed structure should be flavor/aabFile but is {aab_file_parts}"
-        )
-    segments = [
-        name[0].lower() + name[1:] for name in _camel_case_split(aab_file_parts[0])
-    ]
+def _get_required_apk_dir(apk_base_dir: Path, flavor: str, build_type: str) -> Path:
+    if flavor:
+        segments = [flavor, build_type]
+    else:
+        segments = [build_type]
     return Path(apk_base_dir, *segments)
 
 
@@ -62,7 +52,6 @@ def _run_bundle_command(aab_file: Path, apks_file: Path) -> None:
     run(command, check=True)
 
 
-# pylint:disable=C0330
 def _extract_apk(apks_file: Path, apk_file: Path) -> None:
     logging.info("Extracting apk %s from apks %s", apk_file, apks_file)
     with zipfile.ZipFile(apks_file) as apks_fh:
@@ -72,7 +61,7 @@ def _extract_apk(apks_file: Path, apk_file: Path) -> None:
             shutil.copyfileobj(universal_fh, apk_fh)
 
 
-def run_bundletool(base_dir: str) -> None:
+def run_bundletool(base_dir: str, build_type: str, flavor: str) -> None:
     """
     Main function which runs the whole workflow
     """
@@ -82,7 +71,7 @@ def run_bundletool(base_dir: str) -> None:
     aab_file = _get_aab_file(bundle_dir)
     logging.info("bundle file is %s", aab_file)
     apk_dir = _get_required_apk_dir(
-        bundle_dir=bundle_dir, apk_base_dir=apk_base_dir, aab_file=aab_file
+        apk_base_dir=apk_base_dir, flavor=flavor, build_type=build_type
     )
     logging.info("apk dir is %s", apk_dir)
     apk_file_stem = apk_dir / f"{aab_file.stem}"
@@ -96,5 +85,18 @@ def run_bundletool(base_dir: str) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("app", help="The application we want to add to dist")
+    parser.add_argument(
+        "build_type", help="The build type. For example release or debugMenu"
+    )
+    # pylint:disable=C0301
+    parser.add_argument(
+        "-f",
+        "--flavor",
+        nargs="?",
+        const="",
+        help="flavor of application. For example gms or china. If no flavor is used pass an empty string",
+    )
     args = parser.parse_args()
-    run_bundletool(args.app)
+    build_type_arg = _first_char_lowercase(args.build_type)
+    flavor_arg = _first_char_lowercase(args.flavor)
+    run_bundletool(args.app, build_type_arg, flavor_arg)

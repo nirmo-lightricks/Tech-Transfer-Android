@@ -12,6 +12,11 @@ on:
         required: true
         default: 'develop'
 
+      flavor:
+        required: false
+        description: "For applications with flavors. For example Quickshot have to specify Gms"
+        default: ''
+
       app:
         description: App to be built. Need to be the same as the module name. For example swish
         required: true
@@ -31,7 +36,7 @@ on:
 
 jobs:
   distribution:
-    name: "VideoBoost for Debug Menu builds"
+    name: "Debug Menu builds"
     runs-on: android
     steps:
       - name: Clone repo
@@ -45,25 +50,32 @@ jobs:
 
       - name: "Set technical version"
         id: technical_version
-        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@develop
+        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@AI-128
 
       - name: "Set KeyStore"
-        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@develop
+        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@AI-128
         with:
           base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
 
+      - name: "Get firebase secret"
+        run: |
+          echo 'FIREBASE_SECRET_NAME='`python3 tools/runner_provision/debug_menu/get_debugmenu_secret_name.py ${{github.event.inputs.app}}` >> $GITHUB_ENV
+
       - name: "Build APK in Debug Menu mode"
-        uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
+        uses: Lightricks/facetune-android/.github/actions/action-build-release@AI-128
         with:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
-          app: swish
+          app: ${{github.event.inputs.app}}
+          flavor:  ${{github.event.inputs.flavor}}
           buildType: DebugMenu
 
       - name: "Upload to FirebaseDistribution"
-        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
+        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@AI-128
         with:
           app: ${{github.event.inputs.app}}
-          firebase-secret: ${{secrets.VIDEOBOOST_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
+          buildType: DebugMenu
+          flavor:  ${{github.event.inputs.flavor}}
+          firebase-secret: ${{ secrets[env.FIREBASE_SECRET_NAME] }}
           firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
           firebase-app-distribution-release-notes: ${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
 

@@ -31,6 +31,11 @@ inputs:
     description: "Optional. Android release flavor (like `Gms` for example)"
     default: ''
 
+  buildType:
+    required: false
+    default: 'Release'
+    description: "Can be either Release or DebugMenu"
+
 runs:
   using: "composite"
   steps:
@@ -45,7 +50,7 @@ runs:
       run: echo 'FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES=${{inputs.firebase-app-distribution-release-notes}}' >> $GITHUB_ENV
 
     - name: "Upload to Firebase"
-      run: ./gradlew :${{ inputs.app }}:appDistributionUpload${{ inputs.flavor }}Release
+      run: ./gradlew :${{ inputs.app }}:appDistributionUpload${{ inputs.flavor }}${{inputs.buildType}}
       shell: bash
       env:
         FIREBASE_APP_DISTRIBUTION_GROUPS: ${{inputs.firebase-app-distribution-groups}}

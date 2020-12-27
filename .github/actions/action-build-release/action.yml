@@ -42,4 +42,4 @@ runs:
 
     - name: "Create APK from Bundle"
       shell: bash
-      run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py ${{inputs.app}}
+      run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py ${{inputs.app}} ${{inputs.buildType}} -f ${{inputs.flavor}}
