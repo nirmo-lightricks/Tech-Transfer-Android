@@ -8,11 +8,11 @@ import os
 import re
 import sys
 from subprocess import run
-from typing import Set
+from typing import List, Set
 import networkx as nx  # type: ignore
 from github import Github
 from gradle_build import execute_gradle
-from project_modules import get_application_dirs, get_module_dirs
+from project_modules import get_project_modules, ModuleType, ProjectModule
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
@@ -36,12 +36,6 @@ THIRD_PARTY_MODULES = {
     "opencv-android",
     "sdk",
     "facetune-android",
-}
-
-# list of modules that contain only assets.
-# those module don't have any dependencies and don't need to be build
-ASSET_MODULES = {
-    "facetune_asset_packs"
 }
 
 GRADLE_PR_TASK_NAME = "buildForPR"
@@ -71,28 +65,35 @@ def _get_modified_dirs(
     return modified_dirnames
 
 
-def _get_module_dependencies(module: str) -> Set[str]:
-    if module in ASSET_MODULES:
-        return {}
-    pattern = re.compile(r"--- :([\w-]+)")
+def _get_application_dependencies(module: str) -> Set[str]:
     cmd = run(
-        ["./gradlew", "-q", f"{module}:androidDependencies"],
+        [
+            "./gradlew",
+            "-q",
+            f"{module}:dependencies",
+        ],
         capture_output=True,
-        text=True,
         check=True,
+        text=True,
     )
+    pattern = re.compile(r"--- :([\w-]+)")
     match_gen = (pattern.search(line) for line in cmd.stdout.splitlines())
     dependencies = {match.groups()[0] for match in match_gen if match} - {module}
     return dependencies
 
 
-def _get_project_dependencies() -> nx.DiGraph:
-    all_modules = set(get_module_dirs())
+def _get_module_dependencies(module: ProjectModule) -> Set[str]:
+    if module.module_type == ModuleType.ASSET:
+        return set()
+    return _get_application_dependencies(module.name)
+
+
+def _get_project_dependencies(project_modules: List[ProjectModule]) -> nx.DiGraph:
     project_dependencies = {
-        module: _get_module_dependencies(module) for module in all_modules
+        module.name: _get_module_dependencies(module) for module in project_modules
     }
     graph = nx.DiGraph()
-    graph.add_nodes_from(all_modules)
+    graph.add_nodes_from(module.name for module in project_modules)
     dependencies_gen = (
         (module, dependency)
         for module in project_dependencies
@@ -103,16 +104,27 @@ def _get_project_dependencies() -> nx.DiGraph:
 
 
 def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
-    application_dirs = set(get_application_dirs())
+    project_modules = get_project_modules()
+    application_dirs = {
+        module.name
+        for module in project_modules
+        if module.module_type == ModuleType.APPLICATION
+    }
     if modified_dirs.issubset(application_dirs):
         return modified_dirs
-    dependency_graph = _get_project_dependencies()
+    dependency_graph = _get_project_dependencies(project_modules)
+    asset_modules = {
+        module.name
+        for module in project_modules
+        if module.module_type == ModuleType.ASSET
+    }
     all_modules = set(dependency_graph.nodes)
+    all_buildable_modules = all_modules - asset_modules
     # if there are non gradle directories we cannot know the impact of the change
     # so we run all modules
     if modified_dirs - all_modules:
-        return all_modules
-    modified_modules = set(dependency_graph.nodes) & modified_dirs
+        return all_buildable_modules
+    modified_modules = all_buildable_modules & modified_dirs
     logging.info("modified modules are %s", modified_modules)
     dependent_modules = {
         ancestor
@@ -136,6 +148,9 @@ def modules_to_build() -> Set[str]:
 
 
 def main() -> int:
+    """
+    main function which runs the pr logic
+    """
     modules = modules_to_build()
 
     build_tasks = [f":{module}:{GRADLE_PR_TASK_NAME}" for module in modules]
