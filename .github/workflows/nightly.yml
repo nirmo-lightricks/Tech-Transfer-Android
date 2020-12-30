@@ -45,6 +45,8 @@ jobs:
         uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
       - name: Tests including large test
         run: ./gradlew buildForPR
+      - name: Run all python unit tests
+        run: python3 -m unittest discover -s tools/jenkins
       - name: Print adb logcat on failure
         if: ${{ failure() }}
         run: adb logcat -d

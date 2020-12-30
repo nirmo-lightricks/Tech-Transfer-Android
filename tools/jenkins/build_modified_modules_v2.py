@@ -76,7 +76,7 @@ def _get_application_dependencies(module: str) -> Set[str]:
         check=True,
         text=True,
     )
-    pattern = re.compile(r"--- :([\w-]+)")
+    pattern = re.compile(r"--- project :([\w-]+)")
     match_gen = (pattern.search(line) for line in cmd.stdout.splitlines())
     dependencies = {match.groups()[0] for match in match_gen if match} - {module}
     return dependencies
@@ -124,7 +124,7 @@ def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
     # so we run all modules
     if modified_dirs - all_modules:
         return all_buildable_modules
-    modified_modules = all_buildable_modules & modified_dirs
+    modified_modules = all_modules & modified_dirs
     logging.info("modified modules are %s", modified_modules)
     dependent_modules = {
         ancestor
@@ -132,7 +132,7 @@ def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
         for ancestor in nx.ancestors(dependency_graph, modified_module)
     }
     logging.info("dependent_modules are %s", dependent_modules)
-    return dependent_modules | modified_modules
+    return (dependent_modules | modified_modules) & all_buildable_modules
 
 
 def modules_to_build() -> Set[str]:
