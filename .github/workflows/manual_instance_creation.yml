@@ -19,6 +19,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: develop
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Run instance creation
         uses: Lightricks/facetune-android/.github/actions/action-create-gcp-runner@develop
         with:
