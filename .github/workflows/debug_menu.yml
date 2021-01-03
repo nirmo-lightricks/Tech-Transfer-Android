@@ -45,6 +45,8 @@ jobs:
       - name: "Set technical version"
         id: technical_version
         uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@AI-128
+        with:
+          offset: 1000000
 
       - name: "Set KeyStore"
         uses: Lightricks/facetune-android/.github/actions/action-create-keystore@AI-128

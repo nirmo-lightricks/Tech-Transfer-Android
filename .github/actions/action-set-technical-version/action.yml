@@ -1,6 +1,12 @@
 name: 'Set build technical version'
 description: >
   Place the current technical version into $TECHNICAL_VERSION (environment variable).
+inputs:
+  offset:
+    required: false
+    description: Offset of the build.
+    default: 1200
+
 outputs:
   techinal-version:
     description: >
@@ -15,4 +21,5 @@ runs:
       shell: bash
       env:
         NUM: ${{ github.run_number }}
-      run: echo ::set-output name=techinal_version::$(($NUM+1200))
+        OFFSET: ${{ inputs.offset }}
+      run: echo ::set-output name=techinal_version::$(($NUM+$OFFSET))
