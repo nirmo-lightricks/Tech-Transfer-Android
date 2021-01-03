@@ -7,11 +7,6 @@ env:
 on:
   workflow_dispatch:
     inputs:
-      buildBranch:
-        description: 'From which branch the release is built'
-        required: true
-        default: 'develop'
-
       publish:
         description: >
           Select where to publish this build, if successful.
@@ -48,7 +43,6 @@ jobs:
           submodules: recursive
           # To access submodules in Lightricks repo, we need a personal access token
           token: ${{ secrets.GITHUBCIPAT }}
-          ref: ${{github.event.inputs.buildBranch}}
 
       - name: "Set technical version"
         id: technical_version

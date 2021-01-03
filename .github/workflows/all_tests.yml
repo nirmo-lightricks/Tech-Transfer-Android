@@ -1,11 +1,5 @@
 name: Run all tests on demand
-on:
-  workflow_dispatch:
-    inputs:
-      testBranch:
-        description: 'On which branch to run the tests'
-        required: true
-        default: 'develop'
+on: workflow_dispatch
 
 jobs:
   run_all_tests:
@@ -19,7 +13,6 @@ jobs:
           submodules: recursive
           # To access submodules in Lightricks repo, we need a personal access token
           token: ${{ secrets.GITHUBCIPAT }}
-          ref: ${{github.event.inputs.testBranch}}
       - name: Setup emulator
         uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
       - name: Tests including large test
