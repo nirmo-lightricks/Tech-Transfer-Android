@@ -44,12 +44,12 @@ jobs:
 
       - name: "Set technical version"
         id: technical_version
-        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@AI-128
+        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@develop
         with:
           offset: 1000000
 
       - name: "Set KeyStore"
-        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@AI-128
+        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@develop
         with:
           base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
 
@@ -58,7 +58,7 @@ jobs:
           echo 'FIREBASE_SECRET_NAME='`python3 tools/runner_provision/debug_menu/get_debugmenu_secret_name.py ${{github.event.inputs.app}}` >> $GITHUB_ENV
 
       - name: "Build APK in Debug Menu mode"
-        uses: Lightricks/facetune-android/.github/actions/action-build-release@AI-128
+        uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
         with:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
           app: ${{github.event.inputs.app}}
@@ -66,7 +66,7 @@ jobs:
           buildType: DebugMenu
 
       - name: "Upload to FirebaseDistribution"
-        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@AI-128
+        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
         with:
           app: ${{github.event.inputs.app}}
           buildType: DebugMenu
