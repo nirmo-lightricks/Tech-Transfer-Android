@@ -25,7 +25,7 @@ jobs:
         if: ${{ failure() }}
         uses: Lightricks/facetune-android/.github/actions/action-slack@develop
         with:
-          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID
+          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{env.GITHUB_RUN_ID}}
           webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
   run_tests:
     name: "Run all tests including the large ones"
@@ -54,7 +54,7 @@ jobs:
         if: ${{ failure() }}
         uses: Lightricks/facetune-android/.github/actions/action-slack@develop
         with:
-          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/$GITHUB_RUN_ID
+          text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{env.GITHUB_RUN_ID}}
           webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
       - name: Upload unit-test logs to GitHub
         if: ${{ failure()}}
