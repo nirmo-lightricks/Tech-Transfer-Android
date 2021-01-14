@@ -8,16 +8,24 @@ on:
   workflow_dispatch:
     inputs:
       publish:
-        description: 'Select where to publish this build, if successful. <p>archive - Saved under <code>/Artifacts/Facetune Android/</code> on skydive and <code>Lightriks/Tech/Artifacts/Facetune Android</code> on Google Drive.</p><p>firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.</p>'
+        description: >
+          Select where to publish this build, if successful.
+          archive - Saved under "Artifactory" (under android-apps-local)
+          firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.
+          Google play - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
         required: true
         default: 'firebase,archive'
+
       firebaseAppDistributionGroups:
-        description: 'The tester groups you want to distribute builds to (see Manage testers in Firebase Console). Groups are specified using group aliases, which you can find in the Testers tab in the Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.'
+        description: >
+          The tester groups you want to distribute builds to (see Manage testers in Firebase Console).
+          Groups are specified using group aliases, which you can find in the Testers tab in the
+          Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
         required: false
         default: 'internal-testers'
-  
+
 jobs:
-  facetune_distribution:
+  distribution:
     name: "Facetune for Android release builds"
     runs-on: android
     steps:
@@ -28,39 +36,46 @@ jobs:
           submodules: recursive
           # To access submodules in Lightricks repo, we need a personal access token
           token: ${{ secrets.GITHUBCIPAT }}
-      - name: Set technical version
-        env:
-          NUM: ${{ github.run_number }}
-        run: echo TECHNICAL_VERSION=$(($NUM+1200)) >> $GITHUB_ENV
-      - run: echo $TECHNICAL_VERSION
-      - name: Set FIREBASE_APPLICATION_CREDENTIALS
-        run: echo 'FIREBASE_APPLICATION_CREDENTIALS='`python3 tools/runner_provision/secret_file_utils.py env2text SEC` >> $GITHUB_ENV
-        env:
-          SEC: ${{secrets.FACETUNE_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
-      - name: Set KEYSTORE
-        run: echo 'KEYSTORE='`python3 tools/runner_provision/secret_file_utils.py text2bin SEC` >> $GITHUB_ENV
-        env:
-          SEC: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
-      - name: Gradle Clean
-        run: ./gradlew clean
-      - name: Gradle Bundle Release
-        run: ./gradlew :facetune:bundleGmsRelease
-      - name: Upload symbol file with gradle
-        run: ./gradlew :facetune:uploadCrashlyticsSymbolFileGmsRelease
-      - name: Create APK from Bundle
-        run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py facetune release -f gms
-      - name: Archive upload
-        if: ${{contains(github.event.inputs.publish, 'archive')}}
-        run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py facetune google $TECHNICAL_VERSION
-        env:
-          ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
-      - name: Firebase upload
+
+      - name: "Set technical version"
+        id: technical_version
+        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@develop
+
+      - name: "Set KeyStore"
+        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@develop
+        with:
+          base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
+
+      - name: "Build binaries in Release mode"
+        uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
+        with:
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          app: facetune
+          flavor: Gms
+
+      - name: "Upload native symbol file to crashlytics"
+        uses: Lightricks/facetune-android/.github/actions/action-crashlytics-release-symbol-upload@develop
+        with:
+          app: facetune
+          flavor: Gms
+
+      - name: "Upload to FirebaseDistribution"
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
-        run: ./gradlew :facetune:appDistributionUploadGmsRelease
-        env:
-          FIREBASE_APP_DISTRIBUTION_GROUPS: ${{github.event.inputs.firebaseAppDistributionGroups}}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{env.FIREBASE_APPLICATION_CREDENTIALS}}
-      - name: Cleanup
+        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
+        with:
+          app: facetune
+          firebase-secret: ${{secrets.FACETUNE_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
+          firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          flavor: Gms
+
+      - name: "Upload to Artifactory"
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
+        uses: Lightricks/facetune-android/.github/actions/action-archive-artifactory@develop
+        with:
+          app: facetune
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+      - name: "Cleanup"
         if: ${{always()}}
-        run: rm $KEYSTORE $FIREBASE_APPLICATION_CREDENTIALS
-        
+        run: rm ${{env.KEYSTORE}}
