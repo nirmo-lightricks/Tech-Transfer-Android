@@ -13,8 +13,32 @@ on:
         default: 'archive'
 
 jobs:
+  test:
+    name: "Facetune App tests"
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: Setup emulator
+        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
+        with:
+          version: 29
+
+      - name: "Run tests"
+        id: app_test
+        uses: Lightricks/facetune-android/.github/actions/action-app-tests@develop
+        with:
+          app: facetune
+
   facetune_distribution:
     name: "Facetune China for Android release builds"
+    needs: test
     runs-on: android
     strategy:
       matrix:
