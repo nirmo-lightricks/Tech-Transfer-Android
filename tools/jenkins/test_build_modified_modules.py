@@ -31,7 +31,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_asset_pack(self):
         modules = _get_modules_to_build({"facetune_asset_packs"})
-        self.assertEqual({"facetune"}, modules)
+        self.assertEqual({"facetune", "facetune_asset_packs"}, modules)
 
     def test_non_module(self):
         modules = _get_modules_to_build({"tools"})

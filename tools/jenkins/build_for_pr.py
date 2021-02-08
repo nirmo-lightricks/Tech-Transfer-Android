@@ -2,7 +2,7 @@
 This module runs the buildForPr tasks
 """
 import logging
-from typing import Iterable
+from typing import Iterable, List, Set
 from gradle_build import execute_gradle
 from project_modules import get_project_modules, ModuleType
 
@@ -20,17 +20,28 @@ def run_build_for_pr(modules: Iterable[str], include_large_tests: bool) -> None:
         for module in project_modules
         if module.module_type == ModuleType.ASSET
     }
-    buildable_modules = (module for module in modules if module not in asset_modules)
+    gradle_arguments = _get_gradle_arguments(modules, include_large_tests, asset_modules)
+    # if no gradle arguments are given i have nothing to run
+    if gradle_arguments:
+        execute_gradle(gradle_arguments, [])
+
+
+def _get_gradle_arguments(
+    modules: Iterable[str], include_large_tests: bool, asset_modules: Set[str]
+) -> List[str]:
+    buildable_modules = sorted(
+        module for module in modules if module not in asset_modules
+    )
     build_tasks = [f":{module}:{GRADLE_PR_TASK_NAME}" for module in buildable_modules]
     if not build_tasks:
         logging.info("Nothing to execute")
-        return
+        return []
     # pylint: disable=C0301
-    if include_large_tests:
-        gradle_arguments = ["clean"] + build_tasks
-    else:
-        gradle_arguments = [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest",
-            "clean",
-        ] + build_tasks
-    execute_gradle(gradle_arguments, [])
+    gradle_filters = (
+        []
+        if include_large_tests
+        else [
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest"
+        ]
+    )
+    return gradle_filters + ["clean"] + build_tasks
