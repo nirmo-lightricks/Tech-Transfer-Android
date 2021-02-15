@@ -1,0 +1,16 @@
+name: Nightly boosted build
+on: workflow_dispatch
+
+jobs:
+  assemble_and_test:
+    name: Run boosted nightly
+    # This job runs on our self-hosted linux runners, labeled 'android'
+    runs-on: android
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
