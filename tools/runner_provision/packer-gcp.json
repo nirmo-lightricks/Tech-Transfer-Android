@@ -1,4 +1,7 @@
 {
+  "variables": {
+    "image_name": "github-action-runner-v1"
+  },
   "builders": [
     {
       "type": "googlecompute",
@@ -10,7 +13,7 @@
       "image_licenses": [
         "projects/vm-options/global/licenses/enable-vmx"
       ],
-      "image_name": "github-action-runner-v1",
+      "image_name": "{{user `image_name`}}",
       "image_family": "action-runner",
       "scopes": [
         "https://www.googleapis.com/auth/cloud-platform"

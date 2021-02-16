@@ -1,6 +1,7 @@
 """
 these are the constants controlling the proviision and startup script
 """
+from enum import Enum
 from os import environ
 from pathlib import Path
 
@@ -14,14 +15,12 @@ CONFIG_COMMAND = GH_RUNNER_PATH / "config.sh"
 MOUNT_PATH = Path("/mnt/disks/sdb")
 MOUNT_DEVICE = "/dev/sdb"
 RUNNER_WORKDIR = MOUNT_PATH / "runner_workspace"
-LABELS = "android,gcloud"
 SHORT_URL = "https://github.com/Lightricks"
 
 API_URL = "https://api.github.com/orgs/Lightricks/actions/runners/registration-token"
 
 GCP_PROJECT_ID = "android-ci-286617"
 GCP_ZONE = "us-central1-a"
-GCP_IMAGE_NAME = "github-action-runner-v1"
 
 
 def setup_environment() -> None:
@@ -39,3 +38,17 @@ def setup_environment() -> None:
         "RUNNER_ALLOW_RUNASROOT": "1",
     }
     environ.update(env_variables)
+
+
+class GcpEnvironment(Enum):
+    """
+    Enum of all data which is different between staging and production
+    """
+
+    PRODUCTION = ("github-action-runner-v1", "android,gcloud", "production")
+    STAGING = ("github-action-runner-staging", "android_staging,gcloud", "staging")
+
+    def __init__(self, image_name, github_runner_labels, gcp_prefix)->None:
+        self.image_name = image_name
+        self.github_runner_labels = github_runner_labels
+        self.gcp_prefix = gcp_prefix

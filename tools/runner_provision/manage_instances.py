@@ -8,7 +8,7 @@ import logging
 import time
 from typing import List, Dict, cast
 from googleapiclient.discovery import build, Resource  # type: ignore
-from constants import GCP_PROJECT_ID, GCP_ZONE, GCP_IMAGE_NAME
+from constants import GCP_PROJECT_ID, GCP_ZONE, GcpEnvironment
 
 MACHINE_PREFIX = "gh-runner"
 
@@ -27,9 +27,11 @@ def _get_old_instances(compute: Resource) -> List[Dict[str, str]]:
     ]
 
 
-def _create_instance(compute: Resource, image_name: str) -> Dict[str, str]:
+def _create_instance(
+    compute: Resource, image_name: str, gcp_image_name: str
+) -> Dict[str, str]:
     image_response = (
-        compute.images().get(project=GCP_PROJECT_ID, image=GCP_IMAGE_NAME).execute()
+        compute.images().get(project=GCP_PROJECT_ID, image=gcp_image_name).execute()
     )
     source_disk_image = image_response["selfLink"]
     machine_type = f"zones/{GCP_ZONE}/machineTypes/n2-standard-4"
@@ -94,13 +96,19 @@ def _wait_for_operation(compute: Resource, operation: Dict[str, str]) -> Dict[st
         time.sleep(1)
 
 
-def _create_instances(compute: Resource, num_instances: int) -> List[Dict[str, str]]:
+def _create_instances(
+    compute: Resource, num_instances: int, gcp_environment: GcpEnvironment
+) -> List[Dict[str, str]]:
     operations = []
     time_string = datetime.datetime.utcnow().strftime("%m-%d-%H-%M")
     for image_num in range(num_instances):
-        image_name = f"{MACHINE_PREFIX}-{time_string}-{image_num}"
+        image_name = (
+            f"{MACHINE_PREFIX}-{time_string}-{gcp_environment.gcp_prefix}-{image_num}"
+        )
         logging.info("creating new instance %s", image_name)
-        create_operation = _create_instance(compute, image_name)
+        create_operation = _create_instance(
+            compute, image_name, gcp_environment.image_name
+        )
         operations.append(create_operation)
     return [_wait_for_operation(compute, operation) for operation in operations]
 
@@ -122,15 +130,18 @@ def _delete_old_instances(
 
 
 def manage_instances(
-    num_instances: int, delete_old: bool
+    num_instances: int,
+    delete_old: bool,
+    environment_label: str,
 ) -> Dict[str, List[Dict[str, str]]]:
     """
     main function which creates the new instances and deletes the old ones
     """
+    environment = GcpEnvironment[environment_label.upper()]
     compute = build("compute", "v1", cache_discovery=False)
     old_instances = _get_old_instances(compute)
     logging.info("old instances are %s", old_instances)
-    instances_res = _create_instances(compute, num_instances)
+    instances_res = _create_instances(compute, num_instances, environment)
     logging.info("creating instances resulted in %s", instances_res)
     if delete_old:
         deletion_res = _delete_old_instances(compute, old_instances)
@@ -145,6 +156,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("instance_num", type=int, help="number of instances")
     parser.add_argument("delete_old", choices=["yes", "no"])
+    parser.add_argument("environment", choices=["production", "staging"])
     args = parser.parse_args()
-    res = manage_instances(args.instance_num, args.delete_old == "yes")
+    res = manage_instances(
+        args.instance_num, args.delete_old == "yes", args.environment
+    )
     print(res)

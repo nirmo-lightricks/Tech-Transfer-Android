@@ -3,6 +3,7 @@
 This script is used as startup script in the vm image
 """
 
+import argparse
 import datetime
 import logging
 import os
@@ -20,7 +21,6 @@ from constants import (
     CONFIG_COMMAND,
     GCP_PROJECT_ID,
     GH_RUNNER_PATH,
-    LABELS,
     MOUNT_DEVICE,
     MOUNT_PATH,
     RUNNER_WORKDIR,
@@ -81,7 +81,7 @@ def _get_runner_token() -> str:
     return cast(str, response.json()["token"])
 
 
-def _start_runner() -> None:
+def _start_runner(runner_labels: str) -> None:
     hostname = socket.gethostname()
     today = datetime.date.today().isoformat()
     runner_name = f"{hostname}-{today}"
@@ -100,7 +100,7 @@ def _start_runner() -> None:
             "--work",
             RUNNER_WORKDIR.absolute(),
             "--labels",
-            LABELS,
+            runner_labels,
             "--unattended",
             "--replace",
         ],
@@ -116,7 +116,7 @@ def _remove_runner(signal_num: int, stack_frame) -> None:  # type: ignore
     run([CONFIG_COMMAND, "remove", "--token", runner_token], check=True)
 
 
-def _startup_script() -> None:
+def _startup_script(runner_labels: str) -> None:
     setup_environment()
     signal.signal(signal.SIGINT, _remove_runner)
     signal.signal(signal.SIGTERM, _remove_runner)
@@ -124,7 +124,7 @@ def _startup_script() -> None:
         logging.info("machine already configured")
     else:
         _mount_device()
-    _start_runner()
+    _start_runner(runner_labels)
 
 
 def _slack_exception(exception: Exception, stack_trace: str) -> None:
@@ -136,12 +136,12 @@ def _slack_exception(exception: Exception, stack_trace: str) -> None:
     response.raise_for_status()
 
 
-def run_startup_script() -> None:
+def run_startup_script(runner_labels: str) -> None:
     """
     main function which runs the startup sequence
     """
     try:
-        _startup_script()
+        _startup_script(runner_labels)
     # pylint: disable=W0703
     except Exception as exception:
         stack_trace = traceback.format_exc()
@@ -149,4 +149,7 @@ def run_startup_script() -> None:
 
 
 if __name__ == "__main__":
-    run_startup_script()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("runner_labels")
+    args = parser.parse_args()
+    run_startup_script(args.runner_labels)

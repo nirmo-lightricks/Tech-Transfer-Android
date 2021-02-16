@@ -9,16 +9,18 @@ on:
       delete_old:
         description: If we want to delete all old instances. Can be either yes or no
         required: true
-        default: no
-
+        default: 'no'
+      environment_type:
+        description: >
+          Which environment type to create. Can be either `production` or `staging`.
+        required: true
+        default: 'production'
 jobs:
   create_runner:
     runs-on: ubuntu-latest
     name: Create Android runner
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: develop
       - uses: actions/cache@v2
         with:
           path: ~/.cache/pip
@@ -31,3 +33,4 @@ jobs:
           instance_num: ${{github.event.inputs.instance_num}}
           delete_old: ${{github.event.inputs.delete_old}}
           gcp_instance_creator_key: ${{secrets.GCP_ANDROID_CI_INSTANCE_CREATOR}}
+          environment_type: ${{github.event.inputs.environment_type}}
