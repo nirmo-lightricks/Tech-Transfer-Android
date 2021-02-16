@@ -16,7 +16,7 @@ jobs:
       - name: Setup emulator
         uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
       - name: Tests including large test
-        run: ./gradlew buildForPR
+        run: python3 ./tools/jenkins/run_all_tests.py
       - name: Print adb logcat on failure
         if: ${{ failure() }}
         run: adb logcat -d

@@ -38,10 +38,10 @@ def _get_gradle_arguments(
         return []
     # pylint: disable=C0301
     gradle_filters = (
-        []
+        ["-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest"]
         if include_large_tests
         else [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest"
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest"
         ]
     )
     return gradle_filters + ["clean"] + build_tasks
