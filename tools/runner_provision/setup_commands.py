@@ -57,14 +57,12 @@ def _install_android_sdk() -> None:
         "build-tools;28.0.3",
         "cmake;3.10.2.4988404",
         "emulator",
-        "ndk;21.0.6113669",
         "ndk;21.1.6352462",
         "patcher;v4",
         "platforms;android-27",
         "platforms;android-28",
         "platforms;android-29",
         "platform-tools",
-        "system-images;android-28;default;x86",
         "system-images;android-29;default;x86",
     ]
     logging.info("installing android sdk parts %s", sdk_components)
