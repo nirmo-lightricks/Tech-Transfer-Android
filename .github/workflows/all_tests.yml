@@ -4,7 +4,7 @@ on: workflow_dispatch
 jobs:
   run_all_tests:
     name: "Run all tests"
-    runs-on: android_staging
+    runs-on: android
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
