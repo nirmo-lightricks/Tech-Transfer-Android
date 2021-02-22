@@ -17,8 +17,6 @@ jobs:
 
       - name: Setup emulator
         uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
-        with:
-          version: 29
 
       - name: Gradle clean
         run: ./gradlew clean

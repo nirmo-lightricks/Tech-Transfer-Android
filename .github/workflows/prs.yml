@@ -41,8 +41,6 @@ jobs:
 
       - name: Setup emulator
         uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
-        with:
-          version: 29
 
       - name: Gradle clean
         run: ./gradlew clean
@@ -56,7 +54,7 @@ jobs:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
         run: python3 ./tools/jenkins/build_modified_modules_v2.py
 
-      - name: Print adb logcat on failure
+      - name: Save adb logcat
         timeout-minutes: 1
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
