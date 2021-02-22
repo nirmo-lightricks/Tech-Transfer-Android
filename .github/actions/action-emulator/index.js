@@ -11,7 +11,7 @@ async function runEmulator() {
     console.log(creationCommand)
     await exec(creationCommand)
     console.log(await exec("emulator -list-avds"))
-    const emulatorCommand = `emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android${version} -memory 2048 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &`
+    const emulatorCommand = `emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android${version} -memory 3072 -partition-size 2048 -cache-size 2048 >/dev/null 2>&1 &`
     console.log(emulatorCommand)
     await exec(emulatorCommand)
 }
