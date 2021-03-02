@@ -84,7 +84,7 @@ def get_module_dirs() -> List[str]:
     Get all gradle module directories
     """
 
-    return [module.name for module in get_project_modules()]
+    return [module.name.replace(":", "/") for module in get_project_modules()]
 
 
 def _get_module_dependencies_from_gradle(module: str) -> Set[ProjectModule]:
