@@ -53,8 +53,13 @@ class ProjectModule:
         """
         given the module info returns the ProjectModule
         """
+        # Remove the ":" prefix if needed.
+        _name = cast(str, module_info["name"])
+        if _name.startswith(":"):
+            _name = _name[1:]
+
         return ProjectModule(
-            name=cast(str, module_info["name"]),
+            name=_name,
             module_type=ModuleType.get_module_type(module_info),
         )
 
