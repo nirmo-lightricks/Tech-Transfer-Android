@@ -215,7 +215,7 @@ def _create_test_entries_for_all_modules(workspace):
 
     for module in filtered_modules:
         module_path = os.path.join(workspace, module)
-        module_name = os.path.basename(module)
+        module_name = module
         if _does_module_have_type_of_tests(module, TestType.UNIT_TEST):
             test_entries = _report_entries_for_test_type(module_name,
                 _test_reports_for_type(module_path, TestType.UNIT_TEST), TestType.UNIT_TEST)
