@@ -53,8 +53,13 @@ class ProjectModule:
         """
         given the module info returns the ProjectModule
         """
+        # Remove the ":" prefix if needed.
+        _name = cast(str, module_info["name"])
+        if _name.startswith(":"):
+            _name = _name[1:]
+
         return ProjectModule(
-            name=cast(str, module_info["name"]),
+            name=_name,
             module_type=ModuleType.get_module_type(module_info),
         )
 
@@ -79,7 +84,7 @@ def get_module_dirs() -> List[str]:
     Get all gradle module directories
     """
 
-    return [module.name for module in get_project_modules()]
+    return [module.name.replace(":", "/") for module in get_project_modules()]
 
 
 def _get_module_dependencies_from_gradle(module: str) -> Set[ProjectModule]:
