@@ -1,7 +1,7 @@
 name: Nightly boosted build
 on:
   schedule:
-    - cron:  '0 1 * * *'
+    - cron:  '0 0 */6 ? * *'
 
 jobs:
   assemble_and_test:
