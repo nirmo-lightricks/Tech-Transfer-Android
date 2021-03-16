@@ -1,4 +1,4 @@
-name: Nightly boosted build
+name: Large boosted test build
 on:
   schedule:
     - cron:  '0 */6 * * *'
@@ -6,9 +6,10 @@ on:
 
 jobs:
   assemble_and_test:
-    name: Run boosted nightly
+    name: Run boosted large tests
     # This job runs on our self-hosted linux runners, labeled 'android'
     runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
     steps:
       - name: Clone Repo
         uses: actions/checkout@v2
