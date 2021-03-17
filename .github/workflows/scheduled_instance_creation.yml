@@ -15,7 +15,7 @@ jobs:
       - name: Run instance creation
         uses: Lightricks/facetune-android/.github/actions/action-create-gcp-runner@develop
         with:
-          instance_num: 2
+          instance_num: 3
           delete_old: yes
           gcp_instance_creator_key: ${{secrets.GCP_ANDROID_CI_INSTANCE_CREATOR}}
           environment_type: production
