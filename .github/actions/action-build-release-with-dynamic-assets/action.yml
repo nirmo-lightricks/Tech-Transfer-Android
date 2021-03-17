@@ -1,0 +1,45 @@
+name: 'Build Bundle and APK in release mode'
+description: >
+  The purpose of this action is a safe environment for executing your gradle tasks.
+  The tasks:
+    1) Cleans the environment using `./gradlew clean` before the compilation.
+    2) Builds a Bundle in release mode.
+    3) Generate APK file from the Bundle.
+    4) Upload the symbols file to Crashlytics.
+
+inputs:
+  technical-version:
+    required: true
+    description: The technical version of the build.
+
+  app:
+    required: true
+    description: 'Application name, for example: facetune, pixaloop, etc...'
+
+  flavor:
+    required: false
+    default: ''
+    description: "Optional. Android release flavor (like `Gms` for example)"
+
+  buildType:
+    required: false
+    default: 'Release'
+    description: "Can be either Release or DebugMenu"
+runs:
+  using: "composite"
+  steps:
+    - name: "Set TECHNICAL VERSION"
+      shell: bash
+      run: echo TECHNICAL_VERSION=${{inputs.technical-version}} >> $GITHUB_ENV
+
+    - name: "Clean environment"
+      shell: bash
+      run: ./gradlew clean
+
+    - name: "Copy blobs to remote asset delivery module and build bundle in release"
+      shell: bash
+      run: ./gradlew :${{inputs.app}}:copyBlobsToRemoteAssetDeliveryModule ${{inputs.app}}:bundle${{inputs.flavor}}${{inputs.buildType}}
+
+    - name: "Create APK from Bundle"
+      shell: bash
+      run:  python3 tools/runner_provision/app_distribution_workflow/run_bundletool.py ${{inputs.app}} ${{inputs.buildType}} -f ${{inputs.flavor}}
