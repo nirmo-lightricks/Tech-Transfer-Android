@@ -50,7 +50,10 @@ def _create_instance(
             {
                 "boot": False,
                 "autoDelete": True,
-                "initializeParams": {"disk_type": "local-ssd"},
+                "type":"SCRATCH",
+                "initializeParams": {
+                    "disk_type": f"zones/{GCP_ZONE}/diskTypes/local-ssd"
+                }
             },
         ],
         # Specify a network interface with NAT to access the public
