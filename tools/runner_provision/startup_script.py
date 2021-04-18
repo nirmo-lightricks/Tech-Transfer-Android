@@ -10,7 +10,7 @@ import os
 import signal
 import socket
 import traceback
-from subprocess import run
+from subprocess import run, CalledProcessError
 from typing import cast
 import requests
 
@@ -46,16 +46,19 @@ def _mount_device() -> None:
         check=True,
         input="\n",
         text=True,
+        capture_output=True,
     )
     MOUNT_PATH.mkdir(parents=True)
     run(
         ["mount", "-o", "discard,defaults", MOUNT_DEVICE, MOUNT_PATH.as_posix()],
         check=True,
+        capture_output=True,
     )
     run(
         f"echo UUID=`blkid -s UUID -o value {MOUNT_DEVICE}` {MOUNT_PATH.as_posix()} ext4 discard,defaults,nofail 0 2 | tee -a /etc/fstab",
         shell=True,
         check=True,
+        capture_output=True,
     )
 
 
@@ -105,15 +108,20 @@ def _start_runner(runner_labels: str) -> None:
             "--replace",
         ],
         check=True,
+        capture_output=True,
     )
-    run("bin/runsvc.sh", check=True)
+    run("bin/runsvc.sh", check=True, capture_output=True)
 
 
 def _remove_runner(signal_num: int, stack_frame) -> None:  # type: ignore
     logging.info("got signal %s and stack frame %s", signal_num, stack_frame)
     runner_token = _get_runner_token()
     logging.info("remove runner")
-    run([CONFIG_COMMAND, "remove", "--token", runner_token], check=True)
+    run(
+        [CONFIG_COMMAND, "remove", "--token", runner_token],
+        check=True,
+        capture_output=True,
+    )
 
 
 def _startup_script(runner_labels: str) -> None:
@@ -129,8 +137,9 @@ def _startup_script(runner_labels: str) -> None:
 
 def _slack_exception(exception: Exception, stack_trace: str) -> None:
     webhook = _get_secret_string("SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK")
+    hostname = socket.gethostname()
     data = {
-        "text": f"Could not create runner! Got exception {exception}. Stack trace is: {stack_trace} This needs to be fixed immediately"
+        "text": f"Could not create runner on host {hostname}! Got exception {exception}. Stack trace is: {stack_trace} This needs to be fixed immediately"
     }
     response = requests.post(webhook, json=data)
     response.raise_for_status()
@@ -142,8 +151,11 @@ def run_startup_script(runner_labels: str) -> None:
     """
     try:
         _startup_script(runner_labels)
-    # pylint: disable=W0703
-    except Exception as exception:
+
+    except CalledProcessError as exception:
+        stack_trace = f"{traceback.format_exc()}, stdout: {exception.stdout}, stderr: {exception.stderr}"
+        _slack_exception(exception, stack_trace)
+    except Exception as exception:  # pylint: disable=W0703
         stack_trace = traceback.format_exc()
         _slack_exception(exception, stack_trace)
 

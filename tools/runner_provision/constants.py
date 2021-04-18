@@ -48,7 +48,9 @@ class GcpEnvironment(Enum):
     PRODUCTION = ("github-action-runner-v1", "android,gcloud", "production")
     STAGING = ("github-action-runner-staging", "android_staging,gcloud", "staging")
 
-    def __init__(self, image_name, github_runner_labels, gcp_prefix)->None:
+    def __init__(
+        self, image_name: str, github_runner_labels: str, gcp_prefix: str
+    ) -> None:
         self.image_name = image_name
         self.github_runner_labels = github_runner_labels
         self.gcp_prefix = gcp_prefix
