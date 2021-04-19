@@ -59,7 +59,7 @@ jobs:
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
       - name: Post test results on GitHub
-        if: ${{ failure() || success() }}
+        if: ${{ always() }}
         env:
           # Environment variable holding the Github username.
           DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
@@ -68,7 +68,7 @@ jobs:
         run: python3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"
 
       - name: Upload unit-test logs to GitHub
-        if: ${{ failure() || success() }}
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test-logs
