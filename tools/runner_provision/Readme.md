@@ -175,3 +175,39 @@ All the instance creation is done through github actions
 The instances are at: https://console.cloud.google.com/compute/instances?project=android-ci-286617&instancessize=50
 * Login into the problematic machine through ssh
 * The interesting logs are /var/log/supervisor/ for supervisord and /actions_runner/_diag/ for github actions runner
+
+
+# Upgrading 
+
+## When to upgrade the image
+
+All dependencies installed by install_os_dependencies.sh and setup_commands.py are hard coded into the image. If such 
+a dependency needs to be updated the image needs to be created again.
+
+## How the image is created
+
+There is a job for it at: https://github.com/Lightricks/facetune-android/actions/workflows/packer_create_android_runner.yml
+
+## Instructions on how to upgrade the image
+
+* Make the dependency change
+
+* Change the workflows which need to run the image by changing the label from android to android_staging and push
+
+* Push the branch upstream. Github actions can only work on upstream images 
+
+* Create a staging image
+
+* Run the workflow
+
+* Verify that the workflow runs well
+
+* Change the workflow label back from android_staging to android 
+
+* Get an approval
+
+* Merge the PR
+
+* Create the production image from develop
+
+ 
