@@ -170,6 +170,35 @@ Now add permissions:
 All the instance creation is done through github actions
 
 
+# Add audit logs slacking
+In order to get error messages from instance creation we need to do the following
+
+Create a pubsub topic
+
+> gcloud pubsub topics create audit-logging-error
+
+Create a sink which catches these errors and publish them to the pubsub topic:
+
+> gcloud logging sinks create audit_logs_error_sink pubsub.googleapis.com/projects/android-ci-286617/topics/audit-logging-error --log-filter='severity=(ERROR OR CRITICAL OR ALERT OR EMERGENCY) AND resource.type = "gce_instance"'
+
+Give permissions to the logger account to be able to publish to the pubsub topic:
+
+> gcloud beta pubsub topics add-iam-policy-binding audit-logging-error \
+--member serviceAccount:p24917401109-567023@gcp-sa-logging.iam.gserviceaccount.com \
+--role roles/pubsub.publisher
+
+Give the service account of google cloud functions access to the webhook slack secret:
+ 
+> gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:android-ci-286617@appspot.gserviceaccount.com --role=roles/secretmanager.secretAccessor --condition="expression=resource.name=='projects/24917401109/secrets/SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK/versions/latest',title=Restrict access to SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK"
+
+Finally deploy the google cloud function:
+ 
+>cd tools/slack_cloud_function
+>gcloud functions deploy slack_pubsub --runtime python39 --trigger-topic audit-logging-error
+ 
+  
+
+
 # Diagnosing issues with GCP:
 
 The instances are at: https://console.cloud.google.com/compute/instances?project=android-ci-286617&instancessize=50
