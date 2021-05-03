@@ -1,4 +1,4 @@
-name: App Distribution Facetune
+name: Facetune App Distribution
 env:
   KEY: release
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}

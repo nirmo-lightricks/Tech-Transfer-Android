@@ -1,4 +1,4 @@
-name: App Distribution VideoBoost
+name: VideoBoost App Distribution
 env:
   KEY: release
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}

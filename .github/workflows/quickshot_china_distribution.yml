@@ -1,4 +1,4 @@
-name: Apk Distribution Quickshot China
+name: Quickshot China Apk Distribution
 env:
   KEY: release
   KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
