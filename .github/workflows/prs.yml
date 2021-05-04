@@ -1,4 +1,4 @@
-name: Build and test on PR
+name: Build_and_test_on_PR
 # This workflow is triggered by webhook when a PR opens / gets updated on 'develop' branch
 on: pull_request
 
@@ -16,11 +16,6 @@ jobs:
     # This job runs on our self-hosted linux runners, labeled 'android'
     runs-on: android
     steps:
-      # this plugin cancels previous runs
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.5.0
-        with:
-          access_token: ${{ github.token }}
       - name: Clone Repo
         uses: actions/checkout@v2
         with:
