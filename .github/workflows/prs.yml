@@ -41,7 +41,7 @@ jobs:
         run: ./gradlew clean
 
       - name: Build and test modified modules with gradle
-        timeout-minutes: 40
+        timeout-minutes: 45
         env:
           # Environment variable holding the Github username.
           DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
