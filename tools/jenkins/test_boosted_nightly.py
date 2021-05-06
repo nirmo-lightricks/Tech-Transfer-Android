@@ -5,7 +5,6 @@ This class responsible to run Boosted custom tests
 # Created by Yaakov Shahak
 import sys
 from gradle_build import execute_gradle
-from build_for_pr import run_build_for_pr
 
 
 def main():

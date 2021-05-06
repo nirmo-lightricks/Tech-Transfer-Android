@@ -27,7 +27,9 @@ def _get_all_modules_to_build(app: str) -> Set[str]:
 def _run_tests(app: str) -> None:
     all_modules = _get_all_modules_to_build(app)
     logging.info("running tests of %s", all_modules)
-    run_build_for_pr(modules=all_modules, include_large_tests=True)
+    run_build_for_pr(
+        modules=all_modules, include_large_tests=True, use_build_cache=True
+    )
 
 
 if __name__ == "__main__":

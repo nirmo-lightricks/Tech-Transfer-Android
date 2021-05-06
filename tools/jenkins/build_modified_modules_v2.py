@@ -125,7 +125,7 @@ def main() -> None:
     main function which runs the pr logic
     """
     modules = modules_to_build()
-    run_build_for_pr(modules=modules, include_large_tests=False)
+    run_build_for_pr(modules=modules, include_large_tests=False, use_build_cache=True)
 
 
 if __name__ == "__main__":
