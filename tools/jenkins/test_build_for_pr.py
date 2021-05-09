@@ -9,6 +9,7 @@ class TestBuildForPr(unittest.TestCase):
         )
         expected = [
             "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest",
+            "--no-build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
         ]
@@ -20,6 +21,19 @@ class TestBuildForPr(unittest.TestCase):
         )
         expected = [
             "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest",
+            "--no-build-cache",
+            "clean",
+            f":swish:{GRADLE_PR_TASK_NAME}",
+        ]
+        self.assertListEqual(expected, res)
+
+    def test_small_test_with_build_cache(self) -> None:
+        res = _get_gradle_arguments(
+            modules=["swish"], include_large_tests=False, asset_modules=set(), use_build_cache=True
+        )
+        expected = [
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest",
+            "--build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
         ]
@@ -33,6 +47,7 @@ class TestBuildForPr(unittest.TestCase):
         )
         expected = [
             "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest",
+            "--no-build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
         ]
