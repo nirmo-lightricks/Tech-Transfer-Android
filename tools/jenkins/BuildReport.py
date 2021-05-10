@@ -29,7 +29,7 @@ NOTHING_TO_REPORT = """
 
 def report_markdown(entries):
     modules = collections.defaultdict(list)
-    if not modules:
+    if not entries:
         return COMMENT_HEADER + NOTHING_TO_REPORT + COMMENT_FOOTER
     for entry in entries:
         modules[entry.module].append(entry)
