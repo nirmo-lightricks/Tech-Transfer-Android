@@ -6,6 +6,7 @@ import argparse
 import datetime
 import logging
 import time
+from itertools import zip_longest
 from typing import List, Dict, cast
 from googleapiclient.discovery import build, Resource  # type: ignore
 from constants import GCP_PROJECT_ID, GCP_ZONE, GcpEnvironment
@@ -27,7 +28,7 @@ def _get_old_instances(compute: Resource) -> List[Dict[str, str]]:
     ]
 
 
-def _create_instance(
+def _create_instance_operation(
     compute: Resource, image_name: str, gcp_image_name: str
 ) -> Dict[str, str]:
     image_response = (
@@ -50,10 +51,10 @@ def _create_instance(
             {
                 "boot": False,
                 "autoDelete": True,
-                "type":"SCRATCH",
+                "type": "SCRATCH",
                 "initializeParams": {
                     "disk_type": f"zones/{GCP_ZONE}/diskTypes/local-ssd"
-                }
+                },
             },
         ],
         # Specify a network interface with NAT to access the public
@@ -99,44 +100,37 @@ def _wait_for_operation(compute: Resource, operation: Dict[str, str]) -> Dict[st
         time.sleep(1)
 
 
-def _create_instances(
-    compute: Resource, num_instances: int, gcp_environment: GcpEnvironment
-) -> List[Dict[str, str]]:
-    operations = []
+def _create_instance(
+    compute: Resource, gcp_environment: GcpEnvironment, image_num: int
+) -> Dict[str, str]:
     time_string = datetime.datetime.utcnow().strftime("%m-%d-%H-%M")
-    for image_num in range(num_instances):
-        image_name = (
-            f"{MACHINE_PREFIX}-{time_string}-{gcp_environment.gcp_prefix}-{image_num}"
-        )
-        logging.info("creating new instance %s", image_name)
-        create_operation = _create_instance(
-            compute, image_name, gcp_environment.image_name
-        )
-        operations.append(create_operation)
-    return [_wait_for_operation(compute, operation) for operation in operations]
+    image_name = (
+        f"{MACHINE_PREFIX}-{time_string}-{gcp_environment.gcp_prefix}-{image_num}"
+    )
+    logging.info("creating new instance %s", image_name)
+    create_operation = _create_instance_operation(
+        compute, image_name, gcp_environment.image_name
+    )
+
+    return _wait_for_operation(compute, create_operation)
 
 
 # pylint:disable=C0301
-def _delete_old_instances(
-    compute: Resource, old_instances: List[Dict[str, str]]
-) -> List[Dict[str, str]]:
-    operations = []
-    for instance in old_instances:
-        logging.info("deleting instance %s", instance)
-        delete_operation = (
-            compute.instances()
-            .delete(project=GCP_PROJECT_ID, zone=GCP_ZONE, instance=instance["name"])
-            .execute()
-        )
-        operations.append(delete_operation)
-    return [_wait_for_operation(compute, operation) for operation in operations]
+def _delete_old_instance(compute: Resource, instance: Dict[str, str]) -> Dict[str, str]:
+    logging.info("deleting instance %s", instance)
+    delete_operation = (
+        compute.instances()
+        .delete(project=GCP_PROJECT_ID, zone=GCP_ZONE, instance=instance["name"])
+        .execute()
+    )
+    return _wait_for_operation(compute, delete_operation)
 
 
 def manage_instances(
     num_instances: int,
     delete_old: bool,
     environment_label: str,
-) -> Dict[str, List[Dict[str, str]]]:
+) -> None:
     """
     main function which creates the new instances and deletes the old ones
     """
@@ -144,15 +138,18 @@ def manage_instances(
     compute = build("compute", "v1", cache_discovery=False)
     old_instances = _get_old_instances(compute)
     logging.info("old instances are %s", old_instances)
-    instances_res = _create_instances(compute, num_instances, environment)
-    logging.info("creating instances resulted in %s", instances_res)
-    if delete_old:
-        deletion_res = _delete_old_instances(compute, old_instances)
-        logging.info("deleting instances resulted in %s", deletion_res)
-    else:
-        deletion_res = []
+    to_delete = old_instances if delete_old else []
+    to_create_num = range(1, num_instances + 1)
+    for operation_pair in zip_longest(to_create_num, to_delete):
+        if operation_pair[0]:
+            instance_res = _create_instance(compute, environment, operation_pair[0])
+            logging.info("creating instance resulted in %s", instance_res)
+        if operation_pair[1]:
+            deletion_res = _delete_old_instance(compute, operation_pair[1])
+            logging.info("deleting instance resulted in %s", deletion_res)
+
+    if not delete_old:
         logging.info("Not deleting instances because flag was not set")
-    return {"creation_res": instances_res, "deletion_res": deletion_res}
 
 
 if __name__ == "__main__":
@@ -161,7 +158,4 @@ if __name__ == "__main__":
     parser.add_argument("delete_old", choices=["yes", "no"])
     parser.add_argument("environment", choices=["production", "staging"])
     args = parser.parse_args()
-    res = manage_instances(
-        args.instance_num, args.delete_old == "yes", args.environment
-    )
-    print(res)
+    manage_instances(args.instance_num, args.delete_old == "yes", args.environment)
