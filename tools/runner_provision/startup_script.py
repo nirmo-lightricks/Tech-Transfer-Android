@@ -39,9 +39,10 @@ def _start_agent() -> None:
         capture_output=True,
         text=True,
     )
-    if res.stdout != "OK":
-        logging.error("status should be ok but is '%s'", res.stdout)
-        raise Exception("monitor agent status is not ok")
+    active_phrase = "Active: active"
+    if active_phrase not in res.stdout:
+        message = f"Warning: Active status should be active but is {res.stdout}"
+        _slack_message(message, False)
 
 
 def _mount_device() -> None:
@@ -149,14 +150,18 @@ def _startup_script(runner_labels: str) -> None:
     _start_runner(runner_labels)
 
 
-def _slack_exception(exception: Exception, stack_trace: str) -> None:
+def _slack_message(text: str, raise_for_status: bool) -> None:
     webhook = _get_secret_string("SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK")
     hostname = socket.gethostname()
-    data = {
-        "text": f"Could not create runner on host {hostname}! Got exception {exception}. Stack trace is: {stack_trace} This needs to be fixed immediately"
-    }
+    data = {"text": f"{hostname}: {text}"}
     response = requests.post(webhook, json=data)
-    response.raise_for_status()
+    if raise_for_status:
+        response.raise_for_status()
+
+
+def _slack_exception(exception: Exception, stack_trace: str) -> None:
+    text = f"Could not create runner. Got exception {exception}. Stack trace is: {stack_trace} This needs to be fixed immediately"
+    _slack_message(text, True)
 
 
 def run_startup_script(runner_labels: str) -> None:
