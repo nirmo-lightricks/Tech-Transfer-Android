@@ -95,6 +95,10 @@ Add permisssions to this secret:
 
 >gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner@android-ci-286617.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor --condition="expression=resource.name=='projects/24917401109/secrets/SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK/versions/latest',title=Restrict access to SLACK_ANDROID_CI_NOTIFICATION_WEBHOOK"
 
+Add permissions for sending logs to monitoring:
+
+> gcloud projects add-iam-policy-binding android-ci-286617 --member=serviceAccount:gh-runner@android-ci-286617.iam.gserviceaccount.com --role=roles/monitoring.metricWriter --condition=None
+
 
 ### Creation of service acccount which runs packer
 

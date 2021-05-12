@@ -106,6 +106,18 @@ def _create_dirs(machine_type: str) -> None:
         MOUNT_PATH.mkdir(parents=True)
 
 
+def _install_monitoring_agent() -> None:
+    logging.info("Downloading monitoring agent")
+    bash_file = "add-monitoring-agent-repo.sh"
+    url = f"https://dl.google.com/cloudagents/{bash_file}"
+    response = requests.get(url)
+    response.raise_for_status()
+    with open("add-monitoring-agent-repo.sh", "wb") as installation_file:
+        installation_file.write(response.content)
+    logging.info("running %s", bash_file)
+    run(["bash", bash_file, "--also-install"], check=True)
+
+
 def provision_machine(machine_type: str) -> None:
     """
     python script which provisions system
@@ -116,6 +128,7 @@ def provision_machine(machine_type: str) -> None:
     _install_github_actions()
     _download_bundle_tool()
     _create_dirs(machine_type)
+    _install_monitoring_agent()
 
 
 if __name__ == "__main__":

@@ -31,6 +31,19 @@ from constants import (
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 
+def _start_agent() -> None:
+    run(["service", "stackdriver-agent", "start"], check=True, capture_output=True)
+    res = run(
+        ["service", "stackdriver-agent", "status"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    if res.stdout != "OK":
+        logging.error("status should be ok but is '%s'", res.stdout)
+        raise Exception("monitor agent status is not ok")
+
+
 def _mount_device() -> None:
     logging.info("mounting device %s to %s", MOUNT_DEVICE, MOUNT_PATH)
     # pylint: disable=C0301
@@ -126,6 +139,7 @@ def _remove_runner(signal_num: int, stack_frame) -> None:  # type: ignore
 
 def _startup_script(runner_labels: str) -> None:
     setup_environment()
+    _start_agent()
     signal.signal(signal.SIGINT, _remove_runner)
     signal.signal(signal.SIGTERM, _remove_runner)
     if MOUNT_PATH.exists():
