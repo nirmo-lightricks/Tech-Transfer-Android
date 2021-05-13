@@ -127,9 +127,7 @@ def _delete_old_instance(compute: Resource, instance: Dict[str, str]) -> Dict[st
 
 
 def manage_instances(
-    num_instances: int,
-    delete_old: bool,
-    environment_label: str,
+    num_instances: int, delete_old: bool, environment_label: str
 ) -> None:
     """
     main function which creates the new instances and deletes the old ones
@@ -140,13 +138,17 @@ def manage_instances(
     logging.info("old instances are %s", old_instances)
     to_delete = old_instances if delete_old else []
     to_create_num = range(1, num_instances + 1)
-    for operation_pair in zip_longest(to_create_num, to_delete):
-        if operation_pair[0]:
-            instance_res = _create_instance(compute, environment, operation_pair[0])
-            logging.info("creating instance resulted in %s", instance_res)
-        if operation_pair[1]:
-            deletion_res = _delete_old_instance(compute, operation_pair[1])
+    for instance_to_delete, instance_to_create_index in zip_longest(
+        to_delete, to_create_num
+    ):
+        if instance_to_delete:
+            deletion_res = _delete_old_instance(compute, instance_to_delete)
             logging.info("deleting instance resulted in %s", deletion_res)
+        if instance_to_create_index:
+            instance_res = _create_instance(
+                compute, environment, instance_to_create_index
+            )
+            logging.info("creating instance resulted in %s", instance_res)
 
     if not delete_old:
         logging.info("Not deleting instances because flag was not set")
