@@ -1,7 +1,7 @@
 name: Large boosted test build
 on:
   schedule:
-    - cron:  '0 */6 * * *'
+    - cron:  '59 */6 * * *'
 
 
 jobs:
