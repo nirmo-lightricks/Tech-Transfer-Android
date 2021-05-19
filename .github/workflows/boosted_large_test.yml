@@ -55,7 +55,7 @@ jobs:
           DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
           # Environment variable holding the Github password.
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
-        run: python3 ./tools/jenkins/test_boosted_large_test.py
+        run: python3 ./tools/jenkins/boosted_large_test.py
 
       - name: Print adb logcat on failure
         timeout-minutes: 1
