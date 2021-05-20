@@ -10,6 +10,7 @@ import os
 import signal
 import socket
 import traceback
+from pathlib import Path
 from subprocess import run, CalledProcessError
 from typing import cast
 import requests
@@ -25,6 +26,8 @@ from constants import (
     MOUNT_PATH,
     RUNNER_WORKDIR,
     SHORT_URL,
+    SWAP_FILE,
+    SWAP_SIZE,
     setup_environment,
 )
 
@@ -74,6 +77,20 @@ def _mount_device() -> None:
         check=True,
         capture_output=True,
     )
+
+
+def _configure_swap_space() -> None:
+    fstab = Path("/etc/fstab")
+    if SWAP_FILE.as_posix() in fstab.read_text():
+        logging.info("Swap already created")
+        return
+    logging.info("Creating swap file of size %s at %s", SWAP_SIZE, SWAP_FILE)
+    run(["fallocate", "-l", SWAP_SIZE, SWAP_FILE], check=True, capture_output=True)
+    MOUNT_PATH.chmod(0o600)
+    run(["mkswap", SWAP_FILE], check=True, capture_output=True)
+    run(["swapon", SWAP_FILE], check=True, capture_output=True)
+    with fstab.open("a") as swap_fh:
+        swap_fh.write(f"{SWAP_FILE.as_posix()} swap swap defaults 0 0\n")
 
 
 def _get_secret_string(secret_name: str) -> str:
@@ -147,6 +164,7 @@ def _startup_script(runner_labels: str) -> None:
         logging.info("machine already configured")
     else:
         _mount_device()
+    _configure_swap_space()
     _start_runner(runner_labels)
 
 

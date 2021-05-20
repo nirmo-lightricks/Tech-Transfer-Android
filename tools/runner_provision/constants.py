@@ -15,6 +15,8 @@ CONFIG_COMMAND = GH_RUNNER_PATH / "config.sh"
 MOUNT_PATH = Path("/mnt/disks/sdb")
 MOUNT_DEVICE = "/dev/sdb"
 RUNNER_WORKDIR = MOUNT_PATH / "runner_workspace"
+SWAP_FILE = MOUNT_PATH / "swapfile"
+SWAP_SIZE = "8G"
 SHORT_URL = "https://github.com/Lightricks"
 
 API_URL = "https://api.github.com/orgs/Lightricks/actions/runners/registration-token"
