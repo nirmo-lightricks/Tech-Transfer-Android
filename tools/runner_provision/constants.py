@@ -38,6 +38,7 @@ def setup_environment() -> None:
         "PATH": f"{environ['PATH']}:/snap/bin:{ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:{ANDROID_SDK_ROOT}/platform-tools:{ANDROID_SDK_ROOT}/emulator",
         "GRADLE_USER_HOME": (MOUNT_PATH / "gradle_cache").as_posix(),
         "RUNNER_ALLOW_RUNASROOT": "1",
+        "CCACHE_DIR": (MOUNT_PATH / ".ccache").as_posix(),
     }
     environ.update(env_variables)
 
