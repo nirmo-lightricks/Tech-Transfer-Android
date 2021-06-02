@@ -45,11 +45,11 @@ jobs:
           token: ${{ secrets.GITHUBCIPAT }}
 
       - name: Setup emulator
-        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
+        uses: ./.github/actions/action-emulator
 
       - name: "Run tests"
         id: app_test
-        uses: Lightricks/facetune-android/.github/actions/action-app-tests@develop
+        uses: ./.github/actions/action-app-tests
         with:
           app: pixaloop
 
@@ -68,27 +68,27 @@ jobs:
 
       - name: "Set technical version"
         id: technical_version
-        uses: Lightricks/facetune-android/.github/actions/action-set-technical-version@develop
+        uses: ./.github/actions/action-set-technical-version
 
       - name: "Set KeyStore"
-        uses: Lightricks/facetune-android/.github/actions/action-create-keystore@develop
+        uses: ./.github/actions/action-create-keystore
         with:
           base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
 
       - name: "Build binaries in Release mode"
-        uses: Lightricks/facetune-android/.github/actions/action-build-release@develop
+        uses: ./.github/actions/action-build-release
         with:
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}
           app: pixaloop
 
       - name: "Upload native symbol file to crashlytics"
-        uses: Lightricks/facetune-android/.github/actions/action-crashlytics-release-symbol-upload@develop
+        uses: ./.github/actions/action-crashlytics-release-symbol-upload
         with:
           app: pixaloop
 
       - name: "Upload to FirebaseDistribution"
         if: ${{contains(github.event.inputs.publish, 'firebase')}}
-        uses: Lightricks/facetune-android/.github/actions/action-firebase-upload@develop
+        uses: ./.github/actions/action-firebase-upload
         with:
           app: pixaloop
           firebase-secret: ${{secrets.PIXALOOP_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
@@ -96,7 +96,7 @@ jobs:
 
       - name: "Upload to Google Play"
         if: ${{contains(github.event.inputs.publish, 'google')}}
-        uses: Lightricks/facetune-android/.github/actions/action-google-upload@develop
+        uses: ./.github/actions/action-google-upload
         with:
           app: pixaloop
           google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
@@ -104,7 +104,7 @@ jobs:
 
       - name: "Upload to Artifactory"
         if: ${{contains(github.event.inputs.publish, 'archive')}}
-        uses: Lightricks/facetune-android/.github/actions/action-archive-artifactory@develop
+        uses: ./.github/actions/action-archive-artifactory
         with:
           app: pixaloop
           technical-version: ${{ steps.technical_version.outputs.techinal-version }}

@@ -35,7 +35,7 @@ jobs:
           (python3 tools/jenkins/ApplyGithubLabels.py || echo "failed reporting status to github") | tee -a "build-logs/output.log"
 
       - name: Setup emulator
-        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
+        uses: ./.github/actions/action-emulator
 
       - name: Gradle clean
         run: ./gradlew clean

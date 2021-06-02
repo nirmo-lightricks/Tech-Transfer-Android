@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew swish:bundleRelease
       - name: Post failure to slack
         if: ${{ failure() }}
-        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        uses: ./.github/actions/action-slack
         with:
           text: Boosted build release failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
           webhook: ${{secrets.BOOSTED_ANDROID_NOTIFICATION_WEBHOOK}}
@@ -43,7 +43,7 @@ jobs:
           token: ${{ secrets.GITHUBCIPAT }}
 
       - name: Setup emulator
-        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
+        uses: ./.github/actions/action-emulator
 
       - name: Gradle clean
         run: ./gradlew clean
@@ -64,7 +64,7 @@ jobs:
 
       - name: Post failure to slack
         if: ${{ failure() }}
-        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        uses: ./.github/actions/action-slack
         with:
           text: Boosted Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
           webhook: ${{secrets.BOOSTED_ANDROID_NOTIFICATION_WEBHOOK}}

@@ -23,7 +23,7 @@ jobs:
         run: ./gradlew bundleRelease
       - name: Post failure to slack
         if: ${{ failure() }}
-        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        uses: ./.github/actions/action-slack
         with:
           text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
           webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
@@ -42,7 +42,7 @@ jobs:
           ref: develop
       # Every container gets a different value for EMULATOR_PORT variable, so they do not collide
       - name: Setup emulator
-        uses: Lightricks/facetune-android/.github/actions/action-emulator@develop
+        uses: ./.github/actions/action-emulator
       - name: Tests including large test
         run: python3 ./tools/jenkins/run_all_tests.py
       - name: Run all python unit tests
@@ -53,7 +53,7 @@ jobs:
         run: adb logcat -d
       - name: Post failure to slack
         if: ${{ failure() }}
-        uses: Lightricks/facetune-android/.github/actions/action-slack@develop
+        uses: ./.github/actions/action-slack
         with:
           text: Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
           webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}

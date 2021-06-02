@@ -13,7 +13,7 @@ jobs:
         with:
           ref: develop
       - name: Run instance creation
-        uses: Lightricks/facetune-android/.github/actions/action-create-gcp-runner@develop
+        uses: ./.github/actions/action-create-gcp-runner
         with:
           instance_num: 3
           delete_old: yes
