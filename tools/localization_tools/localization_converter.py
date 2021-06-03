@@ -6,6 +6,8 @@ This Converts iOS .strings files to Android .xml files.
 
 Example:
     python localization_converter.py my_iphone_localizations.strings
+In order to drop empty lines:
+    python localization_converter.py my_iphone_localizations.strings drop
 
 With any question, you can come to Lea@lightricks.com
 """
@@ -19,7 +21,7 @@ SUCCESS_MESSAGE = "Success! The file was created, and is in "
 android_special_chars_dict = {"&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "\&quot;", "\'": "\&apos;"}
 
 
-def parse_file(input_file_path):
+def parse_file(input_file_path, include_empty_lines):
     with open(input_file_path, "r") as input_file:
         original_filename = input_file.name
         if IOS_FILE_SUFFIX not in original_filename:
@@ -32,7 +34,8 @@ def parse_file(input_file_path):
             for line in input_file:
                 # Does this a line contain something?
                 if is_empty_line(line):
-                    android_file.write(line)
+                    if include_empty_lines:
+                        android_file.write(line)
                     continue
 
                 if is_comment(line):
@@ -73,16 +76,16 @@ iOS.Key. -> ios_key_
 def convert_key(key):
     key = key.strip()
     key = key.lower()
-    key.replace(".", "_")
+    key = key.replace(".", "_")
     return key.replace(" ", "")
 
 
 def plugin_html(key, value):
-    return "<string name = \"" + key + "\">" + value + "</string>\n"
+    return "<string name=\"" + key + "\">" + value + "</string>\n"
 
 
 def is_comment(line):
-    return "/*" in line or "*/" in line
+    return "/*" in line or "*/" in line or "// " in line
 
 
 def parse_line(line):
@@ -100,12 +103,11 @@ def replace_comment(line):
 
 # Usage: script_name input_filename
 if __name__ == '__main__':
-    NUM_OF_EXPECTED_ARGS = 2
     args = sys.argv
     print("example usage:")
-    print("python localization_converter.py my_iphone_localizations.strings")
-    if len(args) != NUM_OF_EXPECTED_ARGS:
+    print("python localization_converter.py my_iphone_localizations.strings [optional:drop]")
+    if len(args) < 2:
         print(USAGE_MESSAGE)
-
     input_file_path = args[1]
-    parse_file(input_file_path)
+    include_empty_lines = False if len(args) > 2 else True
+    parse_file(input_file_path, include_empty_lines)
