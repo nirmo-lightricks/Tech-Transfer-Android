@@ -32,7 +32,8 @@ dpkg --add-architecture i386 && \
     psmisc \
     net-tools \
     openssh-client \
-    supervisor
+    supervisor \
+    ccache
 
 # Install Python dependencies
 apt-get install python3
