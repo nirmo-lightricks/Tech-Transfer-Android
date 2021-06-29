@@ -14,7 +14,10 @@ from pathlib import Path
 from typing import cast, List, Dict, Union, Set
 from enum import Enum
 
-SHELVE_FILE_NAME = "project_dependencies.db"
+# this is a duplication of the MOUNT_PATH variable from constants.py
+# I have problems to import from the sibling package
+# we can find solutions later but i want to have this work now
+SHELVE_FILE_NAME = "/mnt/disks/sdb/facetune_android_dependencies.db"
 
 
 class ModuleType(Enum):
