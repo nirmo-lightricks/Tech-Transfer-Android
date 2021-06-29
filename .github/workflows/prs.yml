@@ -47,12 +47,22 @@ jobs:
           DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
           # Environment variable holding the Github password.
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
-        run: python3 ./tools/jenkins/build_modified_modules_v2.py
+        #take teh output from the gradle build and send it both to stdout and gradle.out in order to be able to analyze
+        #the error. test enforces that test fails even if tee is successful
+        run: (python3 ./tools/jenkins/build_modified_modules_v2.py 2>&1) | tee build-logs/gradle.out ; test ${PIPESTATUS[0]} -eq 0
 
       - name: Save adb logcat
         timeout-minutes: 1
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
+
+      - name: Extract build failure
+        timeout-minutes: 1
+        if: ${{failure()}}
+        run: python3 tools/actions_support/analyze_error.py build-logs/gradle.out ${{ github.run_id }}
+        env:
+          webhook: ${{ secrets.CI_ANALYSIS_WEBHOOK }}
+
       - name: Post test results on GitHub
         if: ${{ always() }}
         env:
