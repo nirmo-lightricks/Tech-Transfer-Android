@@ -4,14 +4,16 @@ This script runs tests for an app and all it's descendants
 import argparse
 import logging
 from typing import Set
-from project_modules import get_project_dependencies, ProjectModule, ModuleType
+from project_modules import get_project_modules, get_project_dependencies
 from build_for_pr import run_build_for_pr
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 # dynamic dfs. If gradlew dependencies would have been fast i would have used networkx instead
 def _get_all_modules_to_build(app: str) -> Set[str]:
-    application_module = ProjectModule(name=app, module_type=ModuleType.APPLICATION)
+    application_module = next(
+        module for module in get_project_modules() if module.name == app
+    )
     res = {application_module}
     stack = [application_module]
     while stack:

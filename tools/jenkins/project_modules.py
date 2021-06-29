@@ -3,13 +3,18 @@
 """
 Get list of modules/ applications by calling gradle
 """
+import hashlib
 import json
 import re
+import shelve
 from functools import lru_cache
 from subprocess import run
 from dataclasses import dataclass
+from pathlib import Path
 from typing import cast, List, Dict, Union, Set
 from enum import Enum
+
+SHELVE_FILE_NAME = "project_dependencies.db"
 
 
 class ModuleType(Enum):
@@ -44,6 +49,7 @@ class ProjectModule:
 
     name: str
     module_type: ModuleType
+    build_file: Path
 
     @staticmethod
     # pylint: disable=E1136
@@ -57,10 +63,12 @@ class ProjectModule:
         _name = cast(str, module_info["name"])
         if _name.startswith(":"):
             _name = _name[1:]
+        build_file = cast(str, module_info["buildFile"])
 
         return ProjectModule(
             name=_name,
             module_type=ModuleType.get_module_type(module_info),
+            build_file=Path(build_file),
         )
 
 
@@ -105,10 +113,21 @@ def _get_module_dependencies_from_gradle(module: str) -> Set[ProjectModule]:
     return {project_modules[dependency] for dependency in dependencies}
 
 
+def _get_cached_module_key(module: ProjectModule) -> str:
+    with open(module.build_file, "rb") as build_fh:
+        return hashlib.md5(build_fh.read()).hexdigest()
+
+
 def get_project_dependencies(module: ProjectModule) -> Set[ProjectModule]:
     """
     Given a project module returns the dependencies of the modules
     """
     if module.module_type == ModuleType.ASSET:
         return set()
-    return _get_module_dependencies_from_gradle(module.name)
+    with shelve.open(SHELVE_FILE_NAME, "c") as dependencies_cache:
+        key = _get_cached_module_key(module)
+        dependencies = cast(Set[ProjectModule], dependencies_cache.get(key))
+        if dependencies is None:
+            dependencies = _get_module_dependencies_from_gradle(module.name)
+            dependencies_cache[key] = dependencies
+    return dependencies
