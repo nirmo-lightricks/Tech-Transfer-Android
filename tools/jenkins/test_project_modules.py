@@ -1,35 +1,35 @@
 import unittest
+from typing import List
 from build_modified_modules_v2 import (
     get_project_dependencies,
     ProjectModule,
     ModuleType,
 )
+from project_modules import get_project_modules    
 
-
+def _get_module_by_name(name:str)->ProjectModule:
+    all_modules = get_project_modules()
+    return next(module for module in all_modules if module.name == name)
 
 class ProjectModulesTest(unittest.TestCase):
     def test_asset_module(self):
-        module = ProjectModule(
-            name="facetune_assets_pack", module_type=ModuleType.ASSET
-        )
+        module = _get_module_by_name("facetune_asset_packs")
         dependencies = get_project_dependencies(module)
         self.assertSetEqual(set(), dependencies)
 
     def test_leaf_module(self):
-        module = ProjectModule(name="protobuf", module_type=ModuleType.LIBRARY)
+        module = _get_module_by_name("protobuf")
         dependencies = get_project_dependencies(module)
         self.assertSetEqual(set(), dependencies)
 
     def test_app(self):
-        module = ProjectModule(
-            name="billing_playground", module_type=ModuleType.LIBRARY
-        )
+        module = _get_module_by_name("billing_playground")
         dependencies = get_project_dependencies(module)
         expected = {
-            ProjectModule(name="authentication", module_type=ModuleType.LIBRARY),
-            ProjectModule(name="billing", module_type=ModuleType.LIBRARY),
-            ProjectModule(name="common", module_type=ModuleType.LIBRARY),
-            ProjectModule(name="analytics", module_type=ModuleType.LIBRARY),
+            _get_module_by_name("authentication"),
+            _get_module_by_name("billing"),
+            _get_module_by_name("common"),
+            _get_module_by_name("analytics"),
         }
         self.assertSetEqual(expected, dependencies)
 
