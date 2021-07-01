@@ -39,6 +39,7 @@ def setup_environment() -> None:
         "GRADLE_USER_HOME": (MOUNT_PATH / "gradle_cache").as_posix(),
         "RUNNER_ALLOW_RUNASROOT": "1",
         "CCACHE_DIR": (MOUNT_PATH / ".ccache").as_posix(),
+        "SSD_MOUNT_PATH": MOUNT_PATH.as_posix(),
     }
     environ.update(env_variables)
 
