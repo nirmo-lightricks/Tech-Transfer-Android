@@ -8,6 +8,7 @@ import json
 import re
 import shelve
 from functools import lru_cache
+from os import environ
 from subprocess import run
 from dataclasses import dataclass
 from pathlib import Path
@@ -17,7 +18,7 @@ from enum import Enum
 # this is a duplication of the MOUNT_PATH variable from constants.py
 # I have problems to import from the sibling package
 # we can find solutions later but i want to have this work now
-SHELVE_FILE_NAME = "/mnt/disks/sdb/facetune_android_dependencies.db"
+SHELVE_FILE_NAME = Path(environ["SSD_MOUNT_PATH"]) / "facetune_android_dependencies.db"
 
 
 class ModuleType(Enum):
@@ -127,7 +128,7 @@ def get_project_dependencies(module: ProjectModule) -> Set[ProjectModule]:
     """
     if module.module_type == ModuleType.ASSET:
         return set()
-    with shelve.open(SHELVE_FILE_NAME, "c") as dependencies_cache:
+    with shelve.open(SHELVE_FILE_NAME.as_posix(), "c") as dependencies_cache:
         key = _get_cached_module_key(module)
         dependencies = cast(Set[ProjectModule], dependencies_cache.get(key))
         if dependencies is None:
