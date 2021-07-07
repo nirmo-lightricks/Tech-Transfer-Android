@@ -46,7 +46,9 @@ jobs:
       - name: Tests including large test
         run: python3 ./tools/jenkins/run_all_tests.py
       - name: Run all python unit tests
-        run: python3 -m unittest discover -s tools/jenkins
+        run: |
+          python3 -m unittest discover -s tools/jenkins
+          python3 -m unittest discover -s tools/actions_support
       - name: Print adb logcat on failure
         timeout-minutes: 1
         if: ${{ failure() }}
