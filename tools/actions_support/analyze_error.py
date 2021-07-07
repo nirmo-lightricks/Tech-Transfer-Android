@@ -99,6 +99,9 @@ def analyze_error(log_file: Path) -> List[BuildError]:
     Main function which takes a log file and finds all gradle task
     errors
     """
+    if not log_file.exists():
+        return []
+
     build_errors = []
     with open(log_file) as log_fh:
         for log_line in log_fh:
@@ -125,6 +128,7 @@ def _run(log_file: str, run_id: str, slack_webhook: str) -> None:
             for build_error in res:
                 _print_build_error(build_error)
         else:
+            print("could not determine the error.")
             _slack_github_actions_analysis_error(
                 "no errors found but workflow failed", run_id, slack_webhook
             )
