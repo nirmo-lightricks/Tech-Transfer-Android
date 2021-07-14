@@ -23,6 +23,7 @@ class ErrorType(Enum):
     Representation of error types
     """
 
+    AAPT = auto()
     ANDROID_TEST = auto()
     COMPILATION = auto()
     UNIT_TEST = auto()
@@ -74,8 +75,16 @@ def _extract_android_test_failures_from_task(
 
     error_details = extract_test_failure_from_directory(test_dir)
     return BuildError(
-        project=project, error_type=ErrorType. ANDROID_TEST, details=error_details
+        project=project, error_type=ErrorType.ANDROID_TEST, details=error_details
     )
+
+
+def _extract_aapt_error(log_line: str) -> BuildError:
+    stripped_line = log_line.strip()
+    file_name = stripped_line[: stripped_line.index(":")]
+    file_parts = Path(file_name).parts
+    project = file_parts[file_parts.index("src") - 1]
+    return BuildError(project=project, error_type=ErrorType.AAPT, details=[log_line])
 
 
 def _slack_github_actions_analysis_error(
@@ -105,16 +114,19 @@ def analyze_error(log_file: Path) -> List[BuildError]:
     build_errors = []
     with open(log_file) as log_fh:
         for log_line in log_fh:
+            if "AAPT: error" in log_line:
+                build_errors.append(_extract_aapt_error(log_line))
+                continue
             match = re.search(r"Task\s+:(.+?):(.+)\s+FAILED", log_line)
             if match:
                 project, task = match.groups()
                 if task.startswith("compile") or task.startswith("kapt"):
                     build_errors.append(_extract_compilation_error(project, log_fh))
-                if task.startswith("test"):
+                elif task.startswith("test"):
                     build_errors.append(
                         _extract_unit_test_failures_from_task(project, task)
                     )
-                if task.startswith("connected"):
+                elif task.startswith("connected"):
                     build_errors.append(
                         _extract_android_test_failures_from_task(project, task)
                     )

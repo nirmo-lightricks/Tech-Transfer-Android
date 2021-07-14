@@ -1,0 +1,1838 @@
+Found online and idle self-hosted runner(s) in the current repository's organization/enterprise account that matches the required labels: 'android'
+Waiting for a self-hosted runner to pick up this job...
+Current runner version: '2.278.0'
+Runner name: 'gh-runner-07-04-00-04-production-1-2021-07-04'
+Runner group name: 'Default'
+Machine name: 'gh-runner-07-04-00-04-production-1'
+##[group]GITHUB_TOKEN Permissions
+Actions: write
+Checks: write
+Contents: write
+Deployments: write
+Discussions: write
+Issues: write
+Metadata: read
+Packages: write
+PullRequests: write
+RepositoryProjects: write
+SecurityEvents: write
+Statuses: write
+##[endgroup]
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v2'
+Download action repository 'actions/upload-artifact@v2'
+##[group]Run actions/checkout@v2
+with:
+  lfs: true
+  submodules: recursive
+  token: ***
+  repository: Lightricks/facetune-android
+  ssh-strict: true
+  persist-credentials: true
+  clean: true
+  fetch-depth: 1
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+##[endgroup]
+Syncing repository: Lightricks/facetune-android
+##[group]Getting Git version info
+Working directory is '/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android'
+[command]/usr/bin/git version
+git version 2.25.1
+[command]/usr/bin/git lfs version
+git-lfs/2.9.2 (GitHub; linux amd64; go 1.13.5)
+##[endgroup]
+[command]/usr/bin/git config --local --get remote.origin.url
+https://github.com/Lightricks/facetune-android
+##[group]Removing previously created refs, to avoid conflicts
+[command]/usr/bin/git rev-parse --symbolic-full-name --verify --quiet HEAD
+HEAD
+[command]/usr/bin/git rev-parse --symbolic-full-name --branches
+##[endgroup]
+##[group]Cleaning the repository
+[command]/usr/bin/git clean -ffdx
+Removing .gradle/
+Removing analytics/build/
+Removing authentication/build/
+Removing billing/.cxx/
+Removing billing/build/
+Removing build-logs/
+Removing build/
+Removing buildSrc/.gradle/
+Removing buildSrc/build/
+Removing common/build/
+Removing enlight_ui/build/
+Removing facetune/.cxx/
+Removing facetune/build/
+Removing logcat.txt
+Removing nn/face-detection/.cxx/
+Removing pixaloop/.cxx/
+Removing pixaloop/build/
+Removing quickshot/.cxx/
+Removing quickshot/build/
+Removing render/.cxx/
+Removing render/build/
+Removing security/.cxx/
+Removing security/libs/
+Removing security/security_tests/.cxx/
+Removing swish/.cxx/
+Removing swish/build/
+Removing testutils/build/
+Removing third_party/tech_transfer/.cxx/
+Removing tools/jenkins/__pycache__/
+Removing video_engine/.cxx/
+Removing video_engine/build/
+Removing videoleap/.cxx/
+Removing videoleap/build/
+Removing videoleap/schemas/
+[command]/usr/bin/git reset --hard HEAD
+HEAD is now at 979d4c5 Merge a9624e68c781628e86d79ac204d6188da831e262 into cd4f91d84b0d3a48c2d83783db784de9c751c98e
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :
+Entering 'localizations/Owl-localization'
+Entering 'localizations/Video-Localization'
+Entering 'localizations/boosted-localization'
+Entering 'third_party/opencv-android'
+Entering 'third_party/protobuf-android'
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :
+Entering 'localizations/Owl-localization'
+Entering 'localizations/Video-Localization'
+Entering 'localizations/boosted-localization'
+Entering 'third_party/opencv-android'
+Entering 'third_party/protobuf-android'
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+[command]/usr/bin/git lfs install --local
+Updated git hooks.
+Git LFS initialized.
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +795e6bbc0b63420c78c8b80c2ca00104780ab9a8:refs/remotes/pull/7772/merge
+remote: Enumerating objects: 94, done.
+remote: Counting objects:   1% (1/94)
+remote: Counting objects:   2% (2/94)
+remote: Counting objects:   3% (3/94)
+remote: Counting objects:   4% (4/94)
+remote: Counting objects:   5% (5/94)
+remote: Counting objects:   6% (6/94)
+remote: Counting objects:   7% (7/94)
+remote: Counting objects:   8% (8/94)
+remote: Counting objects:   9% (9/94)
+remote: Counting objects:  10% (10/94)
+remote: Counting objects:  11% (11/94)
+remote: Counting objects:  12% (12/94)
+remote: Counting objects:  13% (13/94)
+remote: Counting objects:  14% (14/94)
+remote: Counting objects:  15% (15/94)
+remote: Counting objects:  17% (16/94)
+remote: Counting objects:  18% (17/94)
+remote: Counting objects:  19% (18/94)
+remote: Counting objects:  20% (19/94)
+remote: Counting objects:  21% (20/94)
+remote: Counting objects:  22% (21/94)
+remote: Counting objects:  23% (22/94)
+remote: Counting objects:  24% (23/94)
+remote: Counting objects:  25% (24/94)
+remote: Counting objects:  26% (25/94)
+remote: Counting objects:  27% (26/94)
+remote: Counting objects:  28% (27/94)
+remote: Counting objects:  29% (28/94)
+remote: Counting objects:  30% (29/94)
+remote: Counting objects:  31% (30/94)
+remote: Counting objects:  32% (31/94)
+remote: Counting objects:  34% (32/94)
+remote: Counting objects:  35% (33/94)
+remote: Counting objects:  36% (34/94)
+remote: Counting objects:  37% (35/94)
+remote: Counting objects:  38% (36/94)
+remote: Counting objects:  39% (37/94)
+remote: Counting objects:  40% (38/94)
+remote: Counting objects:  41% (39/94)
+remote: Counting objects:  42% (40/94)
+remote: Counting objects:  43% (41/94)
+remote: Counting objects:  44% (42/94)
+remote: Counting objects:  45% (43/94)
+remote: Counting objects:  46% (44/94)
+remote: Counting objects:  47% (45/94)
+remote: Counting objects:  48% (46/94)
+remote: Counting objects:  50% (47/94)
+remote: Counting objects:  51% (48/94)
+remote: Counting objects:  52% (49/94)
+remote: Counting objects:  53% (50/94)
+remote: Counting objects:  54% (51/94)
+remote: Counting objects:  55% (52/94)
+remote: Counting objects:  56% (53/94)
+remote: Counting objects:  57% (54/94)
+remote: Counting objects:  58% (55/94)
+remote: Counting objects:  59% (56/94)
+remote: Counting objects:  60% (57/94)
+remote: Counting objects:  61% (58/94)
+remote: Counting objects:  62% (59/94)
+remote: Counting objects:  63% (60/94)
+remote: Counting objects:  64% (61/94)
+remote: Counting objects:  65% (62/94)
+remote: Counting objects:  67% (63/94)
+remote: Counting objects:  68% (64/94)
+remote: Counting objects:  69% (65/94)
+remote: Counting objects:  70% (66/94)
+remote: Counting objects:  71% (67/94)
+remote: Counting objects:  72% (68/94)
+remote: Counting objects:  73% (69/94)
+remote: Counting objects:  74% (70/94)
+remote: Counting objects:  75% (71/94)
+remote: Counting objects:  76% (72/94)
+remote: Counting objects:  77% (73/94)
+remote: Counting objects:  78% (74/94)
+remote: Counting objects:  79% (75/94)
+remote: Counting objects:  80% (76/94)
+remote: Counting objects:  81% (77/94)
+remote: Counting objects:  82% (78/94)
+remote: Counting objects:  84% (79/94)
+remote: Counting objects:  85% (80/94)
+remote: Counting objects:  86% (81/94)
+remote: Counting objects:  87% (82/94)
+remote: Counting objects:  88% (83/94)
+remote: Counting objects:  89% (84/94)
+remote: Counting objects:  90% (85/94)
+remote: Counting objects:  91% (86/94)
+remote: Counting objects:  92% (87/94)
+remote: Counting objects:  93% (88/94)
+remote: Counting objects:  94% (89/94)
+remote: Counting objects:  95% (90/94)
+remote: Counting objects:  96% (91/94)
+remote: Counting objects:  97% (92/94)
+remote: Counting objects:  98% (93/94)
+remote: Counting objects: 100% (94/94)
+remote: Counting objects: 100% (94/94), done.
+remote: Compressing objects:   4% (1/24)
+remote: Compressing objects:   8% (2/24)
+remote: Compressing objects:  12% (3/24)
+remote: Compressing objects:  16% (4/24)
+remote: Compressing objects:  20% (5/24)
+remote: Compressing objects:  25% (6/24)
+remote: Compressing objects:  29% (7/24)
+remote: Compressing objects:  33% (8/24)
+remote: Compressing objects:  37% (9/24)
+remote: Compressing objects:  41% (10/24)
+remote: Compressing objects:  45% (11/24)
+remote: Compressing objects:  50% (12/24)
+remote: Compressing objects:  54% (13/24)
+remote: Compressing objects:  58% (14/24)
+remote: Compressing objects:  62% (15/24)
+remote: Compressing objects:  66% (16/24)
+remote: Compressing objects:  70% (17/24)
+remote: Compressing objects:  75% (18/24)
+remote: Compressing objects:  79% (19/24)
+remote: Compressing objects:  83% (20/24)
+remote: Compressing objects:  87% (21/24)
+remote: Compressing objects:  91% (22/24)
+remote: Compressing objects:  95% (23/24)
+remote: Compressing objects: 100% (24/24)
+remote: Compressing objects: 100% (24/24), done.
+remote: Total 53 (delta 32), reused 37 (delta 18), pack-reused 0
+From https://github.com/Lightricks/facetune-android
+ * [new ref]         795e6bbc0b63420c78c8b80c2ca00104780ab9a8 -> pull/7772/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+##[group]Fetching LFS objects
+[command]/usr/bin/git lfs fetch origin refs/remotes/pull/7772/merge
+fetch: Fetching reference refs/remotes/pull/7772/merge
+##[endgroup]
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/7772/merge
+Previous HEAD position was 979d4c5 Merge a9624e68c781628e86d79ac204d6188da831e262 into cd4f91d84b0d3a48c2d83783db784de9c751c98e
+HEAD is now at 795e6bb Merge 4ca97829bf3288845513f94d529882484558c6e1 into cd4f91d84b0d3a48c2d83783db784de9c751c98e
+##[endgroup]
+##[group]Setting up auth for fetching submodules
+Temporarily overriding HOME='/mnt/disks/sdb/runner_workspace/_temp/090df33f-523f-49f6-8653-9d366ee83814' before making global git config changes
+[command]/usr/bin/git config --global http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --global --unset-all url.https://github.com/.insteadOf
+[command]/usr/bin/git config --global url.https://github.com/.insteadOf git@github.com:
+##[endgroup]
+##[group]Fetching submodules
+[command]/usr/bin/git submodule sync --recursive
+Synchronizing submodule url for 'localizations/Owl-localization'
+Synchronizing submodule url for 'localizations/Video-Localization'
+Synchronizing submodule url for 'localizations/boosted-localization'
+Synchronizing submodule url for 'third_party/opencv-android'
+Synchronizing submodule url for 'third_party/protobuf-android'
+[command]/usr/bin/git -c protocol.version=2 submodule update --init --force --depth=1 --recursive
+Submodule path 'localizations/Owl-localization': checked out '37556da41a7cc1db4bd73da9d11084cd02bc4a15'
+Submodule path 'localizations/Video-Localization': checked out '7a6faa318ed25c39977f9d5af360d9bcc5317097'
+Submodule path 'localizations/boosted-localization': checked out '4fe72af3ba7f5f8e3635fe036996964dce587826'
+WARNING: Multiple 'url.*..insteadof' keys with the same alias: "git@github.com:"
+Submodule path 'third_party/opencv-android': checked out '72df0d538daeb2eb99aa5cb0e3a5d4c3fd25670d'
+WARNING: Multiple 'url.*..insteadof' keys with the same alias: "git@github.com:"
+Submodule path 'third_party/protobuf-android': checked out 'b1dce4253a0e21488f428360485627e436d9a674'
+[command]/usr/bin/git submodule foreach --recursive git config --local gc.auto 0
+Entering 'localizations/Owl-localization'
+Entering 'localizations/Video-Localization'
+Entering 'localizations/boosted-localization'
+Entering 'third_party/opencv-android'
+Entering 'third_party/protobuf-android'
+##[endgroup]
+##[group]Persisting credentials for submodules
+[command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'url\.https\:\/\/github\.com\/\.insteadOf' && git config --local --unset-all 'url.https://github.com/.insteadOf' || :
+Entering 'localizations/Owl-localization'
+url.https://github.com/.insteadof
+Entering 'localizations/Video-Localization'
+url.https://github.com/.insteadof
+Entering 'localizations/boosted-localization'
+url.https://github.com/.insteadof
+Entering 'third_party/opencv-android'
+url.https://github.com/.insteadof
+Entering 'third_party/protobuf-android'
+url.https://github.com/.insteadof
+[command]/usr/bin/git submodule foreach --recursive git config --local 'http.https://github.com/.extraheader' 'AUTHORIZATION: basic ***' && git config --local --show-origin --name-only --get-regexp remote.origin.url
+Entering 'localizations/Owl-localization'
+file:/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/.git/modules/localizations/Owl-localization/config	remote.origin.url
+Entering 'localizations/Video-Localization'
+file:/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/.git/modules/localizations/Video-Localization/config	remote.origin.url
+Entering 'localizations/boosted-localization'
+file:/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/.git/modules/localizations/boosted-localization/config	remote.origin.url
+Entering 'third_party/opencv-android'
+file:/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/.git/modules/third_party/opencv-android/config	remote.origin.url
+Entering 'third_party/protobuf-android'
+file:/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/.git/modules/third_party/protobuf-android/config	remote.origin.url
+[command]/usr/bin/git submodule foreach --recursive git config --local 'url.https://github.com/.insteadOf' 'git@github.com:'
+Entering 'localizations/Owl-localization'
+Entering 'localizations/Video-Localization'
+Entering 'localizations/boosted-localization'
+Entering 'third_party/opencv-android'
+Entering 'third_party/protobuf-android'
+##[endgroup]
+[command]/usr/bin/git log -1 --format='%H'
+'795e6bbc0b63420c78c8b80c2ca00104780ab9a8'
+##[group]Run mkdir -p "build-logs"
+[36;1mmkdir -p "build-logs"[0m
+[36;1m(python3 tools/jenkins/ApplyGithubLabels.py || echo "failed reporting status to github") | tee -a "build-logs/output.log"[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+  DANGER_GITHUB_API_USER: ***
+  DANGER_GITHUB_API_TOKEN: ***
+##[endgroup]
+[+] Fetching repo Lightricks/facetune-android...
+[+] Fetching PR #7772...
+[+] Files changed in PR: [['facetune/src/main/java/com/lightricks/facetune/ActionAcceptanceStateMachine.kt', 'facetune/src/main/java/com/lightricks/facetune/FacetuneApplication.java', 'facetune/src/main/java/com/lightricks/facetune/MainFragmentActivity.java', 'facetune/src/main/java/com/lightricks/facetune/MainScreenFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/MainScreenViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/TopDrawerController.kt', 'facetune/src/main/java/com/lightricks/facetune/Workspace.java', 'facetune/src/main/java/com/lightricks/facetune/WorkspaceFragment.java', 'facetune/src/main/java/com/lightricks/facetune/di/ApplicationModule.kt', 'facetune/src/main/java/com/lightricks/facetune/di/MainActivityModule.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExperimentManager.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExportVariant.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportBitmapGenerator.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogModule.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionId.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionIdManager.kt', 'facetune/src/main/java/com/lightricks/facetune/export/WatermarkConfiguration.kt', 'facetune/src/main/java/com/lightricks/facetune/remoteconfig/RemoteConfigManager.kt', 'facetune/src/main/res/drawable/ic_save.xml', 'facetune/src/main/res/drawable/ic_share.xml', 'facetune/src/main/res/layout/export_dialog_fragment.xml', 'facetune/src/main/res/layout/export_drawer_layout.xml', 'facetune/src/main/res/layout/facetune_workspace.xml', 'facetune/src/test/java/com/lightricks/facetune/MainScreenViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/ExportDialogViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/WatermarkConfigurationTest.kt']]
+[+] Fetching issue #7772...
+[+] Currently available labels: [['Next release', 'On hold', 'This release', '[LGTM]', '[WIP]', 'analytics', 'authentication', 'billing', 'common', 'dependencies', 'enlight_ui', 'experiments', 'facetune', 'facetune_asset_packs', 'merge on green', 'nn', 'nn:face-detection', 'pixaloop', 'quickshot', 'render', 'security', 'security_tests', 'swish', 'tech_transfer', 'testutils', 'tools', 'video_engine', 'video_engine_playground', 'videoleap']]
+[+] Currently set labels for PR: [['facetune']]
+[+] Labels to set: [facetune]
+[+] All labels are already set, skipping
+##[group]Run ./.github/actions/action-emulator
+with:
+  version: 29
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+##[endgroup]
+echo no | avdmanager create avd -n android29 -k 'system-images;android-29;default;x86' --force
+{ stdout: 'android29\n', stderr: '' }
+emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android29 -memory 3072 -partition-size 2048 -cache-size 2048 -wipe-data >/dev/null 2>&1 &
+##[group]Run ./gradlew clean
+[36;1m./gradlew clean[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+##[endgroup]
+Starting a Gradle Daemon, 1 incompatible and 2 stopped Daemons could not be reused, use --status for details
+> Task :buildSrc:compileKotlin FROM-CACHE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy FROM-CACHE
+> Task :buildSrc:pluginDescriptors
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC
+> Task :buildSrc:jar
+:jar: No valid plugin descriptors were found in META-INF/gradle-plugins
+> Task :buildSrc:assemble
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:pluginUnderTestMetadata
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins FROM-CACHE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build
+> Configure project :billing
+NDK ABI Filters set to [x86]
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :billing_playground
+Not creating `release` signing config!
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :facetune
+Task Requests: [DefaultTaskExecutionRequest{args=[clean],projectPath='null'}]
+isGmsEnabled = false
+copyBlobsToRemoteAssetDeliveryModule configurationPahase
+Store name is:
+Not creating external signing config
+NDK ABI Filters set to [x86]
+Using debug signingConfig for release
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :opencv-android
+OpenCV: 4.5.0 /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/build.gradle
+> Configure project :pixaloop
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :quickshot
+Store name is:
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :security
+NDK ABI Filters set to: [x86]
+> Configure project :security_tests
+NDK ABI Filters set to: [x86]
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :swish
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :video_engine
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+> Configure project :video_engine_playground
+Not creating `production` signing config!
+> Configure project :videoleap
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :wechat_playground
+Not creating `release` signing config!
+task ':nn:face-detection:connectedDebugAndroidTest' mustRunAfter task ':wechat_playground:connectedDebugAndroidTest'
+task ':wechat_playground:connectedDebugAndroidTest' mustRunAfter task ':videoleap_localization:connectedDebugAndroidTest'
+task ':videoleap_localization:connectedDebugAndroidTest' mustRunAfter task ':videoleap:connectedDebugAndroidTest'
+task ':videoleap:connectedDebugAndroidTest' mustRunAfter task ':video_engine_playground:connectedDebugAndroidTest'
+task ':video_engine_playground:connectedDebugAndroidTest' mustRunAfter task ':video_engine:connectedDebugAndroidTest'
+task ':video_engine:connectedDebugAndroidTest' mustRunAfter task ':testutils:connectedDebugAndroidTest'
+task ':testutils:connectedDebugAndroidTest' mustRunAfter task ':tech_transfer:connectedDebugAndroidTest'
+task ':tech_transfer:connectedDebugAndroidTest' mustRunAfter task ':swish:connectedDebugAndroidTest'
+task ':swish:connectedDebugAndroidTest' mustRunAfter task ':security_tests:connectedDebugAndroidTest'
+task ':security_tests:connectedDebugAndroidTest' mustRunAfter task ':security:connectedDebugAndroidTest'
+task ':security:connectedDebugAndroidTest' mustRunAfter task ':render:connectedDebugAndroidTest'
+task ':render:connectedDebugAndroidTest' mustRunAfter task ':quickshot_localization:connectedDebugAndroidTest'
+task ':quickshot_localization:connectedDebugAndroidTest' mustRunAfter task ':quickshot:connectedGmsDebugAndroidTest'
+task ':quickshot:connectedGmsDebugAndroidTest' mustRunAfter task ':quickshot:connectedChinaDebugAndroidTest'
+task ':quickshot:connectedChinaDebugAndroidTest' mustRunAfter task ':protobuf:connectedDebugAndroidTest'
+task ':protobuf:connectedDebugAndroidTest' mustRunAfter task ':pixaloop:connectedDebugAndroidTest'
+task ':pixaloop:connectedDebugAndroidTest' mustRunAfter task ':opencv-android:connectedDebugAndroidTest'
+task ':opencv-android:connectedDebugAndroidTest' mustRunAfter task ':nn:connectedDebugAndroidTest'
+task ':nn:connectedDebugAndroidTest' mustRunAfter task ':gif_encoder:connectedDebugAndroidTest'
+task ':gif_encoder:connectedDebugAndroidTest' mustRunAfter task ':facetune:connectedGmsDebugAndroidTest'
+task ':facetune:connectedGmsDebugAndroidTest' mustRunAfter task ':facetune:connectedChinaDebugAndroidTest'
+task ':facetune:connectedChinaDebugAndroidTest' mustRunAfter task ':experiments_playground:connectedDebugAndroidTest'
+task ':experiments_playground:connectedDebugAndroidTest' mustRunAfter task ':experiments2:connectedDebugAndroidTest'
+task ':experiments2:connectedDebugAndroidTest' mustRunAfter task ':experiments:connectedDebugAndroidTest'
+task ':experiments:connectedDebugAndroidTest' mustRunAfter task ':enlight_ui:connectedDebugAndroidTest'
+task ':enlight_ui:connectedDebugAndroidTest' mustRunAfter task ':common:connectedDebugAndroidTest'
+task ':common:connectedDebugAndroidTest' mustRunAfter task ':boosted-localization:connectedDebugAndroidTest'
+task ':boosted-localization:connectedDebugAndroidTest' mustRunAfter task ':billing_playground:connectedStagingDebugAndroidTest'
+task ':billing_playground:connectedStagingDebugAndroidTest' mustRunAfter task ':billing_playground:connectedProductionDebugAndroidTest'
+task ':billing_playground:connectedProductionDebugAndroidTest' mustRunAfter task ':billing_playground:connectedDevelopDebugAndroidTest'
+task ':billing_playground:connectedDevelopDebugAndroidTest' mustRunAfter task ':billing:connectedGmsDebugAndroidTest'
+task ':billing:connectedGmsDebugAndroidTest' mustRunAfter task ':billing:connectedChinaDebugAndroidTest'
+task ':billing:connectedChinaDebugAndroidTest' mustRunAfter task ':authentication:connectedDebugAndroidTest'
+task ':authentication:connectedDebugAndroidTest' mustRunAfter task ':analytics:connectedDebugAndroidTest'
+> Task :analytics:clean UP-TO-DATE
+> Task :billing_playground:clean UP-TO-DATE
+> Task :billing:preBuild UP-TO-DATE
+> Task :authentication:clean UP-TO-DATE
+> Task :common:clean UP-TO-DATE
+> Task :experiments:clean UP-TO-DATE
+> Task :enlight_ui:clean UP-TO-DATE
+> Task :experiments_playground:clean UP-TO-DATE
+> Task :facetune:preBuild UP-TO-DATE
+> Task :facetune:preChinaDebugBuild UP-TO-DATE
+> Task :boosted-localization:clean UP-TO-DATE
+> Task :experiments2:clean UP-TO-DATE
+> Task :facetune_asset_packs:clean UP-TO-DATE
+> Task :gif_encoder:clean UP-TO-DATE
+> Task :nn:clean UP-TO-DATE
+> Task :billing:preChinaDebugBuild UP-TO-DATE
+> Task :opencv-android:preBuild UP-TO-DATE
+> Task :opencv-android:preDebugBuild UP-TO-DATE
+> Task :pixaloop:preBuild UP-TO-DATE
+> Task :pixaloop:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanChinaDebug
+> Task :billing:externalNativeBuildCleanChinaDebug
+> Task :billing:preChinaReleaseBuild UP-TO-DATE
+> Task :billing:externalNativeBuildCleanChinaRelease
+> Task :billing:preGmsDebugBuild UP-TO-DATE
+> Task :pixaloop:externalNativeBuildCleanDebug
+> Task :billing:externalNativeBuildCleanGmsDebug
+> Task :billing:preGmsReleaseBuild UP-TO-DATE
+> Task :pixaloop:extractProguardFiles
+> Task :pixaloop:preDebugMenuBuild
+> Task :billing:externalNativeBuildCleanGmsRelease
+> Task :billing:clean UP-TO-DATE
+> Task :facetune:extractProguardFiles
+> Task :facetune:preChinaDebugMenuBuild
+> Task :protobuf:clean UP-TO-DATE
+> Task :quickshot:preBuild UP-TO-DATE
+> Task :quickshot:preChinaDebugBuild UP-TO-DATE
+> Task :pixaloop:externalNativeBuildCleanDebugMenu
+> Task :pixaloop:preReleaseBuild
+> Task :facetune:externalNativeBuildCleanChinaDebugMenu
+> Task :facetune:preChinaReleaseBuild
+> Task :quickshot:externalNativeBuildCleanChinaDebug
+> Task :pixaloop:externalNativeBuildCleanRelease
+> Task :pixaloop:clean
+> Task :quickshot:extractProguardFiles
+> Task :quickshot:preChinaDebugMenuBuild
+> Task :quickshot_localization:clean UP-TO-DATE
+> Task :render:preBuild UP-TO-DATE
+> Task :render:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanChinaRelease
+> Task :facetune:preGmsDebugBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanChinaDebugMenu
+> Task :quickshot:preChinaReleaseBuild
+> Task :render:externalNativeBuildCleanDebug
+> Task :render:preReleaseBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsDebug
+> Task :facetune:preGmsDebugMenuBuild
+> Task :quickshot:externalNativeBuildCleanChinaRelease
+> Task :quickshot:preGmsDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsDebugMenu
+> Task :facetune:preGmsReleaseBuild
+> Task :render:externalNativeBuildCleanRelease
+> Task :render:clean UP-TO-DATE
+> Task :security:preBuild UP-TO-DATE
+> Task :security:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsRelease
+> Task :facetune:clean
+> Task :security_tests:preBuild UP-TO-DATE
+> Task :security_tests:preDebugBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsDebug
+> Task :quickshot:preGmsDebugMenuBuild
+> Task :security:externalNativeBuildCleanDebug
+> Task :security:preReleaseBuild UP-TO-DATE
+> Task :security_tests:externalNativeBuildCleanDebug
+> Task :security_tests:preReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsDebugMenu
+> Task :quickshot:preGmsReleaseBuild
+> Task :opencv-android:externalNativeBuildCleanDebug
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 2 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 2 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86'
+[1/1] Cleaning all built files...
+Cleaning... 2 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 2 files.
+> Task :opencv-android:preReleaseBuild UP-TO-DATE
+> Task :security:externalNativeBuildCleanRelease
+> Task :security_tests:externalNativeBuildCleanRelease
+> Task :security_tests:clean UP-TO-DATE
+> Task :swish:preBuild UP-TO-DATE
+> Task :swish:preDebugBuild UP-TO-DATE
+> Task :security:clean UP-TO-DATE
+> Task :tech_transfer:preBuild UP-TO-DATE
+> Task :tech_transfer:preDebugBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsRelease
+> Task :quickshot:clean
+> Task :tech_transfer:externalNativeBuildCleanDebug
+> Task :tech_transfer:preReleaseBuild UP-TO-DATE
+> Task :testutils:clean UP-TO-DATE
+> Task :video_engine:preBuild UP-TO-DATE
+> Task :video_engine:preDebugBuild UP-TO-DATE
+> Task :swish:externalNativeBuildCleanDebug
+> Task :video_engine:externalNativeBuildCleanDebug
+> Task :swish:extractProguardFiles
+> Task :swish:preDebugMenuBuild
+> Task :tech_transfer:externalNativeBuildCleanRelease
+> Task :tech_transfer:clean UP-TO-DATE
+> Task :video_engine:extractProguardFiles
+> Task :video_engine:preReleaseBuild
+> Task :video_engine_playground:clean UP-TO-DATE
+> Task :videoleap:preBuild UP-TO-DATE
+> Task :videoleap:preDebugBuild UP-TO-DATE
+> Task :videoleap:externalNativeBuildCleanDebug
+> Task :swish:externalNativeBuildCleanDebugMenu
+> Task :swish:preReleaseBuild
+> Task :swish:externalNativeBuildCleanRelease
+> Task :videoleap:extractProguardFiles
+> Task :swish:clean
+> Task :videoleap:preReleaseBuild
+> Task :video_engine:externalNativeBuildCleanRelease
+> Task :video_engine:clean
+> Task :wechat_playground:clean UP-TO-DATE
+> Task :nn:face-detection:preBuild UP-TO-DATE
+> Task :nn:face-detection:preDebugBuild UP-TO-DATE
+> Task :videoleap_localization:clean
+> Task :videoleap:externalNativeBuildCleanRelease
+> Task :videoleap:clean
+> Task :nn:face-detection:externalNativeBuildCleanDebug
+> Task :nn:face-detection:preReleaseBuild UP-TO-DATE
+> Task :nn:face-detection:externalNativeBuildCleanRelease
+> Task :nn:face-detection:clean UP-TO-DATE
+> Task :opencv-android:externalNativeBuildCleanRelease
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+> Task :opencv-android:clean
+BUILD SUCCESSFUL in 25s
+75 actionable tasks: 52 executed, 23 up-to-date
+##[group]Run (python3 ./tools/jenkins/build_modified_modules_v2.py 2>&1) | tee build-logs/gradle.out ; test ${PIPESTATUS[0]} -eq 0
+[36;1m(python3 ./tools/jenkins/build_modified_modules_v2.py 2>&1) | tee build-logs/gradle.out ; test ${PIPESTATUS[0]} -eq 0[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+  DANGER_GITHUB_API_USER: ***
+  DANGER_GITHUB_API_TOKEN: ***
+##[endgroup]
+2021-07-04 08:06:31,828 Fetching repo Lightricks/facetune-android...
+2021-07-04 08:06:32,055 Fetching PR #7772...
+2021-07-04 08:06:32,478 Files changed in PR: ['facetune/src/main/java/com/lightricks/facetune/ActionAcceptanceStateMachine.kt', 'facetune/src/main/java/com/lightricks/facetune/FacetuneApplication.java', 'facetune/src/main/java/com/lightricks/facetune/MainFragmentActivity.java', 'facetune/src/main/java/com/lightricks/facetune/MainScreenFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/MainScreenViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/TopDrawerController.kt', 'facetune/src/main/java/com/lightricks/facetune/Workspace.java', 'facetune/src/main/java/com/lightricks/facetune/WorkspaceFragment.java', 'facetune/src/main/java/com/lightricks/facetune/di/ApplicationModule.kt', 'facetune/src/main/java/com/lightricks/facetune/di/MainActivityModule.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExperimentManager.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExportVariant.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportBitmapGenerator.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogModule.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionId.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionIdManager.kt', 'facetune/src/main/java/com/lightricks/facetune/export/WatermarkConfiguration.kt', 'facetune/src/main/java/com/lightricks/facetune/remoteconfig/RemoteConfigManager.kt', 'facetune/src/main/res/drawable/ic_save.xml', 'facetune/src/main/res/drawable/ic_share.xml', 'facetune/src/main/res/layout/export_dialog_fragment.xml', 'facetune/src/main/res/layout/export_drawer_layout.xml', 'facetune/src/main/res/layout/facetune_workspace.xml', 'facetune/src/test/java/com/lightricks/facetune/MainScreenViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/ExportDialogViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/WatermarkConfigurationTest.kt']
+2021-07-04 08:06:32,478 Directories changed in PR: {'facetune'}
+[+] Executing: ./gradlew -Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest --build-cache clean :facetune:buildForPR
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Configure project :billing
+NDK ABI Filters set to [x86]
+> Configure project :billing_playground
+Not creating `release` signing config!
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :facetune
+Task Requests: [DefaultTaskExecutionRequest{args=[clean, :facetune:buildForPR],projectPath='null'}]
+isGmsEnabled = false
+copyBlobsToRemoteAssetDeliveryModule configurationPahase
+Store name is:
+Not creating external signing config
+NDK ABI Filters set to [x86]
+Using debug signingConfig for release
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :opencv-android
+OpenCV: 4.5.0 /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/build.gradle
+> Configure project :pixaloop
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :quickshot
+Store name is:
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :security
+NDK ABI Filters set to: [x86]
+> Configure project :security_tests
+NDK ABI Filters set to: [x86]
+> Configure project :swish
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "795e6bbc0b63420c78c8b80c2ca00104780ab9a8" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :video_engine
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+> Configure project :video_engine_playground
+Not creating `production` signing config!
+> Configure project :videoleap
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Configure project :wechat_playground
+Not creating `release` signing config!
+task ':nn:face-detection:connectedDebugAndroidTest' mustRunAfter task ':wechat_playground:connectedDebugAndroidTest'
+task ':wechat_playground:connectedDebugAndroidTest' mustRunAfter task ':videoleap_localization:connectedDebugAndroidTest'
+task ':videoleap_localization:connectedDebugAndroidTest' mustRunAfter task ':videoleap:connectedDebugAndroidTest'
+task ':videoleap:connectedDebugAndroidTest' mustRunAfter task ':video_engine_playground:connectedDebugAndroidTest'
+task ':video_engine_playground:connectedDebugAndroidTest' mustRunAfter task ':video_engine:connectedDebugAndroidTest'
+task ':video_engine:connectedDebugAndroidTest' mustRunAfter task ':testutils:connectedDebugAndroidTest'
+task ':testutils:connectedDebugAndroidTest' mustRunAfter task ':tech_transfer:connectedDebugAndroidTest'
+task ':tech_transfer:connectedDebugAndroidTest' mustRunAfter task ':swish:connectedDebugAndroidTest'
+task ':swish:connectedDebugAndroidTest' mustRunAfter task ':security_tests:connectedDebugAndroidTest'
+task ':security_tests:connectedDebugAndroidTest' mustRunAfter task ':security:connectedDebugAndroidTest'
+task ':security:connectedDebugAndroidTest' mustRunAfter task ':render:connectedDebugAndroidTest'
+task ':render:connectedDebugAndroidTest' mustRunAfter task ':quickshot_localization:connectedDebugAndroidTest'
+task ':quickshot_localization:connectedDebugAndroidTest' mustRunAfter task ':quickshot:connectedGmsDebugAndroidTest'
+task ':quickshot:connectedGmsDebugAndroidTest' mustRunAfter task ':quickshot:connectedChinaDebugAndroidTest'
+task ':quickshot:connectedChinaDebugAndroidTest' mustRunAfter task ':protobuf:connectedDebugAndroidTest'
+task ':protobuf:connectedDebugAndroidTest' mustRunAfter task ':pixaloop:connectedDebugAndroidTest'
+task ':pixaloop:connectedDebugAndroidTest' mustRunAfter task ':opencv-android:connectedDebugAndroidTest'
+task ':opencv-android:connectedDebugAndroidTest' mustRunAfter task ':nn:connectedDebugAndroidTest'
+task ':nn:connectedDebugAndroidTest' mustRunAfter task ':gif_encoder:connectedDebugAndroidTest'
+task ':gif_encoder:connectedDebugAndroidTest' mustRunAfter task ':facetune:connectedGmsDebugAndroidTest'
+task ':facetune:connectedGmsDebugAndroidTest' mustRunAfter task ':facetune:connectedChinaDebugAndroidTest'
+task ':facetune:connectedChinaDebugAndroidTest' mustRunAfter task ':experiments_playground:connectedDebugAndroidTest'
+task ':experiments_playground:connectedDebugAndroidTest' mustRunAfter task ':experiments2:connectedDebugAndroidTest'
+task ':experiments2:connectedDebugAndroidTest' mustRunAfter task ':experiments:connectedDebugAndroidTest'
+task ':experiments:connectedDebugAndroidTest' mustRunAfter task ':enlight_ui:connectedDebugAndroidTest'
+task ':enlight_ui:connectedDebugAndroidTest' mustRunAfter task ':common:connectedDebugAndroidTest'
+task ':common:connectedDebugAndroidTest' mustRunAfter task ':boosted-localization:connectedDebugAndroidTest'
+task ':boosted-localization:connectedDebugAndroidTest' mustRunAfter task ':billing_playground:connectedStagingDebugAndroidTest'
+task ':billing_playground:connectedStagingDebugAndroidTest' mustRunAfter task ':billing_playground:connectedProductionDebugAndroidTest'
+task ':billing_playground:connectedProductionDebugAndroidTest' mustRunAfter task ':billing_playground:connectedDevelopDebugAndroidTest'
+task ':billing_playground:connectedDevelopDebugAndroidTest' mustRunAfter task ':billing:connectedGmsDebugAndroidTest'
+task ':billing:connectedGmsDebugAndroidTest' mustRunAfter task ':billing:connectedChinaDebugAndroidTest'
+task ':billing:connectedChinaDebugAndroidTest' mustRunAfter task ':authentication:connectedDebugAndroidTest'
+task ':authentication:connectedDebugAndroidTest' mustRunAfter task ':analytics:connectedDebugAndroidTest'
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :billing_playground:clean UP-TO-DATE
+> Task :billing:preBuild UP-TO-DATE
+> Task :billing:preChinaDebugBuild UP-TO-DATE
+> Task :authentication:clean UP-TO-DATE
+> Task :boosted-localization:clean UP-TO-DATE
+> Task :common:clean UP-TO-DATE
+> Task :enlight_ui:clean UP-TO-DATE
+> Task :experiments:clean UP-TO-DATE
+> Task :experiments2:clean UP-TO-DATE
+> Task :facetune:preBuild UP-TO-DATE
+> Task :facetune:preChinaDebugBuild UP-TO-DATE
+> Task :experiments_playground:clean UP-TO-DATE
+> Task :facetune_asset_packs:clean UP-TO-DATE
+> Task :analytics:clean UP-TO-DATE
+> Task :nn:clean UP-TO-DATE
+> Task :opencv-android:preBuild UP-TO-DATE
+> Task :opencv-android:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanChinaDebug
+> Task :gif_encoder:clean UP-TO-DATE
+> Task :billing:externalNativeBuildCleanChinaDebug
+> Task :pixaloop:preBuild UP-TO-DATE
+> Task :pixaloop:preDebugBuild UP-TO-DATE
+> Task :pixaloop:externalNativeBuildCleanDebug
+> Task :billing:preChinaReleaseBuild UP-TO-DATE
+> Task :facetune:extractProguardFiles
+> Task :facetune:preChinaDebugMenuBuild
+> Task :pixaloop:extractProguardFiles
+> Task :pixaloop:preDebugMenuBuild
+> Task :pixaloop:externalNativeBuildCleanDebugMenu
+> Task :pixaloop:preReleaseBuild
+> Task :pixaloop:externalNativeBuildCleanRelease
+> Task :facetune:externalNativeBuildCleanChinaDebugMenu
+> Task :facetune:preChinaReleaseBuild
+> Task :billing:externalNativeBuildCleanChinaRelease
+> Task :billing:preGmsDebugBuild UP-TO-DATE
+> Task :pixaloop:clean
+> Task :protobuf:clean UP-TO-DATE
+> Task :quickshot:preBuild UP-TO-DATE
+> Task :quickshot:preChinaDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanChinaRelease
+> Task :facetune:preGmsDebugBuild UP-TO-DATE
+> Task :billing:externalNativeBuildCleanGmsDebug
+> Task :billing:preGmsReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanChinaDebug
+> Task :facetune:externalNativeBuildCleanGmsDebug
+> Task :facetune:preGmsDebugMenuBuild
+> Task :quickshot:extractProguardFiles
+> Task :quickshot:preChinaDebugMenuBuild
+> Task :billing:externalNativeBuildCleanGmsRelease
+> Task :billing:clean UP-TO-DATE
+> Task :quickshot_localization:clean UP-TO-DATE
+> Task :render:preBuild UP-TO-DATE
+> Task :render:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsDebugMenu
+> Task :facetune:preGmsReleaseBuild
+> Task :quickshot:externalNativeBuildCleanChinaDebugMenu
+> Task :quickshot:preChinaReleaseBuild
+> Task :quickshot:externalNativeBuildCleanChinaRelease
+> Task :quickshot:preGmsDebugBuild UP-TO-DATE
+> Task :render:externalNativeBuildCleanDebug
+> Task :render:preReleaseBuild UP-TO-DATE
+> Task :render:externalNativeBuildCleanRelease
+> Task :render:clean UP-TO-DATE
+> Task :opencv-android:externalNativeBuildCleanDebug
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+> Task :opencv-android:preReleaseBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsRelease
+> Task :facetune:clean
+> Task :security_tests:preBuild UP-TO-DATE
+> Task :security_tests:preDebugBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsDebug
+> Task :quickshot:preGmsDebugMenuBuild
+> Task :quickshot:externalNativeBuildCleanGmsDebugMenu
+> Task :quickshot:preGmsReleaseBuild
+> Task :security:preBuild UP-TO-DATE
+> Task :security:preDebugBuild UP-TO-DATE
+> Task :security_tests:externalNativeBuildCleanDebug
+> Task :security_tests:preReleaseBuild UP-TO-DATE
+> Task :security:externalNativeBuildCleanDebug
+> Task :security:preReleaseBuild UP-TO-DATE
+> Task :security_tests:externalNativeBuildCleanRelease
+> Task :security_tests:clean UP-TO-DATE
+> Task :swish:preBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsRelease
+> Task :security:externalNativeBuildCleanRelease
+> Task :swish:preDebugBuild UP-TO-DATE
+> Task :quickshot:clean
+> Task :security:clean UP-TO-DATE
+> Task :tech_transfer:preBuild UP-TO-DATE
+> Task :tech_transfer:preDebugBuild UP-TO-DATE
+> Task :swish:externalNativeBuildCleanDebug
+> Task :testutils:clean UP-TO-DATE
+> Task :video_engine:preBuild UP-TO-DATE
+> Task :video_engine:preDebugBuild UP-TO-DATE
+> Task :tech_transfer:externalNativeBuildCleanDebug
+> Task :tech_transfer:preReleaseBuild UP-TO-DATE
+> Task :video_engine:externalNativeBuildCleanDebug
+> Task :swish:extractProguardFiles
+> Task :swish:preDebugMenuBuild
+> Task :tech_transfer:externalNativeBuildCleanRelease
+> Task :tech_transfer:clean UP-TO-DATE
+> Task :swish:externalNativeBuildCleanDebugMenu
+> Task :swish:preReleaseBuild
+> Task :video_engine:extractProguardFiles
+> Task :video_engine:preReleaseBuild
+> Task :video_engine_playground:clean UP-TO-DATE
+> Task :videoleap:preBuild UP-TO-DATE
+> Task :videoleap:preDebugBuild UP-TO-DATE
+> Task :swish:externalNativeBuildCleanRelease
+> Task :video_engine:externalNativeBuildCleanRelease
+> Task :video_engine:clean
+> Task :videoleap_localization:clean UP-TO-DATE
+> Task :swish:clean
+> Task :videoleap:externalNativeBuildCleanDebug
+> Task :nn:face-detection:preBuild UP-TO-DATE
+> Task :nn:face-detection:preDebugBuild UP-TO-DATE
+> Task :nn:face-detection:externalNativeBuildCleanDebug
+> Task :nn:face-detection:preReleaseBuild UP-TO-DATE
+> Task :wechat_playground:clean UP-TO-DATE
+> Task :videoleap:extractProguardFiles
+> Task :nn:face-detection:externalNativeBuildCleanRelease
+> Task :analytics:preBuild UP-TO-DATE
+> Task :analytics:preDebugBuild UP-TO-DATE
+> Task :common:preBuild UP-TO-DATE
+> Task :common:preDebugBuild UP-TO-DATE
+> Task :videoleap:preReleaseBuild
+> Task :nn:face-detection:clean UP-TO-DATE
+> Task :common:compileDebugAidl NO-SOURCE
+> Task :analytics:generateDebugBuildConfig FROM-CACHE
+> Task :videoleap:externalNativeBuildCleanRelease
+> Task :analytics:compileDebugAidl NO-SOURCE
+> Task :videoleap:clean
+> Task :authentication:preBuild UP-TO-DATE
+> Task :analytics:generateDebugResValues FROM-CACHE
+> Task :authentication:preDebugBuild UP-TO-DATE
+> Task :authentication:compileDebugAidl NO-SOURCE
+> Task :common:packageDebugRenderscript NO-SOURCE
+> Task :common:compileDebugRenderscript NO-SOURCE
+> Task :common:generateDebugResValues FROM-CACHE
+> Task :common:generateDebugResources UP-TO-DATE
+> Task :analytics:processDebugManifest FROM-CACHE
+> Task :authentication:compileDebugRenderscript NO-SOURCE
+> Task :analytics:compileDebugRenderscript NO-SOURCE
+> Task :analytics:generateDebugResources UP-TO-DATE
+> Task :authentication:generateDebugBuildConfig FROM-CACHE
+> Task :opencv-android:externalNativeBuildCleanRelease
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+> Task :opencv-android:clean
+> Task :authentication:generateDebugResValues FROM-CACHE
+> Task :authentication:generateDebugResources UP-TO-DATE
+> Task :billing:compileChinaDebugAidl NO-SOURCE
+> Task :analytics:packageDebugResources FROM-CACHE
+> Task :common:packageDebugResources FROM-CACHE
+> Task :authentication:packageDebugResources FROM-CACHE
+> Task :billing:generateChinaDebugBuildConfig
+> Task :billing:generateChinaDebugResValues FROM-CACHE
+> Task :authentication:parseDebugLocalResources FROM-CACHE
+> Task :common:parseDebugLocalResources FROM-CACHE
+> Task :analytics:parseDebugLocalResources FROM-CACHE
+> Task :analytics:javaPreCompileDebug FROM-CACHE
+> Task :common:processDebugManifest FROM-CACHE
+> Task :billing:javaPreCompileChinaDebug FROM-CACHE
+> Task :nn:preBuild UP-TO-DATE
+> Task :nn:preDebugBuild UP-TO-DATE
+> Task :authentication:processDebugManifest FROM-CACHE
+> Task :authentication:javaPreCompileDebug FROM-CACHE
+> Task :authentication:packageDebugRenderscript NO-SOURCE
+> Task :billing:compileChinaDebugRenderscript NO-SOURCE
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :opencv-android:compileDebugAidl FROM-CACHE
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :billing:generateChinaDebugResources UP-TO-DATE
+> Task :nn:compileDebugAidl NO-SOURCE
+> Task :protobuf:preBuild UP-TO-DATE
+> Task :protobuf:preDebugBuild UP-TO-DATE
+> Task :protobuf:compileDebugAidl NO-SOURCE
+> Task :billing:packageChinaDebugResources
+> Task :render:compileDebugAidl NO-SOURCE
+> Task :security:compileDebugAidl NO-SOURCE
+> Task :tech_transfer:compileDebugAidl NO-SOURCE
+> Task :billing:parseChinaDebugLocalResources FROM-CACHE
+> Task :analytics:packageDebugRenderscript NO-SOURCE
+> Task :billing:packageChinaDebugRenderscript NO-SOURCE
+> Task :nn:packageDebugRenderscript NO-SOURCE
+> Task :opencv-android:packageDebugRenderscript NO-SOURCE
+> Task :protobuf:packageDebugRenderscript NO-SOURCE
+> Task :render:packageDebugRenderscript NO-SOURCE
+> Task :billing:processChinaDebugManifest
+> Task :security:packageDebugRenderscript NO-SOURCE
+> Task :tech_transfer:packageDebugRenderscript NO-SOURCE
+> Task :nn:compileDebugRenderscript NO-SOURCE
+> Task :common:generateDebugRFile FROM-CACHE
+> Task :analytics:generateDebugRFile FROM-CACHE
+> Task :common:generateDebugBuildConfig FROM-CACHE
+> Task :nn:generateDebugResValues FROM-CACHE
+> Task :nn:generateDebugResources UP-TO-DATE
+> Task :nn:packageDebugResources FROM-CACHE
+> Task :facetune:compileChinaDebugAidl FROM-CACHE
+> Task :facetune:compileChinaDebugRenderscript NO-SOURCE
+> Task :opencv-android:compileDebugRenderscript NO-SOURCE
+> Task :opencv-android:generateDebugResValues FROM-CACHE
+> Task :facetune:generateChinaDebugBuildConfig
+> Task :opencv-android:generateDebugResources UP-TO-DATE
+> Task :facetune:writeChinaDebugApplicationId
+> Task :opencv-android:packageDebugResources FROM-CACHE
+> Task :protobuf:compileDebugRenderscript NO-SOURCE
+> Task :authentication:generateDebugRFile FROM-CACHE
+> Task :protobuf:generateDebugResValues FROM-CACHE
+> Task :protobuf:generateDebugResources UP-TO-DATE
+> Task :protobuf:packageDebugResources
+> Task :render:compileDebugRenderscript NO-SOURCE
+> Task :render:generateDebugResValues FROM-CACHE
+> Task :render:generateDebugResources UP-TO-DATE
+> Task :render:packageDebugResources FROM-CACHE
+> Task :security:compileDebugRenderscript NO-SOURCE
+> Task :security:generateDebugResValues FROM-CACHE
+> Task :security:generateDebugResources UP-TO-DATE
+> Task :security:packageDebugResources
+> Task :tech_transfer:compileDebugRenderscript NO-SOURCE
+> Task :tech_transfer:generateDebugResValues FROM-CACHE
+> Task :tech_transfer:generateDebugResources UP-TO-DATE
+> Task :tech_transfer:packageDebugResources FROM-CACHE
+> Task :analytics:compileDebugLibraryResources FROM-CACHE
+> Task :authentication:compileDebugLibraryResources FROM-CACHE
+> Task :analytics:extractDeepLinksDebug FROM-CACHE
+> Task :authentication:extractDeepLinksDebug FROM-CACHE
+> Task :nn:extractDeepLinksDebug FROM-CACHE
+> Task :nn:processDebugManifest
+> Task :billing:compileChinaDebugLibraryResources
+> Task :billing:extractDeepLinksChinaDebug FROM-CACHE
+> Task :opencv-android:extractDeepLinksDebug FROM-CACHE
+> Task :opencv-android:processDebugManifest FROM-CACHE
+> Task :protobuf:extractDeepLinksDebug FROM-CACHE
+> Task :protobuf:processDebugManifest
+> Task :render:extractDeepLinksDebug FROM-CACHE
+> Task :render:processDebugManifest FROM-CACHE
+> Task :security:extractDeepLinksDebug FROM-CACHE
+> Task :security:processDebugManifest
+> Task :tech_transfer:extractDeepLinksDebug FROM-CACHE
+> Task :facetune:generateSafeArgsChinaDebug
+> Task :tech_transfer:processDebugManifest
+> Task :nn:compileDebugLibraryResources
+> Task :facetune:injectCrashlyticsMappingFileIdChinaDebug
+> Task :facetune:prepareLintJar
+> Task :facetune:prepareLintJarForPublish
+> Task :facetune:processChinaDebugGoogleServices
+> Task :facetune:generateChinaDebugSources
+> Task :facetune:dataBindingExportBuildInfoChinaDebug FROM-CACHE
+> Task :billing:generateChinaDebugRFile
+> Task :common:kaptGenerateStubsDebugKotlin FROM-CACHE
+> Task :nn:parseDebugLocalResources FROM-CACHE
+> Task :opencv-android:parseDebugLocalResources FROM-CACHE
+> Task :opencv-android:generateDebugRFile FROM-CACHE
+> Task :opencv-android:compileDebugLibraryResources FROM-CACHE
+> Task :facetune:dataBindingMergeDependencyArtifactsChinaDebug FROM-CACHE
+> Task :protobuf:compileDebugLibraryResources
+> Task :common:kaptDebugKotlin FROM-CACHE
+> Task :common:compileDebugKotlin FROM-CACHE
+> Task :nn:generateDebugRFile
+> Task :render:compileDebugLibraryResources FROM-CACHE
+> Task :protobuf:parseDebugLocalResources FROM-CACHE
+> Task :common:javaPreCompileDebug FROM-CACHE
+> Task :render:parseDebugLocalResources FROM-CACHE
+> Task :facetune:dataBindingMergeGenClassesChinaDebug FROM-CACHE
+> Task :facetune:generateChinaDebugResValues FROM-CACHE
+> Task :facetune:generateChinaDebugResources UP-TO-DATE
+> Task :protobuf:generateDebugRFile
+> Task :security:compileDebugLibraryResources
+> Task :render:generateDebugRFile FROM-CACHE
+> Task :security:parseDebugLocalResources FROM-CACHE
+> Task :tech_transfer:compileDebugLibraryResources
+> Task :tech_transfer:parseDebugLocalResources FROM-CACHE
+> Task :security:generateDebugRFile
+> Task :nn:generateDebugBuildConfig
+> Task :opencv-android:generateDebugBuildConfig FROM-CACHE
+> Task :opencv-android:javaPreCompileDebug FROM-CACHE
+> Task :opencv-android:compileDebugJavaWithJavac FROM-CACHE
+> Task :opencv-android:bundleLibCompileToJarDebug FROM-CACHE
+> Task :tech_transfer:generateDebugRFile
+> Task :protobuf:generateDebugBuildConfig
+> Task :protobuf:javaPreCompileDebug FROM-CACHE
+> Task :common:compileDebugJavaWithJavac FROM-CACHE
+> Task :common:bundleLibCompileToJarDebug FROM-CACHE
+> Task :analytics:compileDebugJavaWithJavac FROM-CACHE
+> Task :analytics:bundleLibCompileToJarDebug FROM-CACHE
+> Task :authentication:kaptGenerateStubsDebugKotlin FROM-CACHE
+> Task :authentication:kaptDebugKotlin FROM-CACHE
+> Task :authentication:compileDebugKotlin FROM-CACHE
+> Task :authentication:compileDebugJavaWithJavac FROM-CACHE
+> Task :authentication:bundleLibCompileToJarDebug FROM-CACHE
+> Task :nn:compileDebugKotlin
+> Task :common:compileDebugLibraryResources FROM-CACHE
+> Task :common:extractDeepLinksDebug FROM-CACHE
+> Task :nn:javaPreCompileDebug FROM-CACHE
+> Task :protobuf:compileDebugJavaWithJavac
+> Task :protobuf:bundleLibCompileToJarDebug
+> Task :render:generateDebugBuildConfig FROM-CACHE
+> Task :render:compileDebugKotlin FROM-CACHE
+> Task :render:javaPreCompileDebug FROM-CACHE
+> Task :render:compileDebugJavaWithJavac FROM-CACHE
+> Task :render:bundleLibCompileToJarDebug FROM-CACHE
+> Task :security:generateDebugBuildConfig
+> Task :security:javaPreCompileDebug FROM-CACHE
+> Task :security:compileDebugJavaWithJavac
+> Task :security:bundleLibCompileToJarDebug
+> Task :tech_transfer:generateDebugBuildConfig
+> Task :tech_transfer:javaPreCompileDebug FROM-CACHE
+> Task :tech_transfer:compileDebugJavaWithJavac
+> Task :nn:compileDebugJavaWithJavac
+> Task :tech_transfer:bundleLibCompileToJarDebug
+> Task :nn:bundleLibCompileToJarDebug
+> Task :analytics:mergeDebugJniLibFolders FROM-CACHE
+> Task :analytics:mergeDebugNativeLibs FROM-CACHE
+> Task :authentication:mergeDebugJniLibFolders FROM-CACHE
+> Task :analytics:stripDebugDebugSymbols NO-SOURCE
+> Task :authentication:mergeDebugNativeLibs FROM-CACHE
+> Task :analytics:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :authentication:stripDebugDebugSymbols NO-SOURCE
+> Task :common:mergeDebugJniLibFolders FROM-CACHE
+> Task :authentication:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :nn:mergeDebugJniLibFolders FROM-CACHE
+> Task :common:mergeDebugNativeLibs FROM-CACHE
+> Task :common:stripDebugDebugSymbols NO-SOURCE
+> Task :nn:mergeDebugNativeLibs FROM-CACHE
+> Task :common:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :nn:stripDebugDebugSymbols NO-SOURCE
+> Task :nn:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :opencv-android:generateJsonModelDebug
+> Task :opencv-android:externalNativeBuildDebug
+Build opencv_jni_shared_armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/armeabi-v7a'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/arm64-v8a'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86_64'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+> Task :opencv-android:mergeDebugJniLibFolders FROM-CACHE
+> Task :opencv-android:mergeDebugNativeLibs FROM-CACHE
+> Task :opencv-android:stripDebugDebugSymbols FROM-CACHE
+> Task :protobuf:mergeDebugJniLibFolders FROM-CACHE
+> Task :protobuf:mergeDebugNativeLibs
+> Task :opencv-android:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :protobuf:stripDebugDebugSymbols FROM-CACHE
+> Task :protobuf:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :security:generateJsonModelDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :facetune:mergeChinaDebugResources
+> Task :facetune:dataBindingGenBaseClassesChinaDebug FROM-CACHE
+> Task :security:externalNativeBuildDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+Build security_x86
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/.cxx/cmake/debug/x86'
+[1/3] Building CXX object CMakeFiles/security.dir/src/main/cpp/ShaderStorage.cpp.o
+[2/3] Building CXX object CMakeFiles/security.dir/src/main/cpp/Crypto.cpp.o
+[3/3] Linking CXX static library ../../../../libs/x86/libsecurity.a
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :facetune:dataBindingExportFeaturePackageIdsChinaDebug FROM-CACHE
+> Task :facetune:createChinaDebugCompatibleScreenManifests
+> Task :security:mergeDebugJniLibFolders FROM-CACHE
+> Task :facetune:extractDeepLinksChinaDebug
+> Task :security:mergeDebugNativeLibs
+> Task :facetune:processChinaDebugManifest
+/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/facetune/src/debug/AndroidManifest.xml:8:5-19:19 Warning:
+	application@android:allowBackup was tagged at AndroidManifest.xml:8 to replace other declarations but no other declaration present
+> Task :security:stripDebugDebugSymbols
+> Task :security:copyDebugJniLibsProjectOnly
+> Task :billing:kaptGenerateStubsChinaDebugKotlin
+> Task :render:generateJsonModelDebug
+> Task :render:externalNativeBuildDebug
+Build render_armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/armeabi-v7a'
+[1/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[17/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[18/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[19/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/armeabi-v7a/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/armeabi-v7a/librender.so
+Build render_arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/arm64-v8a'
+[1/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[15/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[16/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[17/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[18/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[19/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/arm64-v8a/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/arm64-v8a/librender.so
+Build render_x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/x86'
+[1/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[17/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[18/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[19/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/x86/librender.so
+Build render_x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/x86_64'
+[1/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[16/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[17/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[18/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[19/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86_64/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/x86_64/librender.so
+> Task :billing:generateJsonModelChinaDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :tech_transfer:generateJsonModelDebug
+> Task :render:mergeDebugJniLibFolders FROM-CACHE
+> Task :billing:externalNativeBuildChinaDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+Build billing_x86
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/billing/.cxx/cmake/chinaDebug/x86'
+[1/5] Building CXX object CMakeFiles/billing.dir/billing_main.cpp.o
+[2/5] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[3/5] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[4/5] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[5/5] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/billing/build/intermediates/cmake/chinaDebug/obj/x86/libbilling.so
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :billing:mergeChinaDebugJniLibFolders FROM-CACHE
+> Task :billing:kaptChinaDebugKotlin
+> Task :render:mergeDebugNativeLibs FROM-CACHE
+> Task :render:stripDebugDebugSymbols FROM-CACHE
+> Task :billing:mergeChinaDebugNativeLibs
+> Task :billing:stripChinaDebugDebugSymbols
+> Task :render:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :billing:copyChinaDebugJniLibsProjectOnly
+> Task :analytics:mergeDebugShaders FROM-CACHE
+> Task :analytics:compileDebugShaders NO-SOURCE
+> Task :analytics:generateDebugAssets UP-TO-DATE
+> Task :analytics:packageDebugAssets FROM-CACHE
+> Task :authentication:mergeDebugShaders FROM-CACHE
+> Task :authentication:compileDebugShaders NO-SOURCE
+> Task :authentication:generateDebugAssets UP-TO-DATE
+> Task :authentication:packageDebugAssets FROM-CACHE
+> Task :billing:mergeChinaDebugShaders FROM-CACHE
+> Task :billing:compileChinaDebugShaders NO-SOURCE
+> Task :billing:generateChinaDebugAssets UP-TO-DATE
+> Task :billing:packageChinaDebugAssets FROM-CACHE
+> Task :common:mergeDebugShaders FROM-CACHE
+> Task :common:compileDebugShaders NO-SOURCE
+> Task :common:generateDebugAssets UP-TO-DATE
+> Task :common:packageDebugAssets FROM-CACHE
+> Task :nn:mergeDebugShaders FROM-CACHE
+> Task :nn:compileDebugShaders NO-SOURCE
+> Task :nn:generateDebugAssets UP-TO-DATE
+> Task :nn:packageDebugAssets FROM-CACHE
+> Task :opencv-android:mergeDebugShaders FROM-CACHE
+> Task :opencv-android:compileDebugShaders NO-SOURCE
+> Task :opencv-android:generateDebugAssets UP-TO-DATE
+> Task :opencv-android:packageDebugAssets FROM-CACHE
+> Task :protobuf:mergeDebugShaders FROM-CACHE
+> Task :protobuf:compileDebugShaders NO-SOURCE
+> Task :protobuf:generateDebugAssets UP-TO-DATE
+> Task :protobuf:packageDebugAssets FROM-CACHE
+> Task :render:mergeDebugShaders FROM-CACHE
+> Task :render:compileDebugShaders NO-SOURCE
+> Task :render:generateDebugAssets UP-TO-DATE
+> Task :render:packageDebugAssets FROM-CACHE
+> Task :security:mergeDebugShaders FROM-CACHE
+> Task :security:compileDebugShaders NO-SOURCE
+> Task :security:generateDebugAssets UP-TO-DATE
+> Task :security:packageDebugAssets FROM-CACHE
+> Task :analytics:processDebugJavaRes NO-SOURCE
+> Task :analytics:bundleLibResDebug NO-SOURCE
+> Task :authentication:processDebugJavaRes NO-SOURCE
+> Task :authentication:bundleLibResDebug FROM-CACHE
+> Task :billing:processChinaDebugJavaRes NO-SOURCE
+> Task :common:processDebugJavaRes NO-SOURCE
+> Task :common:bundleLibResDebug FROM-CACHE
+> Task :nn:processDebugJavaRes NO-SOURCE
+> Task :nn:bundleLibResDebug NO-SOURCE
+> Task :opencv-android:processDebugJavaRes NO-SOURCE
+> Task :opencv-android:bundleLibResDebug NO-SOURCE
+> Task :protobuf:processDebugJavaRes NO-SOURCE
+> Task :protobuf:bundleLibResDebug NO-SOURCE
+> Task :render:processDebugJavaRes NO-SOURCE
+> Task :render:bundleLibResDebug FROM-CACHE
+> Task :security:processDebugJavaRes NO-SOURCE
+> Task :security:bundleLibResDebug NO-SOURCE
+> Task :security:bundleLibRuntimeToJarDebug
+> Task :authentication:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :nn:bundleLibRuntimeToJarDebug
+> Task :render:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :opencv-android:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :protobuf:bundleLibRuntimeToJarDebug
+> Task :analytics:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :facetune:processChinaDebugResources FAILED
+> Task :common:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :tech_transfer:externalNativeBuildDebug
+Build tech_transfer_armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/.cxx/cmake/debug/armeabi-v7a'
+[1/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransfer_jni.cpp.o
+[2/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransferProcessor.cpp.o
+/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/src/main/cpp/ColorTransferProcessor.cpp:261:41: warning: lambda capture 'scale' is not used [-Wunused-lambda-capture]
+        values->forEach([dampingFactor, scale, channel, &inputCDF, &inverseCDF, inputCDFScale, inputCDFOffset,
+                                      ~~^~~~~
+1 warning generated.
+[3/3] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/build/intermediates/cmake/debug/obj/armeabi-v7a/libtech_transfer.so
+Build tech_transfer_arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/.cxx/cmake/debug/arm64-v8a'
+[1/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransfer_jni.cpp.o
+[2/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransferProcessor.cpp.o
+/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/src/main/cpp/ColorTransferProcessor.cpp:261:41: warning: lambda capture 'scale' is not used [-Wunused-lambda-capture]
+        values->forEach([dampingFactor, scale, channel, &inputCDF, &inverseCDF, inputCDFScale, inputCDFOffset,
+                                      ~~^~~~~
+1 warning generated.
+[3/3] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/build/intermediates/cmake/debug/obj/arm64-v8a/libtech_transfer.so
+Build tech_transfer_x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/.cxx/cmake/debug/x86'
+[1/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransfer_jni.cpp.o
+[2/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransferProcessor.cpp.o
+/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/src/main/cpp/ColorTransferProcessor.cpp:261:41: warning: lambda capture 'scale' is not used [-Wunused-lambda-capture]
+        values->forEach([dampingFactor, scale, channel, &inputCDF, &inverseCDF, inputCDFScale, inputCDFOffset,
+                                      ~~^~~~~
+1 warning generated.
+[3/3] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/build/intermediates/cmake/debug/obj/x86/libtech_transfer.so
+Build tech_transfer_x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/.cxx/cmake/debug/x86_64'
+[1/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransfer_jni.cpp.o
+[2/3] Building CXX object CMakeFiles/tech_transfer.dir/ColorTransferProcessor.cpp.o
+/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/src/main/cpp/ColorTransferProcessor.cpp:261:41: warning: lambda capture 'scale' is not used [-Wunused-lambda-capture]
+        values->forEach([dampingFactor, scale, channel, &inputCDF, &inverseCDF, inputCDFScale, inputCDFOffset,
+                                      ~~^~~~~
+1 warning generated.
+[3/3] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/tech_transfer/build/intermediates/cmake/debug/obj/x86_64/libtech_transfer.so
+> Task :billing:compileChinaDebugKotlin
+FAILURE: Build failed with an exception.
+* What went wrong:
+Execution failed for task ':facetune:processChinaDebugResources'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.Workers$ActionFacade
+   > Android resource linking failed
+     /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/facetune/src/main/res/drawable/share_btn.xml:17: AAPT: error: resource drawable/ic_share (aka com.lightricks.facetune.free.cn:drawable/ic_share) not found.
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+* Get more help at https://help.gradle.org
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/6.8.3/userguide/command_line_interface.html#sec:command_line_warnings
+BUILD FAILED in 1m 13s
+285 actionable tasks: 118 executed, 143 from cache, 24 up-to-date
+Traceback (most recent call last):
+  File "./tools/jenkins/build_modified_modules_v2.py", line 132, in <module>
+    main()
+  File "./tools/jenkins/build_modified_modules_v2.py", line 128, in main
+    run_build_for_pr(modules=modules, include_large_tests=False, use_build_cache=True)
+  File "/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/tools/jenkins/build_for_pr.py", line 33, in run_build_for_pr
+    execute_gradle(gradle_arguments, [])
+  File "/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/tools/jenkins/gradle_build.py", line 27, in execute_gradle
+    subprocess.run(args, check=True)
+  File "/usr/lib/python3.8/subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['./gradlew', '-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest', '--build-cache', 'clean', ':facetune:buildForPR']' returned non-zero exit status 1.
+##[error]Process completed with exit code 1.
+##[group]Run adb logcat -d > logcat.txt
+[36;1madb logcat -d > logcat.txt[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+##[endgroup]
+##[group]Run python3 tools/actions_support/analyze_error.py build-logs/gradle.out 997982006
+[36;1mpython3 tools/actions_support/analyze_error.py build-logs/gradle.out 997982006[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+  webhook: ***
+##[endgroup]
+##[group]Run python3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"
+[36;1mpython3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"[0m
+shell: /usr/bin/bash -e {0}
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+  DANGER_GITHUB_API_USER: ***
+  DANGER_GITHUB_API_TOKEN: ***
+##[endgroup]
+2021-07-04 08:07:54,369 Fetching repo Lightricks/facetune-android...
+2021-07-04 08:07:54,582 Fetching PR #7772...
+2021-07-04 08:07:55,062 Files changed in PR: ['facetune/src/main/java/com/lightricks/facetune/ActionAcceptanceStateMachine.kt', 'facetune/src/main/java/com/lightricks/facetune/FacetuneApplication.java', 'facetune/src/main/java/com/lightricks/facetune/MainFragmentActivity.java', 'facetune/src/main/java/com/lightricks/facetune/MainScreenFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/MainScreenViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/TopDrawerController.kt', 'facetune/src/main/java/com/lightricks/facetune/Workspace.java', 'facetune/src/main/java/com/lightricks/facetune/WorkspaceFragment.java', 'facetune/src/main/java/com/lightricks/facetune/di/ApplicationModule.kt', 'facetune/src/main/java/com/lightricks/facetune/di/MainActivityModule.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExperimentManager.kt', 'facetune/src/main/java/com/lightricks/facetune/experiments/ExportVariant.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportBitmapGenerator.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogFragment.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogModule.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportDialogViewModel.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionId.kt', 'facetune/src/main/java/com/lightricks/facetune/export/ExportSessionIdManager.kt', 'facetune/src/main/java/com/lightricks/facetune/export/WatermarkConfiguration.kt', 'facetune/src/main/java/com/lightricks/facetune/remoteconfig/RemoteConfigManager.kt', 'facetune/src/main/res/drawable/ic_save.xml', 'facetune/src/main/res/drawable/ic_share.xml', 'facetune/src/main/res/layout/export_dialog_fragment.xml', 'facetune/src/main/res/layout/export_drawer_layout.xml', 'facetune/src/main/res/layout/facetune_workspace.xml', 'facetune/src/test/java/com/lightricks/facetune/MainScreenViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/ExportDialogViewModelTest.kt', 'facetune/src/test/java/com/lightricks/facetune/export/WatermarkConfigurationTest.kt']
+2021-07-04 08:07:55,062 Directories changed in PR: {'facetune'}
+##[group]Run actions/upload-artifact@v2
+with:
+  name: test-logs
+  path: ./**/build/test-results/**/*.xml
+  if-no-files-found: warn
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  ghprbGhRepository: Lightricks/facetune-android
+  ghprbPullId: 7772
+##[endgroup]
+With the provided path, there will be 1 file uploaded
+Total size of all the files uploaded is 144061 bytes
+Finished uploading artifact test-logs. Reported size is 144061 bytes. There were 0 items that failed to upload
+Artifact test-logs has been successfully uploaded!
+Post job cleanup.
+terminating emulator
+OK: killing emulator, bye bye
+OK
+2021-07-04 08:08:03 INFO     Get emulator list
+2021-07-04 08:08:03 INFO     terminating emulator-5554
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.25.1
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :
+Entering 'localizations/Owl-localization'
+Entering 'localizations/Video-Localization'
+Entering 'localizations/boosted-localization'
+Entering 'third_party/opencv-android'
+Entering 'third_party/protobuf-android'
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :
+Entering 'localizations/Owl-localization'
+http.https://github.com/.extraheader
+Entering 'localizations/Video-Localization'
+http.https://github.com/.extraheader
+Entering 'localizations/boosted-localization'
+http.https://github.com/.extraheader
+Entering 'third_party/opencv-android'
+http.https://github.com/.extraheader
+Entering 'third_party/protobuf-android'
+http.https://github.com/.extraheader
+Cleaning up orphan processes
+Terminate orphan process: pid (28412) (qemu-system-x86_64-headless)
+Terminate orphan process: pid (28488) (java)
+Terminate orphan process: pid (28954) (adb)
+Terminate orphan process: pid (28988) (java)
