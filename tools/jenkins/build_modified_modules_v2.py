@@ -43,7 +43,7 @@ THIRD_PARTY_MODULES = {
 
 
 def _get_modified_dirs(
-    username: str, password: str, repo_name: str, pr_id: str
+        username: str, password: str, repo_name: str, pr_id: str
 ) -> Set[str]:
     """
     Returns set of modified android directories in a given PR.
@@ -62,6 +62,7 @@ def _get_modified_dirs(
         f.filename.split(os.path.sep)[0] if os.path.sep in f.filename else "/"
         for f in files
     }
+
     logging.info("Directories changed in PR: %s", modified_dirnames)
     return modified_dirnames
 

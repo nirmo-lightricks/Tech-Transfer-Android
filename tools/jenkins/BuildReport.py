@@ -27,6 +27,7 @@ NOTHING_TO_REPORT = """
 ### Nothing to report for this build!
 """
 
+
 def report_markdown(entries):
     modules = collections.defaultdict(list)
     if not entries:
@@ -36,7 +37,8 @@ def report_markdown(entries):
 
     table = \
         '\n'.join(_report_module(module.capitalize(), modules[module]) for module in modules.keys())
-    return COMMENT_HEADER +  "<table>\n" + table +  "\n</table>\n" + COMMENT_FOOTER
+    return COMMENT_HEADER + "<table>\n" + table + "\n</table>\n" + COMMENT_FOOTER
+
 
 class Status(Enum):
     OK = "OK"
@@ -48,11 +50,14 @@ class Status(Enum):
                 Status.WARNING: ":warning:",
                 Status.ERROR: ":x:"}[self]
 
+
 ReportEntry = collections.namedtuple("ReportEntry", 'module status stage info details')
 
+
 def _report_entry_markdown(entry):
-    details_markdown = f"{ MarkdownUtils.details_tag('Details', entry.details) }" if entry.details else ""
+    details_markdown = f"{MarkdownUtils.details_tag('Details', entry.details)}" if entry.details else ""
     return f" {entry.status.emoji()} {entry.stage}: {entry.info}<br/>{details_markdown}"
+
 
 def _report_module(module_caption, module_entries):
     module_report = ''.join(_report_entry_markdown(entry) for entry in module_entries)

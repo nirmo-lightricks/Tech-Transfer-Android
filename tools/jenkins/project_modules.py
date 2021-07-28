@@ -15,11 +15,6 @@ from pathlib import Path
 from typing import cast, List, Dict, Union, Set
 from enum import Enum
 
-# this is a duplication of the MOUNT_PATH variable from constants.py
-# I have problems to import from the sibling package
-# we can find solutions later but i want to have this work now
-SHELVE_FILE_NAME = Path(environ["SSD_MOUNT_PATH"]) / "facetune_android_dependencies.db"
-
 
 class ModuleType(Enum):
     """
@@ -58,7 +53,7 @@ class ProjectModule:
     @staticmethod
     # pylint: disable=E1136
     def get_project_module_from_project_info(
-        module_info: Dict[str, Union[str, bool]]
+            module_info: Dict[str, Union[str, bool]]
     ) -> "ProjectModule":
         """
         given the module info returns the ProjectModule
@@ -122,13 +117,21 @@ def _get_cached_module_key(module: ProjectModule) -> str:
         return hashlib.md5(build_fh.read()).hexdigest()
 
 
+def get_shelve_file_name():
+    # this is a duplication of the MOUNT_PATH variable from constants.py
+    # I have problems to import from the sibling package
+    # we can find solutions later but i want to have this work now
+
+    return Path(environ["SSD_MOUNT_PATH"]) / "facetune_android_dependencies.db"
+
+
 def get_project_dependencies(module: ProjectModule) -> Set[ProjectModule]:
     """
     Given a project module returns the dependencies of the modules
     """
     if module.module_type == ModuleType.ASSET:
         return set()
-    with shelve.open(SHELVE_FILE_NAME.as_posix(), "c") as dependencies_cache:
+    with shelve.open(get_shelve_file_name().as_posix(), "c") as dependencies_cache:
         key = _get_cached_module_key(module)
         dependencies = cast(Set[ProjectModule], dependencies_cache.get(key))
         if dependencies is None:

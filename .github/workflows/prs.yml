@@ -86,6 +86,7 @@ jobs:
             ./**/build/reports/androidTests
             ./**/logcat.txt
             ./**/build-logs/gradle.out
+            ./**/build/detekt-results
             facetune-android/**/build/test-results/**/*.xml
             facetune-android/**/build/reports/androidTests
 

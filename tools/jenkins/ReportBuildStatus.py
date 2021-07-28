@@ -22,8 +22,10 @@ def collect_test_entries(workspace):
 def collect_compilation_entries(workspace):
     return CompilationReport.create_compilation_entries(workspace)
 
+
 def collect_lint_entries(workspace):
     return LintReport.create_lint_entries(workspace)
+
 
 def collect_entries(workspace):
     return chain(
@@ -33,14 +35,24 @@ def collect_entries(workspace):
     )
 
 
+debugMode = False
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('workspace_dir')
+    parser.add_argument(
+        '--is_dbg',
+        help="In debug mode there is no access to GitHub, and instead some hard coded module list is picked",
+        default=False)
     args = parser.parse_args()
     workspace = args.workspace_dir
+    debugMode = args.is_dbg is not False  # NOTE! In python "not false" is not "True"
 
     entries = collect_entries(workspace)
-    modules_that_should_be_built = build_modified_modules_v2.modules_to_build()
+    if debugMode:
+        modules_that_should_be_built = {"videoleap:", "quickshot:", "pixaloop:"}
+    else:
+        modules_that_should_be_built = build_modified_modules_v2.modules_to_build()
 
     # Support Gradle's subprojects, with the following conventions: "module:submodule:..."
     normalized_modules_that_should_be_built = {module.replace(":", "/") for module in modules_that_should_be_built}
@@ -51,4 +63,5 @@ if __name__ == "__main__":
     report = BuildReport.report_markdown(built_modules_entries)
 
     tests_signature = MarkdownUtils.hidden_html_tag(TESTS_SIGNATURE)
-    message.post_comment_on_current_pr(tests_signature + report, tests_signature)
+    if not debugMode:
+        message.post_comment_on_current_pr(tests_signature + report, tests_signature)
