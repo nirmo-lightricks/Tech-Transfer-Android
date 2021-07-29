@@ -2,12 +2,11 @@
 #  Created by Noam Freeman.
 
 import glob
-import logging
 import os
-
 import parse_lint
 import project_modules
 from BuildReport import ReportEntry, Status
+from typing import List
 
 MAX_LINT_ISSUES_TO_PREVIEW = 20
 LINT_REPORT_PATH_IN_MODULE = os.path.join("build", "reports", "lint-results*.xml")
@@ -73,6 +72,41 @@ def lint_comment(workspace, lint_report):
     return markdown_table(workspace, lint_report[:MAX_LINT_ISSUES_TO_PREVIEW])
 
 
+def lint_entry(lint_issues, module_name, workspace) -> List[ReportEntry]:
+    if lint_issues:
+        status = Status.WARNING
+        info = f"there are {len(lint_issues)} lint issues"
+        details = lint_comment(workspace, lint_issues)
+        contribution = [ReportEntry(module_name, status, "Lint", info, details)]
+    else:
+        contribution = []
+
+    return contribution
+
+
+def detekt_entry(detekt_issues_report, module_name, workspace) -> List[ReportEntry]:
+    if detekt_issues_report:
+        status = Status.WARNING
+        num_detekt_issues = len(detekt_issues_report)
+        if num_detekt_issues > 1:
+            info = f"there are {num_detekt_issues} Detekt issues"
+        else:
+            info = "there is a Detekt issue"
+        details = lint_comment(workspace, detekt_issues_report)
+        contribution = [ReportEntry(module_name, status, "Detekt", info, details)]
+    else:
+        contribution = []
+
+    return contribution
+
+
+def no_issues_entry(module_name) -> ReportEntry:
+    status = Status.OK
+    info = "no lint issues"
+    details = ""
+    return ReportEntry(module_name, status, "Lint", info, details)
+
+
 def create_lint_entries(workspace):
     modules = project_modules.get_module_dirs()
 
@@ -82,38 +116,23 @@ def create_lint_entries(workspace):
         # a list of LintReport('id priority location')
         reports_paths = glob.glob(os.path.join(workspace, module, LINT_REPORT_PATH_IN_MODULE))
 
-        lint_not_integrated = False
-        if not reports_paths:
-            lint_not_integrated = True
-            report = []
-        else:
+        lint_is_integrated = bool(reports_paths)
+        if lint_is_integrated:
             report = lint_report_for_module(os.path.join(workspace, module))
+        else:
+            report = []
 
         lint_issues = [issue for issue in report
                        if parse_lint.severities[issue.severity] >= parse_lint.severities["Warning"]]
 
         detekt_issues_report = detekt_report_for_module(os.path.join(workspace, module))
-        num_detekt_issues = len(detekt_issues_report)
 
-        if lint_issues:
-            status = Status.ERROR
-            info = f"there are {len(lint_issues)} lint issues"
-            details = lint_comment(workspace, lint_issues)
-        elif detekt_issues_report:
-            status = Status.WARNING
-            if num_detekt_issues > 1:
-                info = f"there are {num_detekt_issues} Detekt issues"
-            else:
-                info = "there is a Detekt issue"
-            details = lint_comment(workspace, detekt_issues_report)
-        elif lint_not_integrated:
-            # OK Because there are project who are not going to integrate LINT on BuildForPR
-            status = Status.OK
-            info = "Lint not integrated in project!"
-            details = ""
-        else:
-            status = Status.OK
-            info = "no lint issues"
-            details = ""
+        entries = []
+        entries += lint_entry(lint_issues, module_name, workspace)
+        entries += detekt_entry(detekt_issues_report, module_name, workspace)
 
-        yield ReportEntry(module_name, status, "Lint", info, details)
+        if lint_is_integrated and not entries:
+            entries.append(no_issues_entry(module_name))
+
+        for entry in entries:
+            yield entry
