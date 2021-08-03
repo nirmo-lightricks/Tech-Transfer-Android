@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew clean
 
       - name: Build and test modified modules with gradle
-        timeout-minutes: 45
+        timeout-minutes: 50
         env:
           # Environment variable holding the Github username.
           DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
@@ -56,12 +56,12 @@ jobs:
         run: (python3 ./tools/jenkins/build_modified_modules_v2.py 2>&1) | tee build-logs/gradle.out ; test ${PIPESTATUS[0]} -eq 0
 
       - name: Save adb logcat
-        timeout-minutes: 1
+        timeout-minutes: 2
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
 
       - name: Extract build failure
-        timeout-minutes: 1
+        timeout-minutes: 2
         if: ${{failure()}}
         run: python3 tools/actions_support/analyze_error.py build-logs/gradle.out ${{ github.run_id }}
         env:
