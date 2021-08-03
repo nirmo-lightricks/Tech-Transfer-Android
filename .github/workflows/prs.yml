@@ -84,6 +84,7 @@ jobs:
           path: |
             ./**/build/test-results/**/*.xml
             ./**/build/reports/androidTests
+            ./**/build/reports/lint*.*
             ./**/logcat.txt
             ./**/build-logs/gradle.out
             ./**/build/reports/task_times.csv
