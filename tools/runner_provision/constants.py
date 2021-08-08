@@ -8,7 +8,7 @@ from pathlib import Path
 ANDROID_SDK_ROOT = "/android-sdk"
 ANDROID_SDK_VERSION = "6514223"
 BUNDLETOOL_VERSION = "1.1.0"
-GH_RUNNER_VERSION = "2.278.0"
+GH_RUNNER_VERSION = "2.280.1"
 GH_RUNNER_PATH = Path("/actions_runner")
 CONFIG_COMMAND = GH_RUNNER_PATH / "config.sh"
 
