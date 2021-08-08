@@ -33,7 +33,7 @@ def setup_environment() -> None:
         "ANDROID_SDK_ROOT": ANDROID_SDK_ROOT,
         "ANDROID_HOME": ANDROID_SDK_ROOT,
         "ANDROID_SDK_VERSION": ANDROID_SDK_VERSION,
-        "JAVA_HOME": "/usr/lib/jvm/java-8-openjdk-amd64",
+        "JAVA_HOME": "/usr/lib/jvm/java-11-openjdk-amd64",
         # pylint: disable=C0301
         "PATH": f"{environ['PATH']}:/snap/bin:{ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:{ANDROID_SDK_ROOT}/platform-tools:{ANDROID_SDK_ROOT}/emulator",
         "GRADLE_USER_HOME": (MOUNT_PATH / "gradle_cache").as_posix(),

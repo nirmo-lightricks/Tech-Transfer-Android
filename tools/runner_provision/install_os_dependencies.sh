@@ -11,7 +11,7 @@ dpkg --add-architecture i386 && \
     lib32ncurses6 \
     lib32z1 \
     zlib1g:i386 \
-    openjdk-8-jdk \
+    openjdk-11-jdk \
     git \
     wget \
     unzip \
