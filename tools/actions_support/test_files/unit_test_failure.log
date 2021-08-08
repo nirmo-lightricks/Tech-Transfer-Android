@@ -1,0 +1,1191 @@
+2021-07-14 12:15:31,268 Fetching repo Lightricks/facetune-android...
+2021-07-14 12:15:31,591 Fetching PR #7908...
+2021-07-14 12:15:32,162 Files changed in PR: ['videoleap/src/main/java/com/lightricks/videoleap/edit/controllers/FeatureController.kt', 'videoleap/src/main/java/com/lightricks/videoleap/edit/controllers/FeatureControllersManager.kt']
+2021-07-14 12:15:32,162 Directories changed in PR: {'videoleap'}
+[+] Executing: ./gradlew -Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest --build-cache clean :videoleap:buildForPR
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+
+> Configure project :billing
+NDK ABI Filters set to [x86]
+
+> Configure project :billing_playground
+Not creating `release` signing config!
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Configure project :facetune
+Task Requests: [DefaultTaskExecutionRequest{args=[clean, :videoleap:buildForPR],projectPath='null'}]
+isGmsEnabled = false
+copyBlobsToRemoteAssetDeliveryModule configurationPahase
+Store name is: 
+Not creating external signing config
+NDK ABI Filters set to [x86]
+Using debug signingConfig for release
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "1aca6ae13bd29a5308d967627424ebf0a8c77344" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :opencv-android
+OpenCV: 4.5.0 /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/build.gradle
+
+> Configure project :pixaloop
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "1aca6ae13bd29a5308d967627424ebf0a8c77344" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :quickshot
+Store name is: 
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "1aca6ae13bd29a5308d967627424ebf0a8c77344" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :security
+NDK ABI Filters set to: [x86]
+
+> Configure project :security_tests
+NDK ABI Filters set to: [x86]
+
+> Configure project :swish
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+WARNING: BuildType(debugMenu): buildConfigField 'CAN_CONSUME_OTP' value is being replaced: false -> true
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_COMMIT' value is being replaced: "1aca6ae13bd29a5308d967627424ebf0a8c77344" -> "0"
+WARNING: BuildType(debugMenu): buildConfigField 'GIT_DIRTY' value is being replaced: true -> false
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :video_engine
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+
+> Configure project :video_engine_playground
+Not creating `production` signing config!
+
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Configure project :videoleap
+Warning: Please apply google-services plugin at the bottom of the build file.
+NDK ABI Filters set to [x86]
+Not creating `production` signing config!
+APK will be signed using DEBUG certificate
+Google play publishing plugin is disabled. No `GOOGLE_PLAY_SECRET_FILE` environment variable.
+
+> Configure project :wechat_playground
+Not creating `release` signing config!
+
+> Configure project :
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+task ':nn:face-detection:connectedDebugAndroidTest' mustRunAfter task ':wechat_playground:connectedDebugAndroidTest'
+task ':wechat_playground:connectedDebugAndroidTest' mustRunAfter task ':videoleap_localization:connectedDebugAndroidTest'
+task ':videoleap_localization:connectedDebugAndroidTest' mustRunAfter task ':videoleap:connectedDebugAndroidTest'
+task ':videoleap:connectedDebugAndroidTest' mustRunAfter task ':video_engine_playground:connectedDebugAndroidTest'
+task ':video_engine_playground:connectedDebugAndroidTest' mustRunAfter task ':video_engine:connectedDebugAndroidTest'
+task ':video_engine:connectedDebugAndroidTest' mustRunAfter task ':testutils:connectedDebugAndroidTest'
+task ':testutils:connectedDebugAndroidTest' mustRunAfter task ':tech_transfer:connectedDebugAndroidTest'
+task ':tech_transfer:connectedDebugAndroidTest' mustRunAfter task ':swish:connectedDebugAndroidTest'
+task ':swish:connectedDebugAndroidTest' mustRunAfter task ':security_tests:connectedDebugAndroidTest'
+task ':security_tests:connectedDebugAndroidTest' mustRunAfter task ':security:connectedDebugAndroidTest'
+task ':security:connectedDebugAndroidTest' mustRunAfter task ':render:connectedDebugAndroidTest'
+task ':render:connectedDebugAndroidTest' mustRunAfter task ':quickshot_localization:connectedDebugAndroidTest'
+task ':quickshot_localization:connectedDebugAndroidTest' mustRunAfter task ':quickshot:connectedGmsDebugAndroidTest'
+task ':quickshot:connectedGmsDebugAndroidTest' mustRunAfter task ':quickshot:connectedChinaDebugAndroidTest'
+task ':quickshot:connectedChinaDebugAndroidTest' mustRunAfter task ':protobuf:connectedDebugAndroidTest'
+task ':protobuf:connectedDebugAndroidTest' mustRunAfter task ':pixaloop:connectedDebugAndroidTest'
+task ':pixaloop:connectedDebugAndroidTest' mustRunAfter task ':opencv-android:connectedDebugAndroidTest'
+task ':opencv-android:connectedDebugAndroidTest' mustRunAfter task ':nn:connectedDebugAndroidTest'
+task ':nn:connectedDebugAndroidTest' mustRunAfter task ':gif_encoder:connectedDebugAndroidTest'
+task ':gif_encoder:connectedDebugAndroidTest' mustRunAfter task ':facetune:connectedGmsDebugAndroidTest'
+task ':facetune:connectedGmsDebugAndroidTest' mustRunAfter task ':facetune:connectedChinaDebugAndroidTest'
+task ':facetune:connectedChinaDebugAndroidTest' mustRunAfter task ':experiments_playground:connectedDebugAndroidTest'
+task ':experiments_playground:connectedDebugAndroidTest' mustRunAfter task ':experiments2:connectedDebugAndroidTest'
+task ':experiments2:connectedDebugAndroidTest' mustRunAfter task ':experiments:connectedDebugAndroidTest'
+task ':experiments:connectedDebugAndroidTest' mustRunAfter task ':enlight_ui:connectedDebugAndroidTest'
+task ':enlight_ui:connectedDebugAndroidTest' mustRunAfter task ':common:connectedDebugAndroidTest'
+task ':common:connectedDebugAndroidTest' mustRunAfter task ':boosted-localization:connectedDebugAndroidTest'
+task ':boosted-localization:connectedDebugAndroidTest' mustRunAfter task ':billing_playground:connectedStagingDebugAndroidTest'
+task ':billing_playground:connectedStagingDebugAndroidTest' mustRunAfter task ':billing_playground:connectedProductionDebugAndroidTest'
+task ':billing_playground:connectedProductionDebugAndroidTest' mustRunAfter task ':billing_playground:connectedDevelopDebugAndroidTest'
+task ':billing_playground:connectedDevelopDebugAndroidTest' mustRunAfter task ':billing:connectedGmsDebugAndroidTest'
+task ':billing:connectedGmsDebugAndroidTest' mustRunAfter task ':billing:connectedChinaDebugAndroidTest'
+task ':billing:connectedChinaDebugAndroidTest' mustRunAfter task ':authentication:connectedDebugAndroidTest'
+task ':authentication:connectedDebugAndroidTest' mustRunAfter task ':analytics:connectedDebugAndroidTest'
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :analytics:clean UP-TO-DATE
+> Task :boosted-localization:clean UP-TO-DATE
+> Task :common:clean UP-TO-DATE
+> Task :enlight_ui:clean UP-TO-DATE
+> Task :experiments:clean UP-TO-DATE
+> Task :experiments2:clean UP-TO-DATE
+> Task :authentication:clean UP-TO-DATE
+> Task :facetune:preBuild UP-TO-DATE
+> Task :experiments_playground:clean UP-TO-DATE
+> Task :facetune:preChinaDebugBuild UP-TO-DATE
+> Task :billing:preBuild UP-TO-DATE
+> Task :billing:preChinaDebugBuild UP-TO-DATE
+> Task :facetune_asset_packs:clean UP-TO-DATE
+> Task :gif_encoder:clean UP-TO-DATE
+> Task :billing:externalNativeBuildCleanChinaDebug
+> Task :billing:preChinaReleaseBuild UP-TO-DATE
+> Task :nn:clean UP-TO-DATE
+> Task :opencv-android:preBuild UP-TO-DATE
+> Task :opencv-android:preDebugBuild UP-TO-DATE
+> Task :billing_playground:clean UP-TO-DATE
+> Task :pixaloop:preBuild UP-TO-DATE
+> Task :pixaloop:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanChinaDebug
+> Task :billing:externalNativeBuildCleanChinaRelease
+> Task :billing:preGmsDebugBuild UP-TO-DATE
+> Task :pixaloop:externalNativeBuildCleanDebug
+> Task :facetune:extractProguardFiles
+> Task :facetune:preChinaDebugMenuBuild
+> Task :pixaloop:extractProguardFiles
+> Task :pixaloop:preDebugMenuBuild
+> Task :facetune:externalNativeBuildCleanChinaDebugMenu
+> Task :facetune:preChinaReleaseBuild
+> Task :billing:externalNativeBuildCleanGmsDebug
+> Task :billing:preGmsReleaseBuild UP-TO-DATE
+> Task :pixaloop:externalNativeBuildCleanDebugMenu
+> Task :pixaloop:preReleaseBuild
+> Task :facetune:externalNativeBuildCleanChinaRelease
+> Task :facetune:preGmsDebugBuild UP-TO-DATE
+> Task :billing:externalNativeBuildCleanGmsRelease
+> Task :billing:clean UP-TO-DATE
+> Task :protobuf:clean UP-TO-DATE
+> Task :quickshot:preBuild UP-TO-DATE
+> Task :quickshot:preChinaDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsDebug
+> Task :facetune:preGmsDebugMenuBuild
+> Task :pixaloop:externalNativeBuildCleanRelease
+> Task :pixaloop:clean
+> Task :quickshot_localization:clean UP-TO-DATE
+> Task :render:preBuild UP-TO-DATE
+> Task :render:preDebugBuild UP-TO-DATE
+> Task :facetune:externalNativeBuildCleanGmsDebugMenu
+> Task :facetune:preGmsReleaseBuild
+> Task :render:externalNativeBuildCleanDebug
+> Task :render:preReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanChinaDebug
+> Task :facetune:externalNativeBuildCleanGmsRelease
+> Task :quickshot:extractProguardFiles
+> Task :quickshot:preChinaDebugMenuBuild
+> Task :facetune:clean
+> Task :security:preBuild UP-TO-DATE
+> Task :security:preDebugBuild UP-TO-DATE
+> Task :security:externalNativeBuildCleanDebug
+> Task :security:preReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanChinaDebugMenu
+> Task :quickshot:preChinaReleaseBuild
+> Task :render:externalNativeBuildCleanRelease
+> Task :render:clean UP-TO-DATE
+> Task :security_tests:preBuild UP-TO-DATE
+> Task :security_tests:preDebugBuild UP-TO-DATE
+> Task :security:externalNativeBuildCleanRelease
+> Task :security:clean UP-TO-DATE
+> Task :swish:preBuild UP-TO-DATE
+> Task :swish:preDebugBuild UP-TO-DATE
+> Task :security_tests:externalNativeBuildCleanDebug
+> Task :security_tests:preReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanChinaRelease
+> Task :quickshot:preGmsDebugBuild UP-TO-DATE
+> Task :security_tests:externalNativeBuildCleanRelease
+> Task :security_tests:clean UP-TO-DATE
+> Task :tech_transfer:preBuild UP-TO-DATE
+> Task :tech_transfer:preDebugBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsDebug
+> Task :quickshot:preGmsDebugMenuBuild
+> Task :quickshot:externalNativeBuildCleanGmsDebugMenu
+> Task :quickshot:preGmsReleaseBuild
+> Task :swish:externalNativeBuildCleanDebug
+> Task :swish:extractProguardFiles
+> Task :swish:preDebugMenuBuild
+> Task :tech_transfer:externalNativeBuildCleanDebug
+> Task :tech_transfer:preReleaseBuild UP-TO-DATE
+> Task :quickshot:externalNativeBuildCleanGmsRelease
+> Task :swish:externalNativeBuildCleanDebugMenu
+> Task :swish:preReleaseBuild
+> Task :quickshot:clean
+> Task :testutils:clean UP-TO-DATE
+> Task :tech_transfer:externalNativeBuildCleanRelease
+> Task :video_engine:preBuild UP-TO-DATE
+> Task :video_engine:preDebugBuild UP-TO-DATE
+> Task :tech_transfer:clean UP-TO-DATE
+> Task :video_engine_playground:clean UP-TO-DATE
+> Task :videoleap:preBuild UP-TO-DATE
+> Task :videoleap:preDebugBuild UP-TO-DATE
+> Task :swish:externalNativeBuildCleanRelease
+> Task :swish:clean
+> Task :videoleap:externalNativeBuildCleanDebug
+> Task :videoleap_localization:clean UP-TO-DATE
+> Task :wechat_playground:clean UP-TO-DATE
+
+> Task :opencv-android:externalNativeBuildCleanDebug
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+
+> Task :nn:face-detection:preBuild UP-TO-DATE
+> Task :opencv-android:preReleaseBuild UP-TO-DATE
+> Task :nn:face-detection:preDebugBuild UP-TO-DATE
+> Task :video_engine:externalNativeBuildCleanDebug
+> Task :videoleap:extractProguardFiles
+> Task :videoleap:preReleaseBuild
+> Task :nn:face-detection:externalNativeBuildCleanDebug
+> Task :nn:face-detection:preReleaseBuild UP-TO-DATE
+> Task :videoleap:externalNativeBuildCleanRelease
+> Task :videoleap:clean
+> Task :analytics:preBuild UP-TO-DATE
+> Task :analytics:preDebugBuild UP-TO-DATE
+> Task :common:preBuild UP-TO-DATE
+> Task :common:preDebugBuild UP-TO-DATE
+> Task :video_engine:extractProguardFiles
+> Task :video_engine:preReleaseBuild
+> Task :nn:face-detection:externalNativeBuildCleanRelease
+> Task :nn:face-detection:clean UP-TO-DATE
+> Task :common:compileDebugAidl NO-SOURCE
+> Task :video_engine:externalNativeBuildCleanRelease
+> Task :video_engine:clean
+> Task :authentication:preBuild UP-TO-DATE
+> Task :authentication:preDebugBuild UP-TO-DATE
+> Task :analytics:generateDebugBuildConfig FROM-CACHE
+> Task :common:packageDebugRenderscript NO-SOURCE
+> Task :analytics:compileDebugAidl NO-SOURCE
+> Task :common:compileDebugRenderscript NO-SOURCE
+> Task :common:generateDebugResValues FROM-CACHE
+> Task :common:generateDebugResources UP-TO-DATE
+> Task :analytics:compileDebugRenderscript NO-SOURCE
+> Task :analytics:generateDebugResValues FROM-CACHE
+> Task :analytics:generateDebugResources UP-TO-DATE
+> Task :authentication:generateDebugBuildConfig FROM-CACHE
+> Task :authentication:compileDebugAidl NO-SOURCE
+> Task :common:packageDebugResources FROM-CACHE
+> Task :analytics:packageDebugResources FROM-CACHE
+> Task :authentication:compileDebugRenderscript NO-SOURCE
+> Task :authentication:generateDebugResValues FROM-CACHE
+> Task :authentication:generateDebugResources UP-TO-DATE
+> Task :authentication:packageDebugResources FROM-CACHE
+> Task :analytics:parseDebugLocalResources FROM-CACHE
+> Task :common:parseDebugLocalResources FROM-CACHE
+> Task :analytics:processDebugManifest FROM-CACHE
+> Task :authentication:parseDebugLocalResources FROM-CACHE
+
+> Task :opencv-android:externalNativeBuildCleanRelease
+Clean opencv_jni_shared armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/armeabi-v7a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/arm64-v8a'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+Clean opencv_jni_shared x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/release/x86_64'
+[1/1] Cleaning all built files...
+Cleaning... 0 files.
+
+> Task :opencv-android:clean
+> Task :billing:compileGmsDebugAidl NO-SOURCE
+> Task :analytics:javaPreCompileDebug FROM-CACHE
+> Task :enlight_ui:preBuild UP-TO-DATE
+> Task :enlight_ui:preDebugBuild UP-TO-DATE
+> Task :billing:generateGmsDebugBuildConfig FROM-CACHE
+> Task :billing:generateGmsDebugResValues FROM-CACHE
+> Task :enlight_ui:compileDebugAidl NO-SOURCE
+> Task :common:processDebugManifest FROM-CACHE
+> Task :enlight_ui:compileDebugRenderscript NO-SOURCE
+> Task :authentication:processDebugManifest FROM-CACHE
+> Task :authentication:javaPreCompileDebug FROM-CACHE
+> Task :enlight_ui:generateDebugBuildConfig FROM-CACHE
+> Task :billing:processGmsDebugManifest FROM-CACHE
+> Task :enlight_ui:generateDebugResValues FROM-CACHE
+> Task :authentication:packageDebugRenderscript NO-SOURCE
+> Task :enlight_ui:generateDebugResources UP-TO-DATE
+> Task :billing:javaPreCompileGmsDebug FROM-CACHE
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+> Task :opencv-android:compileDebugAidl FROM-CACHE
+> Task :enlight_ui:packageDebugResources FROM-CACHE
+> Task :billing:compileGmsDebugRenderscript NO-SOURCE
+> Task :billing:generateGmsDebugResources UP-TO-DATE
+> Task :billing:packageGmsDebugResources FROM-CACHE
+> Task :billing:parseGmsDebugLocalResources FROM-CACHE
+> Task :opencv-android:compileDebugRenderscript NO-SOURCE
+> Task :opencv-android:generateDebugBuildConfig FROM-CACHE
+> Task :opencv-android:generateDebugResValues FROM-CACHE
+> Task :opencv-android:generateDebugResources UP-TO-DATE
+> Task :enlight_ui:parseDebugLocalResources FROM-CACHE
+> Task :opencv-android:packageDebugResources FROM-CACHE
+> Task :enlight_ui:processDebugManifest FROM-CACHE
+> Task :enlight_ui:javaPreCompileDebug FROM-CACHE
+> Task :opencv-android:parseDebugLocalResources FROM-CACHE
+> Task :opencv-android:processDebugManifest FROM-CACHE
+> Task :opencv-android:generateDebugRFile FROM-CACHE
+> Task :opencv-android:javaPreCompileDebug FROM-CACHE
+> Task :render:compileDebugAidl NO-SOURCE
+> Task :video_engine:compileDebugAidl NO-SOURCE
+> Task :render:generateDebugBuildConfig FROM-CACHE
+> Task :render:generateDebugResValues FROM-CACHE
+> Task :video_engine:generateDebugBuildConfig FROM-CACHE
+> Task :video_engine:generateDebugResValues FROM-CACHE
+> Task :common:generateDebugRFile FROM-CACHE
+> Task :render:processDebugManifest FROM-CACHE
+> Task :video_engine:processDebugManifest FROM-CACHE
+> Task :common:generateDebugBuildConfig FROM-CACHE
+> Task :analytics:generateDebugRFile FROM-CACHE
+> Task :enlight_ui:generateDebugRFile FROM-CACHE
+> Task :authentication:generateDebugRFile FROM-CACHE
+> Task :billing:generateGmsDebugRFile FROM-CACHE
+> Task :render:javaPreCompileDebug FROM-CACHE
+> Task :render:packageDebugRenderscript NO-SOURCE
+> Task :videoleap_localization:preBuild UP-TO-DATE
+> Task :videoleap_localization:preDebugBuild UP-TO-DATE
+> Task :videoleap_localization:compileDebugAidl NO-SOURCE
+> Task :videoleap:compileDebugAidl NO-SOURCE
+> Task :analytics:packageDebugRenderscript NO-SOURCE
+> Task :billing:packageGmsDebugRenderscript NO-SOURCE
+> Task :enlight_ui:packageDebugRenderscript NO-SOURCE
+> Task :videoleap_localization:packageDebugRenderscript NO-SOURCE
+> Task :videoleap:generateDebugBuildConfig FROM-CACHE
+> Task :video_engine:javaPreCompileDebug FROM-CACHE
+> Task :video_engine:packageDebugRenderscript NO-SOURCE
+> Task :analytics:compileDebugLibraryResources FROM-CACHE
+> Task :authentication:compileDebugLibraryResources FROM-CACHE
+> Task :billing:compileGmsDebugLibraryResources FROM-CACHE
+> Task :videoleap:writeDebugApplicationId
+> Task :videoleap:compileDebugRenderscript NO-SOURCE
+> Task :enlight_ui:compileDebugLibraryResources FROM-CACHE
+> Task :videoleap_localization:compileDebugRenderscript NO-SOURCE
+> Task :videoleap_localization:generateDebugResValues FROM-CACHE
+> Task :videoleap_localization:generateDebugResources UP-TO-DATE
+> Task :videoleap_localization:packageDebugResources FROM-CACHE
+> Task :analytics:extractDeepLinksDebug FROM-CACHE
+> Task :authentication:extractDeepLinksDebug FROM-CACHE
+> Task :billing:extractDeepLinksGmsDebug FROM-CACHE
+> Task :enlight_ui:extractDeepLinksDebug FROM-CACHE
+> Task :render:extractDeepLinksDebug FROM-CACHE
+> Task :video_engine:extractDeepLinksDebug FROM-CACHE
+> Task :videoleap_localization:extractDeepLinksDebug FROM-CACHE
+> Task :videoleap_localization:processDebugManifest FROM-CACHE
+> Task :videoleap_localization:compileDebugLibraryResources FROM-CACHE
+> Task :videoleap_localization:parseDebugLocalResources FROM-CACHE
+> Task :videoleap_localization:generateDebugRFile FROM-CACHE
+> Task :videoleap_localization:generateDebugBuildConfig FROM-CACHE
+> Task :videoleap_localization:javaPreCompileDebug FROM-CACHE
+> Task :videoleap:generateSafeArgsDebug
+> Task :videoleap:generateDebugResValues FROM-CACHE
+> Task :videoleap:generateDebugResources UP-TO-DATE
+> Task :videoleap:injectCrashlyticsMappingFileIdDebug
+> Task :videoleap:processDebugGoogleServices
+> Task :videoleap:createDebugCompatibleScreenManifests FROM-CACHE
+> Task :videoleap:extractDeepLinksDebug FROM-CACHE
+> Task :videoleap:javaPreCompileDebug FROM-CACHE
+> Task :analytics:mergeDebugJniLibFolders FROM-CACHE
+> Task :analytics:mergeDebugNativeLibs FROM-CACHE
+> Task :analytics:stripDebugDebugSymbols NO-SOURCE
+> Task :analytics:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :authentication:mergeDebugJniLibFolders FROM-CACHE
+> Task :authentication:mergeDebugNativeLibs FROM-CACHE
+> Task :authentication:stripDebugDebugSymbols NO-SOURCE
+> Task :authentication:copyDebugJniLibsProjectOnly FROM-CACHE
+
+> Task :billing:generateJsonModelGmsDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :opencv-android:compileDebugJavaWithJavac FROM-CACHE
+> Task :opencv-android:bundleLibCompileToJarDebug FROM-CACHE
+> Task :opencv-android:packageDebugRenderscript NO-SOURCE
+> Task :render:compileDebugRenderscript NO-SOURCE
+> Task :render:generateDebugResources UP-TO-DATE
+> Task :render:packageDebugResources FROM-CACHE
+> Task :render:parseDebugLocalResources FROM-CACHE
+> Task :render:generateDebugRFile FROM-CACHE
+> Task :video_engine:compileDebugRenderscript NO-SOURCE
+> Task :video_engine:generateDebugResources UP-TO-DATE
+> Task :video_engine:packageDebugResources FROM-CACHE
+> Task :video_engine:parseDebugLocalResources FROM-CACHE
+> Task :video_engine:generateDebugRFile FROM-CACHE
+> Task :opencv-android:compileDebugLibraryResources FROM-CACHE
+> Task :render:compileDebugLibraryResources FROM-CACHE
+> Task :video_engine:compileDebugLibraryResources FROM-CACHE
+> Task :common:kaptGenerateStubsDebugKotlin FROM-CACHE
+> Task :common:kaptDebugKotlin FROM-CACHE
+> Task :common:compileDebugKotlin FROM-CACHE
+> Task :common:javaPreCompileDebug FROM-CACHE
+> Task :videoleap_localization:compileDebugJavaWithJavac FROM-CACHE
+> Task :opencv-android:extractDeepLinksDebug FROM-CACHE
+> Task :videoleap_localization:bundleLibCompileToJarDebug FROM-CACHE
+> Task :enlight_ui:mergeDebugJniLibFolders FROM-CACHE
+> Task :enlight_ui:mergeDebugNativeLibs FROM-CACHE
+> Task :enlight_ui:stripDebugDebugSymbols NO-SOURCE
+> Task :enlight_ui:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :opencv-android:generateJsonModelDebug
+> Task :videoleap:mergeDebugResources FROM-CACHE
+> Task :common:compileDebugJavaWithJavac FROM-CACHE
+> Task :common:bundleLibCompileToJarDebug FROM-CACHE
+> Task :analytics:compileDebugJavaWithJavac FROM-CACHE
+> Task :analytics:bundleLibCompileToJarDebug FROM-CACHE
+> Task :authentication:kaptGenerateStubsDebugKotlin FROM-CACHE
+> Task :authentication:kaptDebugKotlin FROM-CACHE
+> Task :authentication:compileDebugKotlin FROM-CACHE
+> Task :authentication:compileDebugJavaWithJavac FROM-CACHE
+> Task :authentication:bundleLibCompileToJarDebug FROM-CACHE
+
+> Task :opencv-android:externalNativeBuildDebug
+Build opencv_jni_shared_armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/armeabi-v7a'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+
+> Task :enlight_ui:compileDebugKotlin FROM-CACHE
+> Task :enlight_ui:compileDebugJavaWithJavac FROM-CACHE
+> Task :enlight_ui:bundleLibCompileToJarDebug FROM-CACHE
+> Task :common:compileDebugLibraryResources FROM-CACHE
+> Task :common:extractDeepLinksDebug FROM-CACHE
+> Task :videoleap:processDebugManifest FROM-CACHE
+> Task :billing:kaptGenerateStubsGmsDebugKotlin FROM-CACHE
+> Task :billing:kaptGmsDebugKotlin FROM-CACHE
+> Task :billing:compileGmsDebugKotlin FROM-CACHE
+> Task :billing:compileGmsDebugJavaWithJavac FROM-CACHE
+> Task :billing:bundleLibCompileToJarGmsDebug FROM-CACHE
+> Task :common:mergeDebugJniLibFolders FROM-CACHE
+> Task :common:mergeDebugNativeLibs FROM-CACHE
+> Task :common:stripDebugDebugSymbols NO-SOURCE
+> Task :common:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :videoleap:processDebugResources FROM-CACHE
+
+> Task :opencv-android:externalNativeBuildDebug
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/arm64-v8a'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+Build opencv_jni_shared_x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/third_party/opencv-android/sdk/.cxx/cmake/debug/x86_64'
+[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+[2/2] Linking CXX static library libopencv_jni_shared.a
+
+> Task :billing:externalNativeBuildGmsDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+Build billing_x86
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/billing/.cxx/cmake/gmsDebug/x86'
+[1/5] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[2/5] Building CXX object CMakeFiles/billing.dir/billing_main.cpp.o
+[3/5] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[4/5] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[5/5] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/billing/build/intermediates/cmake/gmsDebug/obj/x86/libbilling.so
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :billing:mergeGmsDebugJniLibFolders FROM-CACHE
+
+> Task :video_engine:buildShadersDebug
+ShadersTask compiling shaders from /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/video_engine/src/main/shaders into /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/video_engine/build/cpp/shaders.cpp
+
+> Task :billing:mergeGmsDebugNativeLibs FROM-CACHE
+> Task :billing:stripGmsDebugDebugSymbols FROM-CACHE
+> Task :billing:copyGmsDebugJniLibsProjectOnly FROM-CACHE
+
+> Task :videoleap:buildShadersDebug
+ShadersTask compiling shaders from /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/shaders into /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/build/cpp/shaders.cpp
+
+> Task :video_engine:generateJsonModelDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :video_engine:mergeDebugJniLibFolders FROM-CACHE
+> Task :videoleap_localization:mergeDebugJniLibFolders FROM-CACHE
+> Task :videoleap_localization:mergeDebugNativeLibs FROM-CACHE
+> Task :videoleap_localization:stripDebugDebugSymbols NO-SOURCE
+> Task :videoleap_localization:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :analytics:mergeDebugShaders FROM-CACHE
+> Task :analytics:compileDebugShaders NO-SOURCE
+> Task :analytics:generateDebugAssets UP-TO-DATE
+> Task :analytics:packageDebugAssets FROM-CACHE
+> Task :authentication:mergeDebugShaders FROM-CACHE
+> Task :authentication:compileDebugShaders NO-SOURCE
+> Task :authentication:generateDebugAssets UP-TO-DATE
+> Task :authentication:packageDebugAssets FROM-CACHE
+> Task :billing:mergeGmsDebugShaders FROM-CACHE
+> Task :billing:compileGmsDebugShaders NO-SOURCE
+> Task :billing:generateGmsDebugAssets UP-TO-DATE
+> Task :billing:packageGmsDebugAssets FROM-CACHE
+> Task :common:mergeDebugShaders FROM-CACHE
+> Task :common:compileDebugShaders NO-SOURCE
+> Task :common:generateDebugAssets UP-TO-DATE
+> Task :common:packageDebugAssets FROM-CACHE
+> Task :enlight_ui:mergeDebugShaders FROM-CACHE
+> Task :enlight_ui:compileDebugShaders NO-SOURCE
+> Task :enlight_ui:generateDebugAssets UP-TO-DATE
+> Task :enlight_ui:packageDebugAssets FROM-CACHE
+> Task :video_engine:mergeDebugShaders FROM-CACHE
+> Task :video_engine:compileDebugShaders NO-SOURCE
+> Task :video_engine:generateDebugAssets UP-TO-DATE
+> Task :video_engine:packageDebugAssets FROM-CACHE
+> Task :videoleap_localization:mergeDebugShaders FROM-CACHE
+> Task :videoleap_localization:compileDebugShaders NO-SOURCE
+> Task :videoleap_localization:generateDebugAssets UP-TO-DATE
+> Task :videoleap_localization:packageDebugAssets FROM-CACHE
+> Task :analytics:processDebugJavaRes NO-SOURCE
+> Task :analytics:bundleLibResDebug NO-SOURCE
+> Task :authentication:processDebugJavaRes NO-SOURCE
+> Task :authentication:bundleLibResDebug FROM-CACHE
+
+> Task :videoleap:generateJsonModelDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :billing:processGmsDebugJavaRes NO-SOURCE
+> Task :videoleap:mergeDebugShaders FROM-CACHE
+> Task :videoleap:compileDebugShaders NO-SOURCE
+> Task :videoleap:generateDebugAssets UP-TO-DATE
+> Task :common:processDebugJavaRes NO-SOURCE
+> Task :common:bundleLibResDebug FROM-CACHE
+> Task :billing:bundleLibResGmsDebug FROM-CACHE
+> Task :enlight_ui:processDebugJavaRes NO-SOURCE
+> Task :video_engine:processDebugJavaRes NO-SOURCE
+> Task :videoleap:processDebugJavaRes NO-SOURCE
+> Task :enlight_ui:bundleLibResDebug FROM-CACHE
+> Task :videoleap_localization:processDebugJavaRes NO-SOURCE
+> Task :videoleap_localization:bundleLibResDebug NO-SOURCE
+> Task :opencv-android:mergeDebugJniLibFolders FROM-CACHE
+> Task :billing:bundleLibRuntimeToJarGmsDebug FROM-CACHE
+> Task :authentication:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :enlight_ui:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :analytics:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :videoleap:checkDebugDuplicateClasses FROM-CACHE
+> Task :videoleap:desugarDebugFileDependencies
+> Task :common:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :videoleap_localization:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :testutils:preBuild UP-TO-DATE
+> Task :testutils:preDebugBuild UP-TO-DATE
+> Task :testutils:compileDebugAidl NO-SOURCE
+> Task :testutils:compileDebugRenderscript NO-SOURCE
+> Task :testutils:generateDebugBuildConfig FROM-CACHE
+> Task :testutils:generateDebugResValues FROM-CACHE
+> Task :testutils:generateDebugResources UP-TO-DATE
+> Task :testutils:packageDebugResources FROM-CACHE
+> Task :testutils:parseDebugLocalResources FROM-CACHE
+> Task :testutils:processDebugManifest FROM-CACHE
+> Task :testutils:generateDebugRFile FROM-CACHE
+> Task :testutils:compileDebugKotlin FROM-CACHE
+> Task :testutils:javaPreCompileDebug FROM-CACHE
+> Task :testutils:compileDebugJavaWithJavac FROM-CACHE
+> Task :testutils:bundleLibCompileToJarDebug FROM-CACHE
+> Task :testutils:packageDebugRenderscript NO-SOURCE
+> Task :testutils:extractDeepLinksDebug FROM-CACHE
+> Task :testutils:compileDebugLibraryResources FROM-CACHE
+> Task :testutils:mergeDebugShaders FROM-CACHE
+> Task :testutils:compileDebugShaders NO-SOURCE
+> Task :testutils:generateDebugAssets UP-TO-DATE
+> Task :testutils:packageDebugAssets FROM-CACHE
+> Task :testutils:processDebugJavaRes NO-SOURCE
+> Task :testutils:bundleLibResDebug FROM-CACHE
+> Task :testutils:mergeDebugJniLibFolders FROM-CACHE
+> Task :testutils:mergeDebugNativeLibs FROM-CACHE
+> Task :testutils:stripDebugDebugSymbols NO-SOURCE
+> Task :testutils:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :testutils:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :videoleap:mergeExtDexDebug FROM-CACHE
+> Task :render:generateJsonModelDebug
+> Task :render:compileDebugKotlin FROM-CACHE
+> Task :render:compileDebugJavaWithJavac FROM-CACHE
+> Task :render:bundleLibCompileToJarDebug FROM-CACHE
+> Task :video_engine:kaptGenerateStubsDebugKotlin FROM-CACHE
+> Task :video_engine:kaptDebugKotlin FROM-CACHE
+> Task :video_engine:compileDebugKotlin FROM-CACHE
+> Task :opencv-android:mergeDebugNativeLibs FROM-CACHE
+> Task :video_engine:compileDebugJavaWithJavac FROM-CACHE
+> Task :video_engine:bundleLibCompileToJarDebug FROM-CACHE
+> Task :opencv-android:stripDebugDebugSymbols FROM-CACHE
+> Task :render:mergeDebugJniLibFolders FROM-CACHE
+> Task :render:mergeDebugShaders FROM-CACHE
+> Task :render:compileDebugShaders NO-SOURCE
+> Task :render:generateDebugAssets UP-TO-DATE
+> Task :render:packageDebugAssets FROM-CACHE
+> Task :render:processDebugJavaRes NO-SOURCE
+> Task :render:bundleLibResDebug FROM-CACHE
+> Task :video_engine:bundleLibResDebug FROM-CACHE
+> Task :video_engine:bundleLibRuntimeToJarDebug FROM-CACHE
+> Task :opencv-android:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :opencv-android:mergeDebugShaders FROM-CACHE
+> Task :opencv-android:compileDebugShaders NO-SOURCE
+> Task :opencv-android:generateDebugAssets UP-TO-DATE
+> Task :opencv-android:packageDebugAssets FROM-CACHE
+> Task :opencv-android:processDebugJavaRes NO-SOURCE
+> Task :opencv-android:bundleLibResDebug NO-SOURCE
+
+> Task :render:externalNativeBuildDebug
+Build render_armeabi-v7a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/armeabi-v7a'
+[1/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[17/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[18/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[19/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/armeabi-v7a/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/armeabi-v7a/librender.so
+Build render_arm64-v8a
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/arm64-v8a'
+[1/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[17/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[18/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[19/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/arm64-v8a/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/arm64-v8a/librender.so
+Build render_x86
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/x86'
+[1/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[2/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[17/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[18/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[19/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/x86/librender.so
+Build render_x86_64
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/.cxx/cmake/debug/x86_64'
+[1/21] Building CXX object CMakeFiles/render.dir/render/Texture.cpp.o
+
+> Task :opencv-android:bundleLibRuntimeToJarDebug FROM-CACHE
+
+> Task :render:externalNativeBuildDebug
+[2/21] Building CXX object CMakeFiles/render.dir/render/render.cpp.o
+[3/21] Building CXX object CMakeFiles/render.dir/render/Brush.cpp.o
+[4/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer.cpp.o
+[5/21] Building CXX object CMakeFiles/render.dir/render/SmoothDrawer_jni.cpp.o
+[6/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer.cpp.o
+[7/21] Building CXX object CMakeFiles/render.dir/render/RectDrawer_jni.cpp.o
+[8/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader.cpp.o
+[9/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid.cpp.o
+[10/21] Building CXX object CMakeFiles/render.dir/render/PixelGrid_jni.cpp.o
+[11/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer.cpp.o
+[12/21] Building CXX object CMakeFiles/render.dir/render/GatherTextureReader_jni.cpp.o
+[13/21] Building CXX object CMakeFiles/render.dir/render/PixelBuffer_jni.cpp.o
+[14/21] Building CXX object CMakeFiles/render.dir/render/Program.cpp.o
+[15/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelTrainer.cpp.o
+[16/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider.cpp.o
+[17/21] Building CXX object CMakeFiles/render.dir/render/ChromaKeyModelProvider_jni.cpp.o
+[18/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[19/21] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[20/21] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86_64/libsecurity.a
+[21/21] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/render/build/intermediates/cmake/debug/obj/x86_64/librender.so
+
+> Task :render:mergeDebugNativeLibs FROM-CACHE
+> Task :render:stripDebugDebugSymbols FROM-CACHE
+> Task :render:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :render:bundleLibRuntimeToJarDebug FROM-CACHE
+
+> Task :video_engine:externalNativeBuildDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+Build video_engine_x86
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/video_engine/.cxx/cmake/debug/x86'
+[1/6] Building CXX object CMakeFiles/video_engine.dir/video_engine_main.cpp.o
+[2/6] Building CXX object CMakeFiles/video_engine.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/video_engine/build/cpp/shaders.cpp.o
+[3/6] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[4/6] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[5/6] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[6/6] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/video_engine/build/intermediates/cmake/debug/obj/x86/libvideo_engine.so
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :video_engine:mergeDebugNativeLibs FROM-CACHE
+> Task :video_engine:stripDebugDebugSymbols FROM-CACHE
+> Task :video_engine:copyDebugJniLibsProjectOnly FROM-CACHE
+> Task :videoleap:kaptGenerateStubsDebugKotlin
+
+> Task :videoleap:externalNativeBuildDebug
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+Build videoleap_x86
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+ninja: Entering directory `/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/.cxx/cmake/debug/x86'
+[1/6] Building CXX object CMakeFiles/videoleap.dir/videoleap_main.cpp.o
+[2/6] Building CXX object CMakeFiles/videoleap.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/build/cpp/shaders.cpp.o
+[3/6] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/Crypto.cpp.o
+[4/6] Building CXX object CMakeFiles/security.dir/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/src/main/cpp/ShaderStorage.cpp.o
+[5/6] Linking CXX static library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/security/libs/x86/libsecurity.a
+[6/6] Linking CXX shared library /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/build/intermediates/cmake/debug/obj/x86/libvideoleap.so
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+WARNING: This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+This app only has 32-bit [x86] native libraries. Beginning August 1, 2019 Google Play store requires that all apps that include native libraries must provide 64-bit versions. For more information, visit https://g.co/64-bit-requirement
+
+> Task :videoleap:mergeDebugAssets FROM-CACHE
+> Task :videoleap:mergeLibDexDebug FROM-CACHE
+> Task :videoleap:mergeDebugJniLibFolders FROM-CACHE
+> Task :videoleap:mergeDebugNativeLibs FROM-CACHE
+> Task :videoleap:stripDebugDebugSymbols FROM-CACHE
+> Task :videoleap:validateSigningDebug FROM-CACHE
+> Task :videoleap:preDebugAndroidTestBuild SKIPPED
+> Task :videoleap:compileDebugAndroidTestAidl NO-SOURCE
+> Task :videoleap:processDebugAndroidTestManifest
+> Task :videoleap:compileDebugAndroidTestRenderscript NO-SOURCE
+> Task :videoleap:generateDebugAndroidTestBuildConfig FROM-CACHE
+> Task :videoleap:generateDebugAndroidTestResValues FROM-CACHE
+> Task :videoleap:generateDebugAndroidTestResources UP-TO-DATE
+> Task :videoleap:mergeDebugAndroidTestResources FROM-CACHE
+> Task :videoleap:processDebugAndroidTestResources FROM-CACHE
+> Task :videoleap:javaPreCompileDebugAndroidTest FROM-CACHE
+> Task :videoleap:mergeDebugAndroidTestShaders FROM-CACHE
+> Task :videoleap:compileDebugAndroidTestShaders NO-SOURCE
+> Task :videoleap:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :videoleap:mergeDebugAndroidTestAssets FROM-CACHE
+> Task :videoleap:processDebugAndroidTestJavaRes NO-SOURCE
+> Task :videoleap:mergeDebugAndroidTestJniLibFolders FROM-CACHE
+> Task :videoleap:mergeDebugAndroidTestNativeLibs FROM-CACHE
+> Task :videoleap:checkDebugAndroidTestDuplicateClasses FROM-CACHE
+> Task :videoleap:desugarDebugAndroidTestFileDependencies
+> Task :videoleap:mergeExtDexDebugAndroidTest FROM-CACHE
+> Task :videoleap:mergeLibDexDebugAndroidTest FROM-CACHE
+> Task :videoleap:validateSigningDebugAndroidTest FROM-CACHE
+> Task :videoleap:preDebugUnitTestBuild UP-TO-DATE
+> Task :videoleap:javaPreCompileDebugUnitTest FROM-CACHE
+> Task :videoleap:packageDebugUnitTestForUnitTest FROM-CACHE
+> Task :videoleap:generateDebugUnitTestConfig FROM-CACHE
+> Task :videoleap:processDebugUnitTestJavaRes
+
+> Task :videoleap:kaptDebugKotlin
+warning: Current JDK version 1.8.0_292-8u292-b10-0ubuntu1~20.04-b10 has a bug (https://bugs.openjdk.java.net/browse/JDK-8007720) that prevents Room from being incremental. Consider using JDK 11+ or the embedded JDK shipped with Android Studio 3.5+.
+[WARN] Incremental annotation processing requested, but support is disabled because the following processors are not incremental: androidx.room.RoomProcessor (DYNAMIC).
+
+> Task :videoleap:compileDebugKotlin
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/app/MainActivity.kt: (32, 13): 'when' is exhaustive so 'else' is redundant here
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/appState/ImportAction.kt: (82, 21): Name shadowed: editState
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/billing/ProxyBillingManager.kt: (29, 9): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/AnalyticsObserver.kt: (27, 21): Variable 'temp' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/EditViewModel.kt: (205, 13): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/EditViewModel.kt: (440, 9): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/canvas/ChromaKeyPickerWidgetController.kt: (152, 9): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/controllers/text/ColorSwatchesToolbarController.kt: (81, 89): 'toUpperCase(Locale): String' is deprecated. Use uppercase() instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/controllers/text/TextFontFeatureController.kt: (66, 47): Parameter 'itemId' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/controllers/text/TextSpacingFeature.kt: (181, 43): The corresponding parameter in the supertype 'DisplayModelConverter' is named 'displayValue'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/TimelineLayersView.kt: (37, 49): The corresponding parameter in the supertype 'TimelineView' is named 'visibleTimeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/arithmetics/TimeUnit.kt: (16, 1): 'inline' modifier is deprecated. Use 'value' instead
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (19, 57): 'toLong(): Long' is deprecated. Conversion of Char to Number is deprecated. Use Char.code property instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (19, 67): 'toChar(): Char' is deprecated. Direct conversion to Char is deprecated. Use toInt().toChar() or Char constructor instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (21, 53): 'toLong(): Long' is deprecated. Conversion of Char to Number is deprecated. Use Char.code property instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (21, 63): 'toChar(): Char' is deprecated. Direct conversion to Char is deprecated. Use toInt().toChar() or Char constructor instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (22, 56): 'toLong(): Long' is deprecated. Conversion of Char to Number is deprecated. Use Char.code property instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeFormatter.kt: (22, 66): 'toChar(): Char' is deprecated. Direct conversion to Char is deprecated. Use toInt().toChar() or Char constructor instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeIndicatorTrack.kt: (48, 58): Parameter 'top' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeLabelsTrack.kt: (128, 66): 'toLong(): Long' is deprecated. Conversion of Char to Number is deprecated. Use Char.code property instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TimeLabelsTrack.kt: (128, 76): 'toChar(): Char' is deprecated. Direct conversion to Char is deprecated. Use toInt().toChar() or Char constructor instead.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/edit/timeline/tracks/TrashTrack.kt: (78, 19): Parameter 'x' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/export/ExportFragment.kt: (92, 15): 'onRequestPermissionsResult(Int, Array<(out) String!>, IntArray): Unit' is deprecated. Deprecated in Java
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/export/ExportFragment.kt: (186, 13): 'requestPermissions(Array<(out) String!>, Int): Unit' is deprecated. Deprecated in Java
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/export/SliderSnapHelper.kt: (57, 41): Parameter 'distance' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/AudioUserInput.kt: (84, 32): The corresponding parameter in the supertype 'SpeedableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/UserInputModelExt.kt: (379, 9): Name shadowed: newStart
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/UserInputModelExt.kt: (413, 9): Name shadowed: newEnd
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'ClipUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'SpeedableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'FilterableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'AdjustableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'TransformableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/models/user_input/VideoUserInput.kt: (114, 32): The corresponding parameter in the supertype 'AnimatableUserInput' is named 'timeRange'. This may cause problems when calling this function with named arguments.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/onboarding/OnboardingViewModel.kt: (15, 88): Unnecessary non-null assertion (!!) on a non-null receiver of type List<OnboardingItem>
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/projects/ProjectsFragment.kt: (97, 13): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/projects/ProjectsFragment.kt: (127, 46): 'getColor(Int): Int' is deprecated. Deprecated in Java
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/utils/GifMetadataReader.kt: (7, 25): 'Movie' is deprecated. Deprecated in Java
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/utils/threading/MockExecutorService.kt: (45, 42): No cast needed
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/utils/thumbnailengine/ThumbnailAdapter.kt: (163, 35): 'offer(E): Boolean' is deprecated. Deprecated in the favour of 'trySend' method
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/utils/thumbnailengine/VideoThumbnailGenerator.kt: (55, 37): Type mismatch: inferred type is String? but String was expected
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/main/java/com/lightricks/videoleap/utils/thumbnailengine/VideoThumbnailGenerator.kt: (58, 37): Type mismatch: inferred type is String? but String was expected
+
+> Task :videoleap:compileDebugJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :videoleap:compileDebugSources
+> Task :videoleap:mergeDebugJavaResource FROM-CACHE
+> Task :videoleap:dexBuilderDebug
+> Task :videoleap:kaptGenerateStubsDebugUnitTestKotlin
+> Task :videoleap:kaptDebugUnitTestKotlin
+> Task :videoleap:bundleDebugClasses
+> Task :videoleap:kaptGenerateStubsDebugAndroidTestKotlin
+> Task :videoleap:kaptDebugAndroidTestKotlin
+> Task :videoleap:mergeProjectDexDebug
+> Task :videoleap:packageDebug
+> Task :videoleap:assembleDebug
+> Task :videoleap:compileDebugAndroidTestKotlin
+> Task :videoleap:compileDebugAndroidTestJavaWithJavac
+> Task :videoleap:mergeDebugAndroidTestJavaResource FROM-CACHE
+> Task :videoleap:dexBuilderDebugAndroidTest FROM-CACHE
+> Task :videoleap:mergeProjectDexDebugAndroidTest FROM-CACHE
+> Task :videoleap:packageDebugAndroidTest
+
+> Task :videoleap:compileDebugUnitTestKotlin
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/appState/StateManagerTest.kt: (76, 13): Variable 'expected' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (18, 13): Variable 'ownedProductsUpdated' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (40, 17): Variable 'availableOffers' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (50, 17): Variable 'ownedProducts' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (60, 17): Variable 'subscriptionHistory' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (72, 17): Variable 'ownedProducts' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (81, 17): Variable 'billingAvailabilityStatus' is never used
+w: /mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/src/test/java/com/lightricks/videoleap/billing/NullBillingManagerTest.kt: (88, 13): Variable 'analyticsEvents' is never used
+
+> Task :videoleap:connectedDebugAndroidTest
+Starting 42 tests on android29(AVD) - 10
+
+> Task :videoleap:compileDebugUnitTestJavaWithJavac
+
+> Task :videoleap:testDebugUnitTest
+
+com.lightricks.videoleap.edit.controllers.FeatureControllersManagerTest > onToolbarItemClicked FAILED
+    java.lang.NullPointerException at FeatureControllersManagerTest.kt:168
+
+446 tests completed, 1 failed
+
+> Task :videoleap:testDebugUnitTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':videoleap:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/videoleap/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/6.8.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 3m 34s
+348 actionable tasks: 90 executed, 234 from cache, 24 up-to-date
+Traceback (most recent call last):
+  File "./tools/jenkins/build_modified_modules_v2.py", line 132, in <module>
+    main()
+  File "./tools/jenkins/build_modified_modules_v2.py", line 128, in main
+    run_build_for_pr(modules=modules, include_large_tests=False, use_build_cache=True)
+  File "/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/tools/jenkins/build_for_pr.py", line 33, in run_build_for_pr
+    execute_gradle(gradle_arguments, [])
+  File "/mnt/disks/sdb/runner_workspace/facetune-android/facetune-android/tools/jenkins/gradle_build.py", line 27, in execute_gradle
+    subprocess.run(args, check=True)
+  File "/usr/lib/python3.8/subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['./gradlew', '-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest', '--build-cache', 'clean', ':videoleap:buildForPR']' returned non-zero exit status 1.

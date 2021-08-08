@@ -11,7 +11,7 @@ import traceback
 from dataclasses import dataclass
 from enum import Enum, auto
 from pathlib import Path
-from typing import List, TextIO
+from typing import List, TextIO, Callable
 from slack_message import slack_message
 from test_analyzer import extract_test_failure_from_directory
 
@@ -103,7 +103,7 @@ def _print_build_error(build_error: BuildError) -> None:
     print("*" * 100)
 
 
-def analyze_error(log_file: Path) -> List[BuildError]:
+def analyze_error(log_file: Path, unit_test_failure_extraction_fun:Callable[[str, str], BuildError]=_extract_unit_test_failures_from_task,android_test_failure_extraction_fun:Callable[[str, str], BuildError]=_extract_android_test_failures_from_task) -> List[BuildError]:
     """
     Main function which takes a log file and finds all gradle task
     errors
@@ -124,11 +124,11 @@ def analyze_error(log_file: Path) -> List[BuildError]:
                     build_errors.append(_extract_compilation_error(project, log_fh))
                 elif task.startswith("test"):
                     build_errors.append(
-                        _extract_unit_test_failures_from_task(project, task)
+                        unit_test_failure_extraction_fun(project, task)
                     )
                 elif task.startswith("connected"):
                     build_errors.append(
-                        _extract_android_test_failures_from_task(project, task)
+                        android_test_failure_extraction_fun(project, task)
                     )
     return build_errors
 
