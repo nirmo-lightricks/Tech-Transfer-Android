@@ -24,6 +24,11 @@ on:
         required: false
         default: 'internal-testers'
 
+      firebaseAppDistributionReleaseNotes:
+        description: Release notes for this build.
+        required: false
+        default: ''
+
       googlePlayTrack:
         required: false
         default: 'internal'
@@ -93,6 +98,7 @@ jobs:
           app: videoleap
           firebase-secret: ${{secrets.VIDEOLEAP_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
           firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          firebase-app-distribution-release-notes: ${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
 
       - name: "Upload to Google Play"
         if: ${{contains(github.event.inputs.publish, 'google')}}
