@@ -15,7 +15,7 @@ jobs:
       - name: Run instance creation
         uses: ./.github/actions/action-create-gcp-runner
         with:
-          instance_num: 3
+          instance_num: 2
           delete_old: yes
           gcp_instance_creator_key: ${{secrets.GCP_ANDROID_CI_INSTANCE_CREATOR}}
           environment_type: production
