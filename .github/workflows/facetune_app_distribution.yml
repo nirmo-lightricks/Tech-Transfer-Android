@@ -11,10 +11,9 @@ on:
         description: >
           Select where to publish this build, if successful.
           archive - Saved under "Artifactory" (under android-apps-local)
-          firebase - Uploaded to Firebase App Distribution. Suitable for internal distribution and testing.
-          Google play - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
+          google - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
         required: true
-        default: 'firebase,archive,google'
+        default: 'archive,google'
 
       firebaseAppDistributionGroups:
         description: >
@@ -85,15 +84,6 @@ jobs:
         uses: ./.github/actions/action-crashlytics-release-symbol-upload
         with:
           app: facetune
-          flavor: Gms
-
-      - name: "Upload to FirebaseDistribution"
-        if: ${{contains(github.event.inputs.publish, 'firebase')}}
-        uses: ./.github/actions/action-firebase-upload
-        with:
-          app: facetune
-          firebase-secret: ${{secrets.FACETUNE_FIREBASE_APP_DISTRIBUTION_SERVICE_ACCOUNT}}
-          firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
           flavor: Gms
 
       - name: "Upload to Google Play"
