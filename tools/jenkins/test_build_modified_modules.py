@@ -9,7 +9,6 @@ BIG_MODULE_SET = {
     "swish",
     "facetune",
     "videoleap",
-    "wechat_playground",
     "authentication",
     "quickshot",
     "pixaloop",
