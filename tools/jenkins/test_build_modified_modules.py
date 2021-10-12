@@ -5,7 +5,6 @@ from build_modified_modules_v2 import _get_modules_to_build
 BIG_MODULE_SET = {
     "billing",
     "video_engine",
-    "billing_playground",
     "swish",
     "facetune",
     "videoleap",
