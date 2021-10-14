@@ -74,7 +74,7 @@ def lint_comment(workspace, lint_report):
 
 def lint_entry(lint_issues, module_name, workspace) -> List[ReportEntry]:
     if lint_issues:
-        status = Status.WARNING
+        status = Status.ERROR
         info = f"there are {len(lint_issues)} lint issues"
         details = lint_comment(workspace, lint_issues)
         contribution = [ReportEntry(module_name, status, "Lint", info, details)]
@@ -86,7 +86,7 @@ def lint_entry(lint_issues, module_name, workspace) -> List[ReportEntry]:
 
 def detekt_entry(detekt_issues_report, module_name, workspace) -> List[ReportEntry]:
     if detekt_issues_report:
-        status = Status.WARNING
+        status = Status.ERROR
         num_detekt_issues = len(detekt_issues_report)
         if num_detekt_issues > 1:
             info = f"there are {num_detekt_issues} Detekt issues"

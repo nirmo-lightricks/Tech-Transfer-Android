@@ -60,6 +60,11 @@ jobs:
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
 
+      - name: Verify that static analysis passed
+        timeout-minutes: 2
+        if: ${{ always() }}
+        run: python3 tools/jenkins/VerifyStaticAnalysisResults.py
+
       - name: Extract build failure
         timeout-minutes: 2
         if: ${{failure()}}
