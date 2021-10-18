@@ -79,9 +79,12 @@ def _mount_device() -> None:
         capture_output=True,
     )
 
-def _write_gradle_properties()->None:
+
+def _write_gradle_properties() -> None:
+    GRADLE_USER_HOME.mkdir(exist_ok=True)
     gradle_properties = GRADLE_USER_HOME / "gradle.properties"
     gradle_properties.write_text("org.gradle.jvmargs= -Xmx8g\n")
+
 
 def _configure_swap_space() -> None:
     fstab = Path("/etc/fstab")

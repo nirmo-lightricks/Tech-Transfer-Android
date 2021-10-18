@@ -25,6 +25,7 @@ GCP_PROJECT_ID = "android-ci-286617"
 GCP_ZONE = "us-central1-a"
 GRADLE_USER_HOME = MOUNT_PATH / "gradle_user_home"
 
+
 def setup_environment() -> None:
     """
     sets all environment variables wich are needed for shell scripts run from here
