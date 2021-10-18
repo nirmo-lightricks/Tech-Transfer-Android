@@ -22,6 +22,7 @@ from constants import (
     CONFIG_COMMAND,
     GCP_PROJECT_ID,
     GH_RUNNER_PATH,
+    GRADLE_USER_HOME,
     MOUNT_DEVICE,
     MOUNT_PATH,
     RUNNER_WORKDIR,
@@ -78,6 +79,9 @@ def _mount_device() -> None:
         capture_output=True,
     )
 
+def _write_gradle_properties()->None:
+    gradle_properties = GRADLE_USER_HOME / "gradle.properties"
+    gradle_properties.write_text("org.gradle.jvmargs= -Xmx8g\n")
 
 def _configure_swap_space() -> None:
     fstab = Path("/etc/fstab")
@@ -164,6 +168,7 @@ def _startup_script(runner_labels: str) -> None:
         logging.info("machine already configured")
     else:
         _mount_device()
+    _write_gradle_properties()
     _configure_swap_space()
     _start_runner(runner_labels)
 
