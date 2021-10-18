@@ -8,7 +8,7 @@ from pathlib import Path
 ANDROID_SDK_ROOT = "/android-sdk"
 ANDROID_SDK_VERSION = "6514223"
 BUNDLETOOL_VERSION = "1.1.0"
-GH_RUNNER_VERSION = "2.280.1"
+GH_RUNNER_VERSION = "2.283.3"
 GH_RUNNER_PATH = Path("/actions_runner")
 CONFIG_COMMAND = GH_RUNNER_PATH / "config.sh"
 
@@ -23,7 +23,7 @@ API_URL = "https://api.github.com/orgs/Lightricks/actions/runners/registration-t
 
 GCP_PROJECT_ID = "android-ci-286617"
 GCP_ZONE = "us-central1-a"
-
+GRADLE_USER_HOME = MOUNT_PATH / "gradle_user_home"
 
 def setup_environment() -> None:
     """
@@ -36,7 +36,7 @@ def setup_environment() -> None:
         "JAVA_HOME": "/usr/lib/jvm/java-11-openjdk-amd64",
         # pylint: disable=C0301
         "PATH": f"{environ['PATH']}:/snap/bin:{ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:{ANDROID_SDK_ROOT}/platform-tools:{ANDROID_SDK_ROOT}/emulator",
-        "GRADLE_USER_HOME": (MOUNT_PATH / "gradle_cache").as_posix(),
+        "GRADLE_USER_HOME": GRADLE_USER_HOME.as_posix(),
         "RUNNER_ALLOW_RUNASROOT": "1",
         "CCACHE_DIR": (MOUNT_PATH / ".ccache").as_posix(),
         "SSD_MOUNT_PATH": MOUNT_PATH.as_posix(),
