@@ -57,7 +57,6 @@ def _install_android_sdk() -> None:
         "build-tools;28.0.3",
         "cmake;3.10.2.4988404",
         "emulator",
-        "ndk;21.0.6113669",
         "ndk;21.4.7075529",
         "patcher;v4",
         "platforms;android-27",
