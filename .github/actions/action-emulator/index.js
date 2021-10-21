@@ -7,11 +7,11 @@ async function runEmulator() {
     if(!isNumeric(version)){
         throw new Error(`version needs to be numeric but is ${version}`)
     }
-    const creationCommand = `echo no | avdmanager create avd -n android${version} -k 'system-images;android-${version};default;x86' --force`
+    const creationCommand = `echo no | avdmanager create avd -n android${version} -k 'system-images;android-${version};default;x86_64' --force`
     console.log(creationCommand)
     await exec(creationCommand)
     console.log(await exec("emulator -list-avds"))
-    const emulatorCommand = `emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android${version} -memory 4096 -partition-size 2048 -cache-size 2048 -wipe-data -no-boot-anim -no-snapshot >/dev/null 2>&1 &`
+    const emulatorCommand = `emulator -gpu swiftshader_indirect -no-window -feature GLESDynamicVersion -avd android${version} -partition-size 2048 -cache-size 2048 -wipe-data -no-boot-anim -no-snapshot >/dev/null 2>&1 &`
     console.log(emulatorCommand)
     await exec(emulatorCommand)
 }
