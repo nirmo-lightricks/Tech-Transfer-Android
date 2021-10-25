@@ -1,7 +1,7 @@
 name: Scheduled Creation of runner instances
 on:
   schedule:
-    - cron:  '0 0 1-31/2 * *'
+    - cron: '0 0 * * 0'
 
 jobs:
   create_runner:
