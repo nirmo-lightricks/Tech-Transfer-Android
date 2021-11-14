@@ -73,7 +73,7 @@ jobs:
           flavor:  ${{github.event.inputs.flavor}}
           firebase-secret: ${{ secrets[env.FIREBASE_SECRET_NAME] }}
           firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
-          firebase-app-distribution-release-notes: ${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
+          firebase-app-distribution-release-notes: DEBUG-MENU:${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
 
       - name: "Cleanup"
         if: ${{always()}}
