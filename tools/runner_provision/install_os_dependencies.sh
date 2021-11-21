@@ -39,3 +39,6 @@ dpkg --add-architecture i386 && \
 apt-get install python3
 apt-get install -y --no-install-recommends python3-pip
 pip3 install -r /requirements.txt
+
+# Install Kotlin
+snap install --classic kotlin
