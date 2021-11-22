@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       runner:
-        description: 'Select on which runner the job should run, must be one of `android`, `ubuntu-latest`'
+        description: 'Select on which runner the job should run, must be one of `android`, `android_staging`'
         required: true
         default: 'android'
 
