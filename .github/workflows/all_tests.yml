@@ -1,10 +1,16 @@
 name: Run all tests on demand
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: 'Select on which runner the job should run'
+        required: true
+        default: 'android'
 
 jobs:
   run_all_tests:
     name: "Run all tests"
-    runs-on: android
+    runs-on: ${{ github.event.inputs.runner }}
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
