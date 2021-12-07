@@ -17,7 +17,7 @@ on:
           Groups are specified using group aliases, which you can find in the Testers tab in the
           Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
         required: false
-        default: 'internal-testers'
+        default: 'dev-team'
 
       firebaseAppDistributionReleaseNotes:
         description: Release notes for this build.
