@@ -49,11 +49,11 @@ def _get_gradle_arguments(
     # pylint: disable=C0301
     large_test_filters = (
         [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest"
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest"
         ]
         if include_large_tests
         else [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest"
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest"
         ]
     )
     build_cache_filter = ["--build-cache"] if use_build_cache else ["--no-build-cache"]

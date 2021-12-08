@@ -8,7 +8,7 @@ class TestBuildForPr(unittest.TestCase):
             modules=["swish"], include_large_tests=True, asset_modules=set()
         )
         expected = [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest",
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest",
             "--no-build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
@@ -20,7 +20,7 @@ class TestBuildForPr(unittest.TestCase):
             modules=["swish"], include_large_tests=False, asset_modules=set()
         )
         expected = [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest",
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest",
             "--no-build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
@@ -32,7 +32,7 @@ class TestBuildForPr(unittest.TestCase):
             modules=["swish"], include_large_tests=False, asset_modules=set(), use_build_cache=True
         )
         expected = [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest",
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=androidx.test.filters.LargeTest,com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest",
             "--build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
@@ -46,7 +46,7 @@ class TestBuildForPr(unittest.TestCase):
             asset_modules={"assets"},
         )
         expected = [
-            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest",
+            "-Pandroid.testInstrumentationRunnerArguments.notAnnotation=com.lightricks.swish.utils.BoostedLargeTest,com.lightricks.feed.utils.LargeFeedTest",
             "--no-build-cache",
             "clean",
             f":swish:{GRADLE_PR_TASK_NAME}",
