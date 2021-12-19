@@ -1,7 +1,7 @@
 name: Feed large test build
 on:
   schedule:
-    - cron:  '0 3 11 11 *'
+    - cron:  '0 3 * * *'
 
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/action-slack
         with:
           text: Feed build release failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
-          webhook: ${{secrets.BOOSTED_ANDROID_NOTIFICATION_WEBHOOK}}
+          webhook: ${{secrets.FEED_ANDROID_NOTIFICATION_WEBHOOK}}
   assemble_and_test:
     name: Run Feed large tests
     # This job runs on our self-hosted linux runners, labeled 'android'
@@ -67,7 +67,7 @@ jobs:
         uses: ./.github/actions/action-slack
         with:
           text: Feed Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
-          webhook: ${{secrets.BOOSTED_ANDROID_NOTIFICATION_WEBHOOK}}
+          webhook: ${{secrets.FEED_ANDROID_NOTIFICATION_WEBHOOK}}
 
       - name: Upload unit-test logs to GitHub
         if: ${{ failure() || success() }}
