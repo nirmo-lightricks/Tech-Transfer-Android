@@ -1,8 +1,7 @@
 name: Feed large test build
 on:
   schedule:
-    - cron:  '0 3 * * *'
-
+    - cron:  '0 5,11,17 * * *'
 
 jobs:
   bundle_release:
