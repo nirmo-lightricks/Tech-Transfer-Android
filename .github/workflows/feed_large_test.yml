@@ -20,7 +20,7 @@ jobs:
       - name: Gradle Clean
         run: ./gradlew feed:clean
       - name: Gradle Bundle Release
-        run: ./gradlew feed:bundleRelease
+        run: ./gradlew feed:bundleReleaseAar
       - name: Post failure to slack
         if: ${{ failure() }}
         uses: ./.github/actions/action-slack
