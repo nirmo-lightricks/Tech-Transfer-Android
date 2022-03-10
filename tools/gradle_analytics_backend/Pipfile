@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+functions-framework = "==3.0.0"
+google-cloud-bigquery = "==2.34.1"
+
+[dev-packages]
+mypy = "==0.931"
+pylint = "==2.12.2"
+black = "==22.1.0"
+
+[requires]
+python_version = "3.9"
