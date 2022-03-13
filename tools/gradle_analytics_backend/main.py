@@ -94,7 +94,7 @@ def _json_to_bigquery_row(analytics: BuildAnalytics) -> Dict[str, Any]:
         "gradle_version": general_parameters["gradleVersion"],
         "kotlin_version": general_parameters["kotlinVersion"],
         "agp_version": general_parameters["agpVersion"],
-        "android_studio_version": general_parameters["androidStudioVersion"],
+        "android_studio_version": general_parameters.get("androidStudioVersion"),
         "javaXmx": general_parameters["xmx"],
         "is_ci": general_parameters["isCi"],
         "status": analytics["status"],
