@@ -96,4 +96,5 @@ jobs:
             ./**/build/detekt-results
             facetune-android/**/build/test-results/**/*.xml
             facetune-android/**/build/reports/androidTests
+            ./performance_measurement.txt
 
