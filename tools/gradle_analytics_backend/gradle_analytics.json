@@ -76,13 +76,13 @@
   {
     "name": "start_time",
     "description": "starting time of run in milliseconds since epoch",
-    "type": "INT64",
+    "type": "TIMESTAMP",
     "mode": "REQUIRED"
   },
   {
     "name": "end_time",
     "description": "ending time of run in milliseconds since epoch",
-    "type": "INT64",
+    "type": "TIMESTAMP",
     "mode": "REQUIRED"
   },
   {
@@ -161,13 +161,13 @@
       {
         "name": "start_time",
         "description": "start time of step, in milliseconds since the epoch",
-        "type": "INT64",
+        "type": "TIMESTAMP",
         "mode": "REQUIRED"
       },
       {
         "name": "end_time",
         "description": "end time of step, in milliseconds since the epoch",
-        "type": "INT64",
+        "type": "TIMESTAMP",
         "mode": "REQUIRED"
       },
       {
