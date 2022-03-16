@@ -30,7 +30,7 @@ gcloud iam workload-identity-pools providers create-oidc "github-actions-provide
   --location="global" \
   --workload-identity-pool="ga-workpool" \
   --display-name="Github Actions Provider" \
-  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.aud=assertion.aud" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.actor=assertion.actor,attribute.aud=assertion.aud,attribute.repository=assertion.repository" \
   --issuer-uri="https://token.actions.githubusercontent.com"
 
 
@@ -39,3 +39,9 @@ gcloud iam service-accounts add-iam-policy-binding "cloud-functions-deployer@and
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/projects/24917401109/locations/global/workloadIdentityPools/ga-workpool/attribute.repository/Lightricks/facetune-android"
 
+gcloud iam service-accounts add-iam-policy-binding "cloud-functions-deployer@android-ci-286617.iam.gserviceaccount.com" \
+  --project="android-ci-286617" \
+  --role="roles/iam.serviceAccountTokenCreator" \
+  --member="principalSet://iam.googleapis.com/projects/24917401109/locations/global/workloadIdentityPools/ga-workpool/attribute.repository/Lightricks/facetune-android"
+
+  gcloud iam service-accounts add-iam-policy-binding gradle-analytics-executor@android-ci-286617.iam.gserviceaccount.com --member="serviceAccount:cloud-functions-deployer@android-ci-286617.iam.gserviceaccount.com" --role=roles/iam.serviceAccountUser
