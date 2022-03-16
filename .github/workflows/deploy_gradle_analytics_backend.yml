@@ -1,0 +1,26 @@
+name: Deploy Gradle analytics backend
+on:
+  workflow_dispatch:
+
+jobs:
+  create_runner:
+    runs-on: ubuntu-latest
+    name: Create Android runner
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'principalSet://iam.googleapis.com/projects/24917401109/locations/global/workloadIdentityPools/ga-workpool/*'
+          service_account: 'cloud-functions-deployer@android-ci-286617.iam.gserviceaccount.com'
+          create_credentials_file: true
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+      - name: Deploy function
+        working-directory: ./tools/
+        run: gcloud functions deploy gradle_analytics_backend --entry-point gradle_analytics_to_bigquery --runtime python39  --trigger-http --allow-unauthenticated --service-account=gradle-analytics-executor@android-ci-286617.iam.gserviceaccount.com --max-instances=10
+
+
