@@ -3,6 +3,7 @@ This is a google cloud function which pushes gradle analytics to bigquery
 """
 
 import logging
+from datetime import datetime
 from typing import Any, cast, Dict, List, Optional, TypedDict
 import functions_framework  # type: ignore
 import flask
@@ -61,6 +62,10 @@ BuildAnalytics = TypedDict(
 )
 
 
+def _ms_to_datetime(time_in_ms: int) -> datetime:
+    return datetime.fromtimestamp(time_in_ms / 1000)
+
+
 def _json_to_bigquery_row(analytics: BuildAnalytics) -> Dict[str, Any]:
     general_parameters = analytics["generalParameters"]
     github_action_info = None
@@ -76,8 +81,8 @@ def _json_to_bigquery_row(analytics: BuildAnalytics) -> Dict[str, Any]:
         {
             "name": step["name"],
             "status": step["status"],
-            "start_time": step["startTime"],
-            "end_time": step["endTime"],
+            "start_time": _ms_to_datetime(step["startTime"]),
+            "end_time": _ms_to_datetime(step["endTime"]),
             "running_time": step["runningTime"],
             "is_fresh_run": step["freshRun"],
         }
@@ -98,8 +103,8 @@ def _json_to_bigquery_row(analytics: BuildAnalytics) -> Dict[str, Any]:
         "javaXmx": general_parameters["xmx"],
         "is_ci": general_parameters["isCi"],
         "status": analytics["status"],
-        "start_time": analytics["startTime"],
-        "end_time": analytics["endTime"],
+        "start_time": _ms_to_datetime(analytics["startTime"]),
+        "end_time": _ms_to_datetime(analytics["endTime"]),
         "running_time": analytics["runningTime"],
         "git_repo": general_parameters["gitRepo"],
         "github_actions_info": github_action_info,
@@ -121,9 +126,10 @@ def gradle_analytics_to_bigquery(request: flask.Request) -> Any:
         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
     """
     client = bigquery.Client()
-    table_id = "android-ci-286617.build_analytics.performance_statistics"
+    table_ref = client.dataset("build_analytics").table("performance_statistics")
+    table = client.get_table(table_ref)
     row = _json_to_bigquery_row(cast(BuildAnalytics, request.get_json()))
-    errors = client.insert_rows_json(table_id, [row])
+    errors = client.insert_rows(table, [row])
     if errors:
         logging.error("got following error when inserting %s: %s", row, errors)
         return "developer error!", 400
