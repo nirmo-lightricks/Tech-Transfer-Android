@@ -7,7 +7,7 @@ bq mk --table android-ci-286617:build_analytics.performance_statistics gradle_an
 
 export GOOGLE_APPLICATION_CREDENTIALS=~/Downloads/android-ci-286617-21c2508387e7.json
 
-gcloud projects add-iam-policy-binding android-ci-286617 --member="serviceAccount:gradle-analytics-executor@android-ci-286617.iam.gserviceaccount.com"  --role="roles/bigquery.dataEditor"
+gcloud projects add-iam-policy-binding android-ci-286617 --member="serviceAccount:gradle-analytics-executor@android-ci-286617.iam.gserviceaccount.com"  --role="roles/bigquery.user"
 
 When prompted select condition none
 
