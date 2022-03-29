@@ -56,5 +56,5 @@ jobs:
           commit-message: ++Capabilities.
           title: ++Capabilities.
           body: ${{ steps.pull_body.outputs.body }}
-          base: feed_develop
+          base: develop
           author: Noam Freeman <nfreeman@lightricks.com>
