@@ -1,0 +1,60 @@
+name: Plus Plus Capabilities
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron:  '0 0 1,12,34 * *'
+
+jobs:
+  plusPlusFeedTemplates:
+    runs-on: android
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          lfs: true
+          token: ${{ secrets.GITHUBCIPAT }}
+      - name: Reset promotion branch
+        id: branch_reset
+        working-directory: feed-templates
+        run: |
+          git fetch
+          echo "::set-output name=start_commit::$(git rev-parse HEAD)"
+          git reset --hard origin/main
+          echo "::set-output name=target_commit::$(git rev-parse HEAD)"
+      - name: Create branch name
+        id: branch_name
+        run: echo "::set-output name=branch_name::feature/++capabilities-auto-$(date +'%Y-%m-%d')"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Python dependencies
+        run: |
+          python -m pip install PyGithub
+      - name: Generate VL capabilities in Kotlin
+        id: generate_capabilities
+        run: |
+          python ./videoleap/tools/capabilities.py ./feed-templates/Videoleap/capabilities.yaml -d videoleap/src/main/java/com/lightricks/videoleap/feed/feedInitializer/Capabilities.kt
+          git commit -am "VL: generate capabilities for ${{ steps.branch_reset.outputs.target_commit }}"
+      - name: Create pull request body
+        id: pull_body
+        env:
+          LT_GITHUB_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          START_COMMIT: ${{ steps.branch_reset.outputs.start_commit }}
+          TARGET_COMMIT: ${{ steps.branch_reset.outputs.target_commit }}
+          RUN_URL: https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
+        run: |-
+          output=$(python ./videoleap/tools/plusPlusPrettify.py "$LT_GITHUB_TOKEN" "feed-templates" "$START_COMMIT" "$TARGET_COMMIT" "$RUN_URL" --ndl EnlightUI VideoEngine)
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
+          echo "::set-output name=body::$output"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: ${{ steps.branch_name.outputs.branch_name }}
+          commit-message: ++Capabilities.
+          title: ++Capabilities.
+          body: ${{ steps.pull_body.outputs.body }}
+          base: develop
+          author: Noam Freeman <nfreeman@lightricks.com>
