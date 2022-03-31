@@ -19,7 +19,7 @@ jobs:
         run: |
           git fetch
           echo "::set-output name=start_commit::$(git rev-parse HEAD)"
-          git reset --hard origin/main
+          git reset --hard origin/develop
           echo "::set-output name=target_commit::$(git rev-parse HEAD)"
       - name: Create branch name
         id: branch_name
@@ -34,7 +34,7 @@ jobs:
       - name: Generate VL capabilities in Kotlin
         id: generate_capabilities
         run: |
-          python ./videoleap/tools/capabilities.py ./feed-templates/Videoleap/capabilities.yaml -d videoleap/src/main/java/com/lightricks/videoleap/feed/feedInitializer/Capabilities.kt
+          python ./videoleap/tools/capabilities.py ./feed-templates/Videoleap/version1/capabilities.yaml -d videoleap/src/main/java/com/lightricks/videoleap/feed/feedInitializer/Capabilities.kt
           git commit -am "VL: generate capabilities for ${{ steps.branch_reset.outputs.target_commit }}"
       - name: Create pull request body
         id: pull_body
