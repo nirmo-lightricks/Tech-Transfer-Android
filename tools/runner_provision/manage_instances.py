@@ -35,7 +35,7 @@ def _create_instance_operation(
         compute.images().get(project=GCP_PROJECT_ID, image=gcp_image_name).execute()
     )
     source_disk_image = image_response["selfLink"]
-    machine_type = f"zones/{GCP_ZONE}/machineTypes/n2-standard-8"
+    machine_type = f"zones/{GCP_ZONE}/machineTypes/n2-highmem-8"
     config = {
         "name": image_name,
         "machineType": machine_type,
