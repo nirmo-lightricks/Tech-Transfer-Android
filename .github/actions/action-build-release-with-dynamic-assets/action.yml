@@ -36,9 +36,9 @@ runs:
       shell: bash
       run: ./gradlew clean
 
-    - name: "Copy blobs to remote asset delivery module and build bundle in release"
+    - name: "Copy blobs and assets to remote asset delivery module and build bundle in release"
       shell: bash
-      run: ./gradlew :${{inputs.app}}:copyBlobsToRemoteAssetDeliveryModule ${{inputs.app}}:bundle${{inputs.flavor}}${{inputs.buildType}}
+      run: ./gradlew :${{inputs.app}}:setupDynamicAssetDeliveryProjects ${{inputs.app}}:bundle${{inputs.flavor}}${{inputs.buildType}}
 
     - name: "Create APK from Bundle"
       shell: bash
