@@ -30,8 +30,8 @@ add_library(
     tech_transfer
     SHARED
 
-    ColorTransferProcessor.cpp
-    ColorTransfer_jni.cpp
+    color_transfer/ColorTransferProcessor.cpp
+    color_transfer/ColorTransfer_jni.cpp
 )
 
 target_compile_options(
