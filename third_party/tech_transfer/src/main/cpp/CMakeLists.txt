@@ -34,10 +34,16 @@ add_library(
     color_transfer/ColorTransfer_jni.cpp
 )
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    set(CPP_OPTIMIZATION_FLAG "-O0")
+else()
+    set(CPP_OPTIMIZATION_FLAG "-O3")
+endif()
+
 target_compile_options(
     tech_transfer
     PRIVATE
-    -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wno-unknown-pragmas -std=c++17 -O3
+    -fvisibility-inlines-hidden -Wall -Wno-unknown-pragmas -std=c++17 ${CPP_OPTIMIZATION_FLAG}
     -Wno-inconsistent-missing-override
 )
 
