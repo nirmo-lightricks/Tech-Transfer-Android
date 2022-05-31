@@ -52,3 +52,6 @@ target_link_libraries(
     tech_transfer
     opencv_java4
 )
+
+include(../../androidTest/cppTests/CMakeLists.txt)
+
