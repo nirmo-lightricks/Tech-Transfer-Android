@@ -12,12 +12,13 @@ endif()
 
 # Path to pre-built opencv installation
 set(LT_OPENCV_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../../../opencv-android)
+set(LT_OPENCV_LIB_DIR ${LT_OPENCV_HOME}/sdk/native/libs/${ANDROID_ABI})
 add_library(opencv_java4 SHARED IMPORTED)
 set_target_properties(
     opencv_java4
     PROPERTIES
     IMPORTED_LOCATION
-    ${LT_OPENCV_HOME}/sdk/native/libs/${ANDROID_ABI}/libopencv_java4.so
+    ${LT_OPENCV_LIB_DIR}/libopencv_java4.so
 )
 
 include_directories(
@@ -26,12 +27,12 @@ include_directories(
     ${LT_PROTOBUF_HOME}/include
 )
 
+file(GLOB_RECURSE LT_TECH_TRANSFER_CPP_SOURCES "*.cpp")
+
 add_library(
     tech_transfer
     SHARED
-
-    color_transfer/ColorTransferProcessor.cpp
-    color_transfer/ColorTransfer_jni.cpp
+    ${LT_TECH_TRANSFER_CPP_SOURCES}
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
