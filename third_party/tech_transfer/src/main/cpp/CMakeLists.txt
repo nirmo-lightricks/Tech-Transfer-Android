@@ -48,10 +48,7 @@ target_compile_options(
     -Wno-inconsistent-missing-override
 )
 
-target_link_libraries(
-    tech_transfer
-    opencv_java4
-)
+target_link_libraries(tech_transfer opencv_java4 log)
 
 include(../../androidTest/cppTests/CMakeLists.txt)
 
