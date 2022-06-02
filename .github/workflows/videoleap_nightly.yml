@@ -1,0 +1,67 @@
+name: Videoleap Nightly build
+on:
+  schedule:
+    - cron:  '0 2 * * *'
+
+jobs:
+  bundle_release:
+    name: "Bundle Release of Videoleap app on develop"
+    runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: develop
+      - name: Gradle Clean
+        run: ./gradlew clean
+      - name: Gradle Bundle Release
+        run: ./gradlew :videoleap:bundleRelease
+      - name: Post failure to slack
+        if: ${{ failure() }}
+        uses: ./.github/actions/action-slack
+        with:
+          text: Videoleap nightly build failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
+          webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
+  run_tests:
+    name: "Run all Videoleap tests including the large ones"
+    runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: develop
+      # Every container gets a different value for EMULATOR_PORT variable, so they do not collide
+      - name: Setup emulator
+        uses: ./.github/actions/action-emulator
+      - name: Tests including large test
+        run: ./gradlew :videoleap:buildForPR
+      - name: Print adb logcat on failure
+        timeout-minutes: 1
+        if: ${{ failure() }}
+        run: adb logcat -d
+      - name: Post failure to slack
+        if: ${{ failure() }}
+        uses: ./.github/actions/action-slack
+        with:
+          text: Videoleap nightly build failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
+          webhook: ${{secrets.CI_NOTIFICATION_WEBHOOK}}
+      - name: Upload unit-test logs to GitHub
+        if: ${{ failure()}}
+        uses: actions/upload-artifact@v2
+        with:
+          name: videoleap-nightly-test-logs
+          path: |
+            ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
+            facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests
