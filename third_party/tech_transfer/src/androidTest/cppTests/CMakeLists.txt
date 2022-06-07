@@ -21,6 +21,7 @@ set(LT_CPP_TEST_IMAGES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../androidTest/resourc
 # Push and execute tests as post-build event.
 set(TARGET_TEST_DIR /data/local/tmp/tech_transfer_test) # Directory on device to push tests.
 set(TARGET_TEST_LIB_DIR ${TARGET_TEST_DIR}/${ANDROID_ABI})
+set(TARGET_TEST_IMAGES_DIR ${TARGET_TEST_DIR}/images)
 
 set(STANDARD_LIB_DIR ${ANDROID_NDK}/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI})
 
@@ -36,6 +37,10 @@ if(PLATFORM_ARCH STREQUAL ANDROID_ABI)
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_LIB_DIR}
         COMMAND ${ADB} push $<TARGET_FILE:tech_transfer_test> $<TARGET_FILE:tech_transfer>
             ${LT_OPENCV_LIB_DIR}/libopencv_java4.so  ${STANDARD_LIB_DIR}/libc++_shared.so ${TARGET_TEST_LIB_DIR}/
+
+        # Push images
+        COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_IMAGES_DIR}
+        COMMAND ${ADB} push ${LT_CPP_TEST_IMAGES_DIR}/*.png ${TARGET_TEST_IMAGES_DIR}/
 
         # Execute tests
         COMMAND ${ADB} shell \"export LD_LIBRARY_PATH=${TARGET_TEST_LIB_DIR}\;
