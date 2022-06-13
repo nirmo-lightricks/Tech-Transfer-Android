@@ -14,7 +14,7 @@ add_executable(tech_transfer_test
     ${LT_TECH_TRANSFER_TEST_SOURCES}
 )
 
-target_link_libraries(tech_transfer_test tech_transfer gtest log jnigraphics z)
+target_link_libraries(tech_transfer_test tech_transfer gtest log jnigraphics z GLESv3 EGL)
 
 set(LT_CPP_TEST_IMAGES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../androidTest/resources/images)
 
@@ -36,7 +36,9 @@ if(PLATFORM_ARCH STREQUAL ANDROID_ABI)
         # Push libraries
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_LIB_DIR}
         COMMAND ${ADB} push $<TARGET_FILE:tech_transfer_test> $<TARGET_FILE:tech_transfer>
-            ${LT_OPENCV_LIB_DIR}/libopencv_java4.so  ${STANDARD_LIB_DIR}/libc++_shared.so ${TARGET_TEST_LIB_DIR}/
+            ${LT_OPENCV_LIB_DIR}/libopencv_java4.so ${STANDARD_LIB_DIR}/libc++_shared.so
+            ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_jni.so
+            ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_gpu_jni.so ${TARGET_TEST_LIB_DIR}/
 
         # Push images
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_IMAGES_DIR}
