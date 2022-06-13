@@ -33,18 +33,32 @@ android {
             path "src/main/cpp/CMakeLists.txt"
         }
     }
+
+    packagingOptions {
+        pickFirst "**/libtensorflowlite_gpu_jni.so"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':opencv-android')
+    
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.6.0'
 
     // Guava
     implementation 'com.google.guava:guava:28.1-android'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.test:monitor:1.5.0'
 
     // Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project(':testutils')
+    
+    // Truth.
+    def truthVersion = "1.1"
+    testImplementation "com.google.truth:truth:$truthVersion"
+    androidTestImplementation "com.google.truth:truth:$truthVersion"
+
 }
