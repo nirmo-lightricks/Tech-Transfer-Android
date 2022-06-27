@@ -60,10 +60,12 @@ jobs:
           SEC: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
       - name: Gradle Clean
         run: ./gradlew clean
-      - name: Gradle Bundle Release
-        run: ./gradlew  :facetune:assembleChinaRelease
+
+      - name: Remove unused Facetune Video assets And Bundle Release
+        run: ./gradlew :facetune:removeUnusedChinaAssets :facetune:assembleChinaRelease
         env:
           STORE: ${{matrix.app_store}}
+
       - name: Archive files
         if: ${{contains(github.event.inputs.publish, 'archive')}}
         run: python3 tools/runner_provision/app_distribution_workflow/upload_to_artifactory.py facetune ${{matrix.app_store}} $TECHNICAL_VERSION
