@@ -34,7 +34,6 @@ on:
 jobs:
   distribution:
     name: "Pixaloop for Android release builds"
-    needs: test
     runs-on: android
     steps:
       - name: Clone repo
