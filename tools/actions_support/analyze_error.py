@@ -54,9 +54,7 @@ def _extract_compilation_error(project: str, log_fh: TextIO) -> BuildError:
 def _extract_unit_test_failures_from_task(project: str, task_name: str) -> BuildError:
     test_dir = Path(project) / "build/test-results" / task_name
     error_details = extract_test_failure_from_directory(test_dir)
-    return BuildError(
-        project=project, error_type=ErrorType.UNIT_TEST, details=error_details
-    )
+    return BuildError(project=project, error_type=ErrorType.UNIT_TEST, details=error_details)
 
 
 def _extract_android_test_failures_from_task(
@@ -65,18 +63,14 @@ def _extract_android_test_failures_from_task(
     report_base_dir = Path(project) / "build/outputs/androidTest-results/connected"
     flavors_dir = report_base_dir / "flavors"
     if flavors_dir.exists():
-        test_dir = next(
-            dir
-            for dir in flavors_dir.glob("*")
-            if task_name.startswith(f"connected{dir.name.title()}")
-        )
+        for i in (dir for dir in flavors_dir.glob("*") if task_name.startswith(f"connected{dir.name.title()}")):
+            test_dir = i
+            break
     else:
         test_dir = report_base_dir
 
     error_details = extract_test_failure_from_directory(test_dir)
-    return BuildError(
-        project=project, error_type=ErrorType.ANDROID_TEST, details=error_details
-    )
+    return BuildError(project=project, error_type=ErrorType.ANDROID_TEST, details=error_details)
 
 
 def _extract_aapt_error(log_line: str) -> BuildError:
@@ -87,9 +81,7 @@ def _extract_aapt_error(log_line: str) -> BuildError:
     return BuildError(project=project, error_type=ErrorType.AAPT, details=[log_line])
 
 
-def _slack_github_actions_analysis_error(
-    text: str, github_run_id: str, webhook: str
-) -> None:
+def _slack_github_actions_analysis_error(text: str, github_run_id: str, webhook: str) -> None:
     url = f"https://github.com/Lightricks/facetune-android/actions/runs/{github_run_id}"
     message = f"{text}\n For more details visit {url}"
     slack_message(text=message, webhook=webhook)
@@ -103,7 +95,11 @@ def _print_build_error(build_error: BuildError) -> None:
     print("*" * 100)
 
 
-def analyze_error(log_file: Path, unit_test_failure_extraction_fun:Callable[[str, str], BuildError]=_extract_unit_test_failures_from_task,android_test_failure_extraction_fun:Callable[[str, str], BuildError]=_extract_android_test_failures_from_task) -> List[BuildError]:
+def analyze_error(
+        log_file: Path,
+        unit_test_failure_extraction_fun: Callable[[str, str], BuildError] = _extract_unit_test_failures_from_task,
+        android_test_failure_extraction_fun: Callable[[str, str], BuildError] = _extract_android_test_failures_from_task
+) -> List[BuildError]:
     """
     Main function which takes a log file and finds all gradle task
     errors
