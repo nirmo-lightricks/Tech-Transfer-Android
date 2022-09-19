@@ -98,8 +98,14 @@ namespace lit_color_transfer {
                                              cv::Mat *outputLUT) const {
         auto inputNoAlpha = convertToFloat(input);
         auto referenceNoAlpha = convertToFloat(reference);
-        cv::Mat3f inputTransformed(inputNoAlpha.size());
-        cv::Mat3f referenceTransformed(referenceNoAlpha.size());
+        // These are float3 matrices, but they are later accessed using a Neon intrinsic that works
+        // on float4. In order to avoid accessing unowned memory, we first allocate a matrix padded
+        // with an extra row, then use a submatrix of the correct size, so that the dimensions are
+        // correct, but all memory access is confined to our allocated memory.
+        cv::Mat3f inputTransformedPadded(inputNoAlpha.rows + 1, inputNoAlpha.cols);
+        cv::Mat3f referenceTransformedPadded(referenceNoAlpha.rows + 1, referenceNoAlpha.cols);
+        cv::Mat3f inputTransformed = inputTransformedPadded.rowRange(0, inputNoAlpha.rows);
+        cv::Mat3f referenceTransformed = referenceTransformedPadded.rowRange(0, referenceNoAlpha.rows);
 
         float inputCount = input.total();
         float referenceCount = reference.total();
