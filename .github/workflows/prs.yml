@@ -41,6 +41,14 @@ jobs:
       - name: Setup emulator
         uses: ./.github/actions/action-emulator
 
+      - name: Run detekt on monorepo modules
+        run: ./gradlew detekt
+
+      - name: Verify that static analysis passed
+        timeout-minutes: 2
+        if: ${{ always() }}
+        run: python3 tools/jenkins/VerifyStaticAnalysisResults.py
+
       - name: Gradle clean
         run: ./gradlew clean
 
@@ -59,11 +67,6 @@ jobs:
         timeout-minutes: 2
         if: ${{ always() }}
         run: adb logcat -d > logcat.txt
-
-      - name: Verify that static analysis passed
-        timeout-minutes: 2
-        if: ${{ always() }}
-        run: python3 tools/jenkins/VerifyStaticAnalysisResults.py
 
       - name: Extract build failure
         timeout-minutes: 2
