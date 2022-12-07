@@ -24,7 +24,7 @@ runs:
         SEC: ${{inputs.gcp_instance_creator_key}}
     - name: Install python dependencies
       run: |
-        pip3 install setuptools=='45.2.0' wheel=='0.34.2'
+        pip3 install -Iv -r tools/runner_provision/setuptools-requirements.txt
         pip3 install -r tools/runner_provision/requirements.txt
       shell: bash
     - name: Run Instance creation
