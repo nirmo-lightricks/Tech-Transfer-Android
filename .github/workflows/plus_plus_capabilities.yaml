@@ -19,7 +19,7 @@ jobs:
         run: |
           git fetch
           echo "::set-output name=start_commit::$(git rev-parse HEAD)"
-          git reset --hard origin/develop
+          git reset --hard origin/main
           echo "::set-output name=target_commit::$(git rev-parse HEAD)"
       - name: Create branch name
         id: branch_name
