@@ -44,8 +44,8 @@ dependencies {
     implementation project(':opencv-android')
     
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.4.3'
-    implementation 'org.tensorflow:tensorflow-lite-gpu:2.10.0'
-    implementation 'org.tensorflow:tensorflow-lite-gpu-api:2.10.0'
+    implementation "org.tensorflow:tensorflow-lite-gpu:$tfLiteVersion"
+    implementation "org.tensorflow:tensorflow-lite-gpu-api:$tfLiteVersion"
 
     // Guava
     implementation 'com.google.guava:guava:28.1-android'
