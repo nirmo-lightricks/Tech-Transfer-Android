@@ -8,7 +8,14 @@ env:
   ghprbGhRepository: ${{ github.repository }}
   # Environment variable for the pull request ID.
   ghprbPullId: ${{ github.event.number }}
-  # The EMULATOR_HOST_FOR_CONTAINER environment variable is different for each docker container, as setup by kubernetes
+
+  TECHNICAL_VERSION: ${{ github.run_number }}
+  # We use the TECHNICAL_VERSION environment version when we create the library version. The
+  # version is defined as {currentDate}.{TECHNICAL_VERSION}
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
 
 concurrency:
   group: prs-${{ github.event.number }}
