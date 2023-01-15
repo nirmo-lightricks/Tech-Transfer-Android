@@ -1,0 +1,41 @@
+name: Library Distribution
+on:
+  workflow_dispatch:
+    inputs:
+      library:
+        type: choice
+        description: Which library to publish
+        options:
+          - security
+
+env:
+  # We use the TECHNICAL_VERSION environment version when we create the library version. The
+  # version is defined as {currentDate}.{TECHNICAL_VERSION}
+  TECHNICAL_VERSION: ${{ github.run_number }}
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+jobs:
+  distribution:
+    name: "Library artifactory distribution"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: "Library Build and Upload to Artifactory"
+        id: library_publish
+        uses: ./.github/actions/action-library-publish-artifactory
+        with:
+          gradle-module: ${{github.event.inputs.library}}
+
+      - name: Slack Notify
+        if: success()
+        uses: ./.github/actions/action-new-version-slack-notify
+        with:
+          library-name: ${{github.event.inputs.library}}
+          author: ${{ github.triggering_actor }}
+          artifact-details: ${{ steps.library_publish.outputs.artifact-details }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
