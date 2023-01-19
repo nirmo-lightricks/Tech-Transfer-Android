@@ -68,9 +68,12 @@ def _get_modified_dirs(
 
 
 def _get_project_dependencies(project_modules: List[ProjectModule]) -> nx.DiGraph:
+    logging.info("======= START _get_project_dependencies START =======")
+    logging.info("project_modules: %s", project_modules)
     project_dependencies = {
         module.name: get_project_dependencies(module) for module in project_modules
     }
+    logging.info("project_dependencies: %s", project_dependencies)
     graph = nx.DiGraph()
     graph.add_nodes_from(module.name for module in project_modules)
     dependencies_gen = (
@@ -78,18 +81,23 @@ def _get_project_dependencies(project_modules: List[ProjectModule]) -> nx.DiGrap
         for module in project_dependencies
         for dependency in project_dependencies[module]
     )
+    logging.info("dependencies_gen: %s", dependencies_gen)
     graph.add_edges_from(dependencies_gen)
+    logging.info("======= END _get_project_dependencies END =======")
     return graph
 
 
 def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
     project_modules = get_project_modules()
+    logging.info("All project modules: %s", project_modules)
     application_dirs = {
         module.name
         for module in project_modules
         if module.module_type == ModuleType.APPLICATION
     }
+    logging.info("Application modules: %s", application_dirs)
     if modified_dirs.issubset(application_dirs):
+        logging.info("Modified modules is subset of application modules")
         return modified_dirs
     dependency_graph = _get_project_dependencies(project_modules)
 
@@ -97,6 +105,7 @@ def _get_modules_to_build(modified_dirs: Set[str]) -> Set[str]:
     # if there are non gradle directories we cannot know the impact of the change
     # so we run all modules
     if modified_dirs - all_modules:
+        logging.info("Have non gradle modules so must run all modules")
         return all_modules
     modified_modules = all_modules & modified_dirs
     logging.info("modified modules are %s", modified_modules)
@@ -126,6 +135,7 @@ def main() -> None:
     main function which runs the pr logic
     """
     modules = modules_to_build()
+    logging.info("Modules to build: %s", modules)
     run_build_for_pr(modules=modules, include_large_tests=False, use_build_cache=True)
 
 
