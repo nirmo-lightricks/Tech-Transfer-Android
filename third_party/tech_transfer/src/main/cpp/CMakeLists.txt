@@ -10,16 +10,8 @@ if(CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif()
 
-# Path to pre-built opencv installation
-set(LT_OPENCV_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../../../opencv-android)
-set(LT_OPENCV_LIB_DIR ${LT_OPENCV_HOME}/sdk/native/libs/${ANDROID_ABI})
-add_library(opencv_java4 SHARED IMPORTED)
-set_target_properties(
-    opencv_java4
-    PROPERTIES
-    IMPORTED_LOCATION
-    ${LT_OPENCV_LIB_DIR}/libopencv_java4.so
-)
+
+find_package(opencv_android REQUIRED CONFIG)
 
 set(LT_TFLITE_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../../../tensorflow-lite)
 
@@ -41,7 +33,6 @@ set_target_properties(
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${LT_OPENCV_HOME}/sdk/native/jni/include
     ${LT_TFLITE_HOME}/headers
     ${LT_PROTOBUF_HOME}/include
 )
@@ -69,7 +60,11 @@ target_compile_options(
 
 target_link_libraries(
     tech_transfer
-    opencv_java4
+        opencv_android::opencv_java4
+        android
+        camera2ndk
+        mediandk
+        z
     tflite_cpp
     tflite_cpp_gpu
     log

@@ -37,11 +37,15 @@ android {
     packagingOptions {
         pickFirst "**/libtensorflowlite_gpu_jni.so"
     }
+
+    buildFeatures {
+        prefab true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':opencv-android')
+    implementation("com.lightricks:opencv_android:4.5.5")
     
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.4.3'
     implementation "org.tensorflow:tensorflow-lite-gpu:$tfLiteVersion"
