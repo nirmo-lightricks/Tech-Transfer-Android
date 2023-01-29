@@ -30,7 +30,6 @@ class ProjectModulesTest(unittest.TestCase):
         expected = {
             _get_module_by_name("common"),
             _get_module_by_name("video_engine"),
-            _get_module_by_name("opencv-android"),
             _get_module_by_name("render"),
             _get_module_by_name("analytics")
         }

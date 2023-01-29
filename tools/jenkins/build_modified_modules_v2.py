@@ -127,7 +127,7 @@ def modules_to_build() -> Set[str]:
     repo = os.environ[GHPRB_REPO_ENV]
     pr_id = os.environ[GHPRB_PR_ID_ENV]
     modified_dirs = _get_modified_dirs(username, password, repo, pr_id)
-    return _get_modules_to_build(modified_dirs)
+    return _get_modules_to_build(modified_dirs) - THIRD_PARTY_MODULES
 
 
 def main() -> None:
