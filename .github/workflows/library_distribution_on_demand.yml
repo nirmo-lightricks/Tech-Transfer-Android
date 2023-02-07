@@ -8,6 +8,7 @@ on:
         options:
           - security
           - networking
+          - gif_encoder
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
