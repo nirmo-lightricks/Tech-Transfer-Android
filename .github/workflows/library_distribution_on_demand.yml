@@ -7,6 +7,7 @@ on:
         description: Which library to publish
         options:
           - security
+          - networking
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
