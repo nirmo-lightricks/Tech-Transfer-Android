@@ -7,6 +7,7 @@ on:
         description: Which library to publish
         options:
           - security
+          - uxdesign
           - networking
           - gif_encoder
 
