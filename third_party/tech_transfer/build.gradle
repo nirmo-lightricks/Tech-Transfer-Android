@@ -1,3 +1,5 @@
+import java.time.Duration
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.lightricks.plugins.publishing-plugin'
 
@@ -5,6 +7,12 @@ ltPublishing {
     version = "1.0.0"
     withFlavors = false
     libraryName = "tech_transfer"
+}
+
+project.afterEvaluate {
+    tasks.findByName("publishAllPublicationsToArtifactoryRepository").configure {
+        timeout = Duration.ofMinutes(10)
+    }
 }
 
 android {
