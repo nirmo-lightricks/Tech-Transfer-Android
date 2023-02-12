@@ -11,6 +11,7 @@ on:
           - networking
           - gif_encoder
           - experiments
+          - experiments2
           - common
           - nn
           - testutils
