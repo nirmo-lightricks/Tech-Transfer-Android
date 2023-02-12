@@ -15,6 +15,7 @@ find_package(opencv_android REQUIRED CONFIG)
 
 set(LT_TFLITE_HOME ${CMAKE_CURRENT_SOURCE_DIR}/tensorflow-lite)
 
+###################################### tflite_cpp ######################################
 add_library(tflite_cpp SHARED IMPORTED)
 set_target_properties(
     tflite_cpp
@@ -23,6 +24,22 @@ set_target_properties(
     ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_jni.so
 )
 
+# Specify the location of the .so file to replace the shared library
+set(TF_LITE_FILE_TO_COPY ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_jni.so)
+add_library(tensorflowlite_jni SHARED dummy.cpp)
+
+# Check if the .so file exists
+if(EXISTS ${TF_LITE_FILE_TO_COPY})
+    message("Using .so file: ${TF_LITE_FILE_TO_COPY}")
+    add_custom_command(TARGET tensorflowlite_jni POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${TF_LITE_FILE_TO_COPY} $<TARGET_FILE:tensorflowlite_jni>
+            )
+else()
+    message(FATAL_ERROR "Can't find file ${TF_LITE_FILE_TO_COPY}!")
+endif()
+
+
+###################################### tflite_cpp_gpu ######################################
 add_library(tflite_cpp_gpu SHARED IMPORTED)
 set_target_properties(
     tflite_cpp_gpu
@@ -30,6 +47,22 @@ set_target_properties(
     IMPORTED_LOCATION
     ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_gpu_jni.so
 )
+
+# Specify the location of the .so file to replace the shared library
+set(TF_LITE_GPU_FILE_TO_COPY ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_gpu_jni.so)
+add_library(tensorflowlite_gpu_jni SHARED dummy.cpp)
+
+# Check if the .so file exists
+if(EXISTS ${TF_LITE_GPU_FILE_TO_COPY})
+    message("Using .so file: ${TF_LITE_GPU_FILE_TO_COPY}")
+    add_custom_command(TARGET tensorflowlite_gpu_jni POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${TF_LITE_GPU_FILE_TO_COPY} $<TARGET_FILE:tensorflowlite_gpu_jni>
+            )
+else()
+    message(FATAL_ERROR "Can't find file ${TF_LITE_GPU_FILE_TO_COPY}!")
+endif()
+
+###################################### tech_transfer ######################################
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}

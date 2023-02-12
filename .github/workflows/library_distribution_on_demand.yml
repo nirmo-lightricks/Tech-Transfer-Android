@@ -22,6 +22,7 @@ on:
           - analytics:delta_events
           - analytics:delta_manager
           - analytics:core
+          - tech_transfer
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The

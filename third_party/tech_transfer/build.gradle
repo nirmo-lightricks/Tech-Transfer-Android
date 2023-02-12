@@ -1,4 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.lightricks.plugins.publishing-plugin'
+
+ltPublishing {
+    version = "1.0.0"
+    withFlavors = false
+    libraryName = "tech_transfer"
+}
 
 android {
     compileSdkVersion 29
@@ -40,6 +47,17 @@ android {
 
     buildFeatures {
         prefab true
+        prefabPublishing true
+    }
+
+    prefab {
+        tensorflowlite_gpu_jni {
+            headers "src/main/cpp/tensorflow-lite/headers"
+        }
+
+        tensorflowlite_jni {
+            headers "src/main/cpp/tensorflow-lite/headers"
+        }
     }
 }
 
@@ -64,5 +82,4 @@ dependencies {
     def truthVersion = "1.1"
     testImplementation "com.google.truth:truth:$truthVersion"
     androidTestImplementation "com.google.truth:truth:$truthVersion"
-
 }
