@@ -13,7 +13,7 @@ endif()
 
 find_package(opencv_android REQUIRED CONFIG)
 
-set(LT_TFLITE_HOME ${CMAKE_CURRENT_SOURCE_DIR}/../../../../tensorflow-lite)
+set(LT_TFLITE_HOME ${CMAKE_CURRENT_SOURCE_DIR}/tensorflow-lite)
 
 add_library(tflite_cpp SHARED IMPORTED)
 set_target_properties(
@@ -34,7 +34,6 @@ set_target_properties(
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${LT_TFLITE_HOME}/headers
-    ${LT_PROTOBUF_HOME}/include
 )
 
 file(GLOB_RECURSE LT_TECH_TRANSFER_CPP_SOURCES "*.cpp")
