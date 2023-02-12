@@ -15,6 +15,7 @@ on:
           - common
           - nn
           - testutils
+          - enlight_ui
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
