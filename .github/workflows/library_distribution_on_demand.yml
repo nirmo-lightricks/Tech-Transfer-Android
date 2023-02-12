@@ -10,6 +10,7 @@ on:
           - uxdesign
           - networking
           - gif_encoder
+          - common
           - nn
 
 env:
