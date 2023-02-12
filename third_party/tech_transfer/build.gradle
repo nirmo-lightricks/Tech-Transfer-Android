@@ -59,7 +59,7 @@ dependencies {
 
     // Tests
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation project(':testutils')
+    androidTestImplementation "com.lightricks:testutils:1.0.0"
     
     // Truth.
     def truthVersion = "1.1"
