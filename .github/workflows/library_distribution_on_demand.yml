@@ -16,7 +16,7 @@ on:
           - nn
           - testutils
           - enlight_ui
-          - "nn:face-detection"
+          - nn:face-detection
           - common:zendesk
 
 env:
