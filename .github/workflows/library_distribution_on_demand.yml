@@ -17,6 +17,7 @@ on:
           - testutils
           - enlight_ui
           - "nn:face-detection"
+          - common:zendesk
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
