@@ -50,7 +50,10 @@ android {
     }
 
     packagingOptions {
-        pickFirst "**/libtensorflowlite_gpu_jni.so"
+        // No need to pack these files in the generated *.aar. It will be packed using `prefab`, by adding these snippet
+        // we are avoiding assets duplication.
+        exclude "**/libtensorflowlite_gpu_jni.so"
+        exclude "**/libtensorflowlite_jni.so"
     }
 
     buildFeatures {
@@ -75,6 +78,8 @@ dependencies {
     
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.6.0'
+    implementation "org.tensorflow:tensorflow-lite-gpu-api:2.6.0"
+    implementation "org.tensorflow:tensorflow-lite:2.6.0"
 
     // Guava
     implementation 'com.google.guava:guava:28.1-android'

@@ -47,8 +47,7 @@ if(PLATFORM_ARCH STREQUAL ANDROID_ABI)
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_LIB_DIR}
         COMMAND ${ADB} push $<TARGET_FILE:tech_transfer_test> $<TARGET_FILE:tech_transfer>
             $<TARGET_FILE:opencv_android::opencv_java4> ${STANDARD_LIB_DIR}/libc++_shared.so
-            ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_jni.so
-            ${LT_TFLITE_HOME}/jni/${ANDROID_ABI}/libtensorflowlite_gpu_jni.so ${TARGET_TEST_LIB_DIR}/
+            ${TENSORFLOW_JNI} ${TENSORFLOW_GPU_JNI} ${TARGET_TEST_LIB_DIR}/
 
         # Push images
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_IMAGES_DIR}
