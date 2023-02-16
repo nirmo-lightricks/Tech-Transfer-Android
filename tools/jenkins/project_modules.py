@@ -7,13 +7,13 @@ import hashlib
 import json
 import re
 import shelve
+from dataclasses import dataclass
+from enum import Enum
 from functools import lru_cache
 from os import environ
-from subprocess import run
-from dataclasses import dataclass
 from pathlib import Path
+from subprocess import run
 from typing import cast, List, Dict, Union, Set
-from enum import Enum
 
 
 class ModuleType(Enum):
@@ -83,6 +83,7 @@ def get_project_modules() -> List[ProjectModule]:
     return [
         ProjectModule.get_project_module_from_project_info(module_info)
         for module_info in modules_info_list
+        if module_info["isAssetModule"] or module_info["isApplicationModule"] or module_info["isLibraryModule"]
     ]
 
 
@@ -109,7 +110,7 @@ def _get_module_dependencies_from_gradle(module: str) -> Set[ProjectModule]:
     match_gen = (pattern.search(line) for line in cmd.stdout.splitlines())
     dependencies = {match.groups()[0] for match in match_gen if match} - {module}
     project_modules = {module.name: module for module in get_project_modules()}
-    return {project_modules[dependency] for dependency in dependencies}
+    return {project_modules[dependency] for dependency in dependencies if dependency in project_modules}
 
 
 def _get_cached_module_key(module: ProjectModule) -> str:

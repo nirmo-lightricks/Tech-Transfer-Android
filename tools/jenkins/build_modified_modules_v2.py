@@ -4,18 +4,18 @@ This module decides which projects pr tests are run with gradle
 # Copyright (c) 2020 Lightricks. All rights reserved.
 # Created by Geva Kipper.
 import logging
-import os
-
-from typing import List, Set
 import networkx as nx  # type: ignore
+import os
 from github import Github
+from typing import List, Set
+
+from build_for_pr import run_build_for_pr
 from project_modules import (
     get_project_modules,
     get_project_dependencies,
     ModuleType,
     ProjectModule,
 )
-from build_for_pr import run_build_for_pr
 
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
@@ -39,6 +39,7 @@ THIRD_PARTY_MODULES = {
     "opencv-android",
     "sdk",
     "facetune-android",
+    "analytics"
 }
 
 
