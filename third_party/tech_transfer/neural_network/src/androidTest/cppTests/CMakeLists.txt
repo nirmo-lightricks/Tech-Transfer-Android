@@ -17,7 +17,7 @@ add_executable(tech_transfer_test
 )
 
 target_link_libraries(tech_transfer_test
-        tech_transfer
+        tech_transfer_neural_network
         opencv_android::opencv_java4
         gtest
         log
@@ -45,7 +45,7 @@ if(PLATFORM_ARCH STREQUAL ANDROID_ABI)
     add_custom_command(TARGET tech_transfer_test POST_BUILD
         # Push libraries
         COMMAND ${ADB} shell mkdir -p ${TARGET_TEST_LIB_DIR}
-        COMMAND ${ADB} push $<TARGET_FILE:tech_transfer_test> $<TARGET_FILE:tech_transfer>
+        COMMAND ${ADB} push $<TARGET_FILE:tech_transfer_test> $<TARGET_FILE:tech_transfer_neural_network>
             $<TARGET_FILE:opencv_android::opencv_java4> ${STANDARD_LIB_DIR}/libc++_shared.so
             ${TENSORFLOW_JNI} ${TENSORFLOW_GPU_JNI} ${TARGET_TEST_LIB_DIR}/
 

@@ -3,6 +3,8 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+set(MODULE_NAME tech_transfer_neural_network)
+
 # Configure CCache if available
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
@@ -66,26 +68,21 @@ include_directories(
 file(GLOB_RECURSE LT_TECH_TRANSFER_CPP_SOURCES "*.cpp")
 
 add_library(
-    tech_transfer
+    ${MODULE_NAME}
     SHARED
     ${LT_TECH_TRANSFER_CPP_SOURCES}
 )
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-    set(CPP_OPTIMIZATION_FLAG "-O0")
-else()
-    set(CPP_OPTIMIZATION_FLAG "-O3")
-endif()
 
 target_compile_options(
-    tech_transfer
+    ${MODULE_NAME}
     PRIVATE
     -fvisibility-inlines-hidden -Wall -Wno-unknown-pragmas -std=c++17 ${CPP_OPTIMIZATION_FLAG}
     -Wno-inconsistent-missing-override
 )
 
 target_link_libraries(
-    tech_transfer
+        ${MODULE_NAME}
         opencv_android::opencv_java4
         android
         camera2ndk

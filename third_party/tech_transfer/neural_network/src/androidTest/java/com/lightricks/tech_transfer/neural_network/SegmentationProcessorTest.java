@@ -26,7 +26,7 @@ public class SegmentationProcessorTest {
     static {
         System.loadLibrary("c++_shared");
         System.loadLibrary("opencv_java4");
-        System.loadLibrary("tech_transfer");
+        System.loadLibrary("tech_transfer_neural_network");
     }
 
     private SegmentationProcessor segmentationProcessor;

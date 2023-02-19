@@ -23,6 +23,7 @@ on:
           - analytics:delta_manager
           - analytics:core
           - tech_transfer:color_transfer
+          - tech_transfer:neural_network
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
