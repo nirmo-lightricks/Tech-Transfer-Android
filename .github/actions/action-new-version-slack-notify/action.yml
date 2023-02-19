@@ -47,7 +47,7 @@ runs:
           			"type": "section",
           			"text": {
           				"type": "mrkdwn",
-          				"text": "*New artifact details:* ${{ inputs.artifact-details }}"
+          				"text": "*New artifact details:* `${{ inputs.artifact-details }}`"
           			}
           		}
           	]
