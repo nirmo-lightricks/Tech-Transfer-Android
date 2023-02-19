@@ -4,7 +4,7 @@ plugins {
 }
 
 ltPublishing {
-    version = "1.0.0"
+    version = "1.0.1"
     withFlavors = false
     libraryName = "tech-transfer_neural-network"
 }
@@ -69,10 +69,9 @@ android {
 dependencies {
     implementation("com.lightricks:opencv_android:4.5.5")
 
-    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.3")
-    implementation("org.tensorflow:tensorflow-lite-gpu:${Versions.tfLite}")
-    implementation("org.tensorflow:tensorflow-lite-gpu-api:${Versions.tfLite}")
-    implementation("org.tensorflow:tensorflow-lite:${Versions.tfLite}")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.6.0")
+    implementation("org.tensorflow:tensorflow-lite:2.6.0")
 
     // Guava
     implementation("com.google.guava:guava:28.1-android")
