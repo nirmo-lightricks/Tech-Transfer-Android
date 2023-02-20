@@ -11,6 +11,10 @@ outputs:
     description: "Artifact details"
     value: ${{ steps.artifact_details_extraction.outputs.artifact }}
 
+  artifact-version:
+    description: "The version of the published artifact"
+    value: ${{ steps.artifact_version_extraction.outputs.artifact_version }}
+
 runs:
   using: "composite"
   steps:
@@ -30,3 +34,9 @@ runs:
       id: artifact_details_extraction
       shell: bash
       run: echo "artifact=$(./gradlew :${{inputs.gradle-module}}:artifactDetails -q | tail -n 1)" >> $GITHUB_OUTPUT
+
+    - name: "Extract uploaded artifact details"
+      if: success()
+      id: artifact_version_extraction
+      shell: bash
+      run: echo "artifact_version=$(./gradlew :${{inputs.gradle-module}}:artifactVersion -q | tail -n 1)" >> $GITHUB_OUTPUT

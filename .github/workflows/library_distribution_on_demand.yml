@@ -55,6 +55,13 @@ jobs:
         with:
           gradle-module: ${{github.event.inputs.library}}
 
+      - name: GH Release
+        run: |
+          gh api --method POST /repos/${{github.repository}}/releases -H "Accept: application/vnd.github+json" -f tag_name="${{env.TAG_NAME}}" -f target_commitish=${{github.sha}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          TAG_NAME: ${{github.event.inputs.library}}-${{ steps.library_publish.outputs.artifact-version }}
+
       - name: Slack Notify
         if: success()
         uses: ./.github/actions/action-new-version-slack-notify
