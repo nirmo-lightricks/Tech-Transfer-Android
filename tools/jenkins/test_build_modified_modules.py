@@ -12,9 +12,6 @@ BIG_MODULE_SET = {
     "quickshot",
     "pixaloop",
     "video_engine_playground",
-    "common",
-    "render",
-    "analytics",
 }
 
 # This test takes a lot of time because gradle calculations

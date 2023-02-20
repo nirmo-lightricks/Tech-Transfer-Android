@@ -20,7 +20,9 @@ class ProjectModulesTest(unittest.TestCase):
         self.assertSetEqual(set(), dependencies)
 
     def test_leaf_module(self):
-        module = _get_module_by_name("protobuf")
+        """Tests a leaf module which is a module without dependencies."""
+        # NOTE (Nirmo): This test will be redundant once we will move all the local modules into Artifactory.
+        module = _get_module_by_name("security")
         dependencies = get_project_dependencies(module)
         self.assertSetEqual(set(), dependencies)
 
@@ -28,10 +30,7 @@ class ProjectModulesTest(unittest.TestCase):
         module = _get_module_by_name("video_engine_playground")
         dependencies = get_project_dependencies(module)
         expected = {
-            _get_module_by_name("common"),
-            _get_module_by_name("video_engine"),
-            _get_module_by_name("render"),
-            _get_module_by_name("analytics")
+            _get_module_by_name("video_engine")
         }
         self.assertSetEqual(expected, dependencies)
 
