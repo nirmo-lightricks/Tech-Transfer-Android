@@ -27,6 +27,7 @@ on:
           - render
           - text2image
           - authentication
+          - billing
 
 env:
   # We use the TECHNICAL_VERSION environment version when we create the library version. The
