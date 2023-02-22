@@ -55,12 +55,17 @@ jobs:
         with:
           gradle-module: ${{github.event.inputs.library}}
 
+      - name: "Extract library name"
+        id: extract_library_name
+        shell: bash
+        run: echo "library_name=$(echo ${{github.event.inputs.library}} | sed 's/.*\://')" >> $GITHUB_OUTPUT
+
       - name: GH Release
         run: |
           gh api --method POST /repos/${{github.repository}}/releases -H "Accept: application/vnd.github+json" -f tag_name="${{env.TAG_NAME}}" -f target_commitish=${{github.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBCIPAT }}
-          TAG_NAME: ${{github.event.inputs.library}}-${{ steps.library_publish.outputs.artifact-version }}
+          TAG_NAME: ${{ steps.extract_library_name.outputs.library_name }}-${{ steps.library_publish.outputs.artifact-version }}
 
       - name: Slack Notify
         if: success()
