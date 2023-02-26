@@ -4,23 +4,13 @@
 # It uses the same pattern rule for gitignore file
 # https://git-scm.com/docs/gitignore#_pattern_format
 
-# Default catch-all
-* adam@lightricks.com
-
 # Analytics
-/analytics/ nmoshe@lightricks.com dgang@lightricks.com
-
-# Billing
-/billing/ dgang@lightricks.com yarden@lightricks.com
-
-# Billing Playground
-/billing_playground/ lea@lightricks.com
+/analytics/ nmoshe@lightricks.com
 
 # Common
 /common/ @Lightricks/android-write-access
 
 # Experiments
-/experiments/ adam@lightricks.com
 /experiment2/ nfreeman@lightricks.com
 
 # Facetune
@@ -38,9 +28,6 @@
 # Pixaloop
 /pixaloop/ nmoshe@lightricks.com
 
-# Quickshot
-/quickshot/ lea@lightricks.com nmoshe@lightricks.com
-
 # Render
 /render/ aartyomov@lightricks.com
 
@@ -48,7 +35,7 @@
 /security/ nmoshe@lightricks.com
 
 # Swish a.k.a. VideoBoost
-/swish/ yarden@lightricks.com ouriel@lightricks.com yaakov@lightricks.com
+/swish/ ouriel@lightricks.com yaakov@lightricks.com
 
 # Videoleap
 /videoleap/ lea@lightricks.com nfreeman@lightricks.com bmaximenko@lightricks.com
