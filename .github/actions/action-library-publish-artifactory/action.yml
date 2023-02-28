@@ -1,0 +1,42 @@
+name: 'Publish Library to Artifactory'
+description: Builds an aar for the given gradle module and uploads it to lightricks private maven
+  repo in artifactory https://artifactory.lightricks.com/artifactory/webapp/#/artifacts/browse/tree/General/android-foundations-local
+inputs:
+  gradle-module:
+    required: true
+    description: 'Gradle module name, for example: common, analytics, authentication etc...'
+
+outputs:
+  artifact-details:
+    description: "Artifact details"
+    value: ${{ steps.artifact_details_extraction.outputs.artifact }}
+
+  artifact-version:
+    description: "The version of the published artifact"
+    value: ${{ steps.artifact_version_extraction.outputs.artifact_version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Clean environment"
+      shell: bash
+      run: ./gradlew clean
+
+    # Uses gradle task (publishAllPublicationsToArtifactoryRepository) created by publishing plugin
+    # (https://github.com/Lightricks/gradle-lightricks-publish-plugin)
+    # to create aar's and upload them to artifactory
+    - name: "Build and upload"
+      shell: bash
+      run: ./gradlew :${{inputs.gradle-module}}:publishAllPublicationsToArtifactoryRepository
+
+    - name: "Extract uploaded artifact details"
+      if: success()
+      id: artifact_details_extraction
+      shell: bash
+      run: echo "artifact=$(./gradlew :${{inputs.gradle-module}}:artifactDetails -q | tail -n 1)" >> $GITHUB_OUTPUT
+
+    - name: "Extract uploaded artifact details"
+      if: success()
+      id: artifact_version_extraction
+      shell: bash
+      run: echo "artifact_version=$(./gradlew :${{inputs.gradle-module}}:artifactVersion -q | tail -n 1)" >> $GITHUB_OUTPUT

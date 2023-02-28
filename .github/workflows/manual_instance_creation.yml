@@ -1,0 +1,36 @@
+name: Manual Creation of runner instances
+on:
+  workflow_dispatch:
+    inputs:
+      instance_num:
+        description: Number of instances we want to add
+        required: true
+        default: 2
+      delete_old:
+        description: If we want to delete all old instances. Can be either yes or no
+        required: true
+        default: 'no'
+      environment_type:
+        description: >
+          Which environment type to create. Can be either `production` or `staging`.
+        required: true
+        default: 'production'
+jobs:
+  create_runner:
+    runs-on: ubuntu-latest
+    name: Create Android runner
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Run instance creation
+        uses: ./.github/actions/action-create-gcp-runner
+        with:
+          instance_num: ${{github.event.inputs.instance_num}}
+          delete_old: ${{github.event.inputs.delete_old}}
+          gcp_instance_creator_key: ${{secrets.GCP_ANDROID_CI_INSTANCE_CREATOR}}
+          environment_type: ${{github.event.inputs.environment_type}}

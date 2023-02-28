@@ -1,0 +1,189 @@
+[
+  {
+    "name": "id",
+    "description": "UUID for fetching row",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "architecture",
+    "description": "chip architecture: amd64 or aarch64",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "platform",
+    "description": "Linux or apple",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "hostname",
+    "description": "hostname running. Enables to query by local user",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "cores",
+    "description": "number of cores in system",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "java_version",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "gradle_version",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "kotlin_version",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "javaXmx",
+    "description": "how much memory is dedicated to this process",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "agp_version",
+    "description": "version of android gradle plugin",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "android_studio_version",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "is_ci",
+    "description": "if the job is run from ci. For now it checks if we run from github actions",
+    "type": "BOOLEAN",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "status",
+    "description": "status of run. If all steps are up-to-date it is up-to-date. otherwise it is success. for now failures are not examined",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "start_time",
+    "description": "starting time of run in milliseconds since epoch",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "end_time",
+    "description": "ending time of run in milliseconds since epoch",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "running_time",
+    "description": "running time in milliseconds",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "git_repo",
+    "description": "name of git repo",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "github_actions_info",
+    "description": "information on the github actions run",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "fields": [
+      {
+        "name": "workflow_name",
+        "description": "name of workflow which runs the job",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "run_id",
+        "description": "unique id of run",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "branch",
+        "description": "name of source branch in pr",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "owner",
+        "description": "name of user which triggered this action",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      }
+    ]
+  },
+  {
+    "name": "has_git_changed",
+    "description": "if a checkout, pull or rebase was done from the last run which changes the commit hash",
+    "type": "BOOLEAN",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "root_task_names",
+    "description": "which tasks were run from command line",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "build_steps",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "name",
+        "description": "name of gradle task",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "status",
+        "description": "status of build step",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "start_time",
+        "description": "start time of step, in milliseconds since the epoch",
+        "type": "TIMESTAMP",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "end_time",
+        "description": "end time of step, in milliseconds since the epoch",
+        "type": "TIMESTAMP",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "running_time",
+        "description": "running  time of step in milliseconds",
+        "type": "INT64",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "is_fresh_run",
+        "description": "if this step is run first time after gradle clean or clone",
+        "type": "BOOLEAN",
+        "mode": "REQUIRED"
+      }
+
+    ]
+  }
+
+]

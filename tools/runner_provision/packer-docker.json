@@ -1,0 +1,58 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu:focal-20200720",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"python3\",\"/usr/bin/supervisord\"]"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone",
+      "environment_vars": [
+        "TZ=Asia/Jerusalem"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "requirements.txt",
+      "destination": "/requirements.txt"
+    },
+    {
+      "type": "shell",
+      "script": "install_os_dependencies.sh"
+    },
+    {
+      "type": "file",
+      "source": "setup_commands.py",
+      "destination": "/setup_commands.py"
+    },
+    {
+      "type": "file",
+      "source": "constants.py",
+      "destination": "/constants.py"
+    },
+    {
+      "type": "shell",
+      "inline": "python3 /setup_commands.py docker"
+    },
+    {
+      "type": "file",
+      "source": "startup_script.py",
+      "destination": "/startup_script.py"
+    },
+    {
+      "type": "shell",
+      "inline": "chmod +x /startup_script.py"
+    },
+    {
+      "type": "file",
+      "source": "supervisord-docker.conf",
+      "destination": "/etc/supervisor/conf.d/supervisord-gh.conf"
+    }
+  ]
+}

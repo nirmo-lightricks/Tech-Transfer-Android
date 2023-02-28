@@ -1,0 +1,113 @@
+name: Facetune App Distribution
+env:
+  KEY: release
+  KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
+  KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
+  ABI_FILTERS_OVERRIDE: armeabi-v7a:arm64-v8a
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: >
+          Select where to publish this build, if successful.
+          archive - Saved under "Artifactory" (under android-apps-local)
+          google - Publish the APK/Bundle to Google play, using the GPlay gradle plugin.
+        required: true
+        default: 'archive,google'
+
+      firebaseAppDistributionGroups:
+        description: >
+          The tester groups you want to distribute builds to (see Manage testers in Firebase Console).
+          Groups are specified using group aliases, which you can find in the Testers tab in the
+          Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
+        required: false
+        default: 'internal-testers'
+
+      googlePlayTrack:
+        required: false
+        default: 'internal'
+        description: >
+          track is the target stage for an artifact, i.e. internal/alpha/beta/production or any custom track.
+          By default the track is 'internal'.
+
+jobs:
+  test:
+    name: "Facetune App tests"
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: Setup emulator
+        uses: ./.github/actions/action-emulator
+
+      - name: "Run tests"
+        id: app_test
+        uses: ./.github/actions/action-app-tests
+        with:
+          app: facetune
+  distribution:
+    name: "Facetune for Android release builds"
+    needs: test
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: "Set technical version"
+        id: technical_version
+        uses: ./.github/actions/action-set-technical-version
+
+      - name: "Set KeyStore"
+        uses: ./.github/actions/action-create-keystore
+        with:
+          base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
+
+      - name: "Build binaries in Release mode"
+        uses: ./.github/actions/action-build-release-with-dynamic-assets
+        with:
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          app: facetune
+          flavor: Gms
+
+      - name: "Upload native symbol file to crashlytics"
+        uses: ./.github/actions/action-crashlytics-release-symbol-upload
+        with:
+          app: facetune
+          flavor: Gms
+
+      - name: "Upload to Google Play"
+        if: ${{contains(github.event.inputs.publish, 'google')}}
+        uses: ./.github/actions/action-google-upload
+        with:
+          app: facetune
+          google-play-secret-json: ${{secrets.PIXALOOP_GOOGLE_PLAY_CREDENTIALS}}
+          google-play-track: ${{github.event.inputs.googlePlayTrack}}
+          flavor: Gms
+
+      - name: "Upload to Artifactory"
+        if: ${{contains(github.event.inputs.publish, 'archive')}}
+        uses: ./.github/actions/action-archive-artifactory
+        with:
+          app: facetune
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          api-key: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+      - name: "Cleanup"
+        if: ${{always()}}
+        run: rm ${{env.KEYSTORE}}

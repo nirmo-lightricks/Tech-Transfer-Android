@@ -1,0 +1,23 @@
+name: "Set KEYSTORE environment variable"
+description: Sets the KEYSTORE in the system (and remove it afterwords).
+inputs:
+  base64-keystore:
+    required: true
+    description: The content of the keystore file encoded as base64.
+
+outputs:
+  keystore-location:
+    description: The temporary location of the Keystore file.
+    value: ${{ steps.set_keystore.outputs.keystore_location }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set KEYSTORE"
+      id: set_keystore
+      shell: bash
+      run: |
+        echo 'KEYSTORE='`python3 tools/runner_provision/secret_file_utils.py text2bin SEC` >> $GITHUB_ENV
+        echo ::set-output name=keystore_location::$KEYSTORE
+      env:
+        SEC: ${{inputs.base64-keystore}}

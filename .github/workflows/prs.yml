@@ -1,0 +1,110 @@
+name: Build_and_test_on_PR
+# This workflow is triggered by webhook when a PR opens / gets updated on 'develop' branch
+on: pull_request
+
+env:
+  ABI_FILTERS_OVERRIDE: x86
+  # Environment variable for the repo name, in the format 'Lightricks/Repo'.
+  ghprbGhRepository: ${{ github.repository }}
+  # Environment variable for the pull request ID.
+  ghprbPullId: ${{ github.event.number }}
+
+  TECHNICAL_VERSION: ${{ github.run_number }}
+  # We use the TECHNICAL_VERSION environment version when we create the library version. The
+  # version is defined as {currentDate}.{TECHNICAL_VERSION}
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+concurrency:
+  group: prs-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  assemble_and_test:
+    name: Build and test PR
+    # This job runs on our self-hosted linux runners, labeled 'android'
+    runs-on: android
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: Apply GitHub labels
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        run: |
+          mkdir -p "build-logs"
+          (python3 tools/jenkins/ApplyGithubLabels.py || echo "failed reporting status to github") | tee -a "build-logs/output.log"
+
+      - name: Setup emulator
+        uses: ./.github/actions/action-emulator
+
+      - name: Run detekt on monorepo modules
+        run: ./gradlew detekt
+
+      - name: Verify that static analysis passed
+        timeout-minutes: 2
+        if: ${{ always() }}
+        run: python3 tools/jenkins/VerifyStaticAnalysisResults.py
+
+      - name: Gradle clean
+        run: ./gradlew clean
+
+      - name: Build and test modified modules with gradle
+        timeout-minutes: 50
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        #take teh output from the gradle build and send it both to stdout and gradle.out in order to be able to analyze
+        #the error. test enforces that test fails even if tee is successful
+        run: (python3 ./tools/jenkins/build_modified_modules_v2.py 2>&1) | tee build-logs/gradle.out ; test ${PIPESTATUS[0]} -eq 0
+
+      - name: Save adb logcat
+        timeout-minutes: 2
+        if: ${{ always() }}
+        run: adb logcat -d > logcat.txt
+
+      - name: Extract build failure
+        timeout-minutes: 2
+        if: ${{failure()}}
+        run: python3 tools/actions_support/analyze_error.py build-logs/gradle.out ${{ github.run_id }}
+        env:
+          webhook: ${{ secrets.CI_ANALYSIS_WEBHOOK }}
+
+      - name: Post test results on GitHub
+        if: ${{ always() }}
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        run: python3 tools/jenkins/ReportBuildStatus.py "$GITHUB_WORKSPACE" || echo "failed reporting status to github"
+
+      - name: Upload unit-test logs to GitHub
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: |
+            ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
+            ./**/build/reports/lint*.*
+            ./**/logcat.txt
+            ./**/build-logs/gradle.out
+            ./**/build/reports/task_times.csv
+            ./**/build/detekt-results
+            facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests
+            ./performance_measurement.txt
+

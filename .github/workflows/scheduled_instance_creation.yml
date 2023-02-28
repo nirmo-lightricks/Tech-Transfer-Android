@@ -1,0 +1,21 @@
+name: Scheduled Creation of runner instances
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  create_runner:
+    name: Create Android runner
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+      - name: Run instance creation
+        uses: ./.github/actions/action-create-gcp-runner
+        with:
+          instance_num: 2
+          delete_old: yes
+          gcp_instance_creator_key: ${{secrets.GCP_ANDROID_CI_INSTANCE_CREATOR}}
+          environment_type: production

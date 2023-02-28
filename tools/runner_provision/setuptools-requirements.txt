@@ -1,0 +1,4 @@
+# Temporary file which locks the versions of Python's setup tools (setuptools and wheel).
+
+setuptools==45.2.0
+wheel==0.34.2

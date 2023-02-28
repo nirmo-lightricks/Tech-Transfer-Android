@@ -1,0 +1,79 @@
+name: Library Distribution
+on:
+  workflow_dispatch:
+    inputs:
+      library:
+        type: choice
+        description: Which library to publish
+        options:
+          - security
+          - uxdesign
+          - networking
+          - gif_encoder
+          - experiments
+          - experiments2
+          - common
+          - lighthouse
+          - nn
+          - testutils
+          - enlight_ui
+          - nn:face-detection
+          - common:zendesk
+          - analytics:delta_events
+          - analytics:delta_manager
+          - analytics:core
+          - tech_transfer:color_transfer
+          - tech_transfer:neural_network
+          - render
+          - text2image
+          - authentication
+          - billing
+
+env:
+  # We use the TECHNICAL_VERSION environment version when we create the library version. The
+  # version is defined as {currentDate}.{TECHNICAL_VERSION}
+  TECHNICAL_VERSION: ${{ github.run_number }}
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+jobs:
+  distribution:
+    name: "Library artifactory distribution"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: "Library Build and Upload to Artifactory"
+        id: library_publish
+        uses: ./.github/actions/action-library-publish-artifactory
+        with:
+          gradle-module: ${{github.event.inputs.library}}
+
+      - name: "Extract library name"
+        id: extract_library_name
+        shell: bash
+        run: echo "library_name=$(echo ${{github.event.inputs.library}} | sed 's/.*\://')" >> $GITHUB_OUTPUT
+
+      - name: GH Release
+        run: |
+          gh api --method POST /repos/${{github.repository}}/releases -H "Accept: application/vnd.github+json" -f tag_name="${{env.TAG_NAME}}" -f target_commitish=${{github.sha}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBCIPAT }}
+          TAG_NAME: ${{ steps.extract_library_name.outputs.library_name }}-${{ steps.library_publish.outputs.artifact-version }}
+
+      - name: Slack Notify
+        if: success()
+        uses: ./.github/actions/action-new-version-slack-notify
+        with:
+          library-name: ${{github.event.inputs.library}}
+          author: ${{ github.triggering_actor }}
+          artifact-details: ${{ steps.library_publish.outputs.artifact-details }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

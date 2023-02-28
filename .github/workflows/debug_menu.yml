@@ -1,0 +1,85 @@
+name: Debug Menu Build
+env:
+  KEY: release
+  KEY_PASSWORD: ${{secrets.KEY_PASSWORD}}
+  KEYSTORE_PASSWORD: ${{secrets.KEYSTORE_PASSWORD}}
+  ABI_FILTERS_OVERRIDE: armeabi-v7a:arm64-v8a
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        required: false
+        description: "For applications with flavors. For example Quickshot have to specify Gms"
+        default: ''
+
+      app:
+        description: App to be built. Need to be the same as the module name. For example swish
+        required: true
+
+      firebaseAppDistributionGroups:
+        description: >
+          The tester groups you want to distribute builds to (see Manage testers in Firebase Console).
+          Groups are specified using group aliases, which you can find in the Testers tab in the
+          Firebase App Distribution console. You can specify the groups as a comma-separated list of group aliases.
+        required: false
+        default: 'internal-testers'
+
+      firebaseAppDistributionReleaseNotes:
+        description: Release notes for this build.
+        required: false
+        default: ''
+
+jobs:
+  distribution:
+    name: "Debug Menu builds"
+    runs-on: android
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: "Set technical version"
+        id: technical_version
+        uses: ./.github/actions/action-set-technical-version
+        with:
+          offset: 1000000
+
+      - name: "Set KeyStore"
+        uses: ./.github/actions/action-create-keystore
+        with:
+          base64-keystore: ${{secrets.FACETUNE_KEYSTORE_BASE64}}
+
+      - name: "Get firebase secret"
+        run: |
+          echo 'FIREBASE_SECRET_NAME='`python3 tools/runner_provision/debug_menu/get_debugmenu_secret_name.py ${{github.event.inputs.app}}` >> $GITHUB_ENV
+
+      - name: "Build APK in Debug Menu mode"
+        uses: ./.github/actions/action-build-release
+        with:
+          technical-version: ${{ steps.technical_version.outputs.techinal-version }}
+          app: ${{github.event.inputs.app}}
+          flavor:  ${{github.event.inputs.flavor}}
+          buildType: DebugMenu
+
+      - name: "Upload to FirebaseDistribution"
+        uses: ./.github/actions/action-firebase-upload
+        with:
+          app: ${{github.event.inputs.app}}
+          buildType: DebugMenu
+          flavor:  ${{github.event.inputs.flavor}}
+          firebase-secret: ${{ secrets[env.FIREBASE_SECRET_NAME] }}
+          firebase-app-distribution-groups: ${{github.event.inputs.firebaseAppDistributionGroups}}
+          firebase-app-distribution-release-notes: DEBUG-MENU:${{github.event.inputs.firebaseAppDistributionReleaseNotes}}
+
+      - name: "Cleanup"
+        if: ${{always()}}
+        run: rm ${{env.KEYSTORE}}

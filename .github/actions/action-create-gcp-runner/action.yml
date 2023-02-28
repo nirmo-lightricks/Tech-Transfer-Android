@@ -1,0 +1,35 @@
+name: Manages the android runner images
+description: This action manages the creation and deletion of the android images in gcp
+inputs:
+  instance_num:
+    required: true
+    description: Number of instances created
+  delete_old:
+    required: true
+    description: if to delete the old instances. Can be `yes` or `no`.
+  environment_type:
+    required: true
+    description: which environment to create. Can be either `production` or `staging`.
+  gcp_instance_creator_key:
+    required: true
+    description: the GCP_ANDROID_CI_INSTANCE_CREATOR secret
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set GOOGLE_APPLICATION_CREDENTIALS
+      run: echo 'GOOGLE_APPLICATION_CREDENTIALS='`python3 tools/runner_provision/secret_file_utils.py env2text SEC` >> $GITHUB_ENV
+      shell: bash
+      env:
+        SEC: ${{inputs.gcp_instance_creator_key}}
+    - name: Install python dependencies
+      run: |
+        pip3 install -Iv -r tools/runner_provision/setuptools-requirements.txt
+        pip3 install -r tools/runner_provision/requirements.txt
+      shell: bash
+    - name: Run Instance creation
+      run: python3 tools/runner_provision/manage_instances.py ${{inputs.instance_num}} ${{inputs.delete_old}} ${{inputs.environment_type}}
+      shell: bash
+    - name: Delete secret file
+      run: rm $GOOGLE_APPLICATION_CREDENTIALS
+      shell: bash

@@ -1,0 +1,44 @@
+name: Run all tests on demand
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: 'Select on which runner the job should run, must be one of `android`, `android_staging`'
+        required: true
+        default: 'android'
+
+env:
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+jobs:
+  run_all_tests:
+    name: "Run all tests"
+    runs-on: ${{ github.event.inputs.runner }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+      - name: Setup emulator
+        uses: ./.github/actions/action-emulator
+      - name: Tests including large test
+        run: python3 ./tools/jenkins/run_all_tests.py
+      - name: Print adb logcat on failure
+        if: ${{ failure() }}
+        run: adb logcat -d
+      - name: Upload unit-test logs to GitHub
+        if: ${{ failure()}}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: |
+            ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
+            facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests

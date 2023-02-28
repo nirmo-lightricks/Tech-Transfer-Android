@@ -1,0 +1,23 @@
+name: 'Send slack notification'
+description: >
+  Enables sending slack notifications through github actions
+
+inputs:
+  text:
+    required: true
+    description: 'What the text of the slack message is'
+
+  webhook:
+    required: true
+    description: the secret webhook used to send the message
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set technical version"
+      id: set_technical_version
+      shell: bash
+      run: python3 tools/actions_support/slack_message.py
+      env:
+        text: ${{inputs.text}}
+        webhook: ${{inputs.webhook}}

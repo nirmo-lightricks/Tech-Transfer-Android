@@ -1,0 +1,56 @@
+name: 'Send slack notification about new library'
+description: Sends a message to slack about newly published library
+
+inputs:
+  library-name:
+    required: true
+    description: 'Name of the library'
+  author:
+    required: true
+    description: 'Author of PR which triggered new release'
+  artifact-details:
+    required: true
+    description: 'Details of the newly published artifact'
+  slack-bot-token:
+    required: true
+    description: 'Token of slack bot'
+
+runs:
+  using: composite
+  steps:
+    - name: Slack Notify
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: android-common-libraries-releases
+        payload: |
+          {
+          	"blocks": [
+          		{
+          			"type": "header",
+          			"text": {
+          				"type": "plain_text",
+          				"text": ":tada: New version of ${{inputs.library-name}} published",
+          				"emoji": true
+          			}
+          		},
+          		{
+          			"type": "divider"
+          		},
+          		{
+          			"type": "section",
+          			"text": {
+          				"type": "mrkdwn",
+          				"text": "*Author:* ${{inputs.author}}"
+          			}
+          		},
+          		{
+          			"type": "section",
+          			"text": {
+          				"type": "mrkdwn",
+          				"text": "*New artifact details:* `${{ inputs.artifact-details }}`"
+          			}
+          		}
+          	]
+          }
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}

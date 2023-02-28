@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "billing"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "authentication"
+    schedule:
+      interval: "daily"

@@ -1,0 +1,19 @@
+name: 'Upload the symbols to Crashlytics'
+description: This action uploads the crashlytics symbol file
+
+inputs:
+  app:
+    required: true
+    description: 'Application name, for example: facetune, pixaloop, etc...'
+
+  flavor:
+    required: false
+    default: ''
+    description: "Optional. Android release flavor (like `Gms` for example)"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Upload symbols to Crashlytics"
+      shell: bash
+      run: ./gradlew :${{inputs.app}}:uploadCrashlyticsSymbolFile${{inputs.flavor}}Release

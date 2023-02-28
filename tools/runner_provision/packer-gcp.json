@@ -1,0 +1,63 @@
+{
+  "variables": {
+    "image_name": "github-action-runner-v1"
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "android-ci-286617",
+      "source_image_family": "ubuntu-2004-lts",
+      "ssh_username": "root",
+      "disk_size": "35",
+      "zone": "us-central1-a",
+      "image_licenses": [
+        "projects/vm-options/global/licenses/enable-vmx"
+      ],
+      "image_name": "{{user `image_name`}}",
+      "image_family": "action-runner",
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "requirements.txt",
+      "destination": "/requirements.txt"
+    },
+    {
+      "type": "shell",
+      "script": "install_os_dependencies.sh",
+      "pause_before": "30s"
+    },
+    {
+      "type": "file",
+      "source": "setup_commands.py",
+      "destination": "/setup_commands.py"
+    },
+    {
+      "type": "file",
+      "source": "constants.py",
+      "destination": "/constants.py"
+    },
+    {
+      "type": "shell",
+      "inline": "python3 /setup_commands.py gcp"
+    },
+    {
+      "type": "file",
+      "source": "startup_script.py",
+      "destination": "/startup_script.py"
+    },
+    {
+      "type": "shell",
+      "inline": "chmod +x /startup_script.py"
+    },
+    {
+      "type": "file",
+      "source": "supervisord-gcp.conf",
+      "destination": "/etc/supervisor/conf.d/supervisord-gh.conf"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+name: Feed large test build
+on:
+  schedule:
+    - cron:  '0 5,11,17 * * *'
+
+env:
+  ANDROID_ARTIFACTORY_REPO_NAME: ${{secrets.ANDROID_ARTIFACTORY_REPO_NAME}}
+  ANDROID_ARTIFACTORY_URL: ${{secrets.ANDROID_ARTIFACTORY_URL}}
+  ANDROID_ARTIFACTORY_HEADER_NAME: ${{secrets.ANDROID_ARTIFACTORY_HEADER_NAME}}
+  ARTIFACTORY_ANDROID_API_KEY: ${{secrets.ARTIFACTORY_ANDROID_API_KEY}}
+
+jobs:
+  bundle_release:
+    name: "Bundle Release for feed"
+    runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+          ref: develop
+      - name: Gradle Clean
+        run: ./gradlew feed:clean
+      - name: Gradle Bundle Release
+        run: ./gradlew feed:bundleReleaseAar
+      - name: Post failure to slack
+        if: ${{ failure() }}
+        uses: ./.github/actions/action-slack
+        with:
+          text: Feed build release failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
+          webhook: ${{secrets.FEED_ANDROID_NOTIFICATION_WEBHOOK}}
+  assemble_and_test:
+    name: Run Feed large tests
+    # This job runs on our self-hosted linux runners, labeled 'android'
+    runs-on: android
+    if: (github.event_name == 'schedule' && github.repository == 'Lightricks/facetune-android')
+    steps:
+      - name: Clone Repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+          # To access submodules in Lightricks repo, we need a personal access token
+          token: ${{ secrets.GITHUBCIPAT }}
+
+      - name: Setup emulator
+        uses: ./.github/actions/action-emulator
+
+      - name: Gradle clean
+        run: ./gradlew clean
+
+      - name: Build and run large tests for Feed
+        timeout-minutes: 120
+        env:
+          # Environment variable holding the Github username.
+          DANGER_GITHUB_API_USER: ${{ secrets.GITHUBCIUSER }}
+          # Environment variable holding the Github password.
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUBCIPAT }}
+        run: python3 ./tools/jenkins/feed_large_test.py
+
+      - name: Print adb logcat on failure
+        timeout-minutes: 1
+        if: ${{ always() }}
+        run: adb logcat -d > logcat.txt
+
+      - name: Post failure to slack
+        if: ${{ failure() }}
+        uses: ./.github/actions/action-slack
+        with:
+          text: Feed Nightly failed. Please check https://github.com/Lightricks/facetune-android/actions/runs/${{github.run_id}}
+          webhook: ${{secrets.FEED_ANDROID_NOTIFICATION_WEBHOOK}}
+
+      - name: Upload unit-test logs to GitHub
+        if: ${{ failure() || success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: |
+            ./**/build/test-results/**/*.xml
+            ./**/build/reports/androidTests
+            ./**/logcat.txt
+            facetune-android/**/build/test-results/**/*.xml
+            facetune-android/**/build/reports/androidTests
+
